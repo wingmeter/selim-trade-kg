@@ -1,6 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+root {
+  --base-font: 'Montserrat', sans-serif;
+  --second-font: 'Inter', sans-serif;
+  --primary-color: #5061ff;;
+  --gradient-color: linear-gradient(90.13deg, #105BFB 0.1%, #5061FF 134.04%);
+  --title-color: #414141;
+  --text-color: #545454;
+  --background: #c8c8c8;
+  --gap-card: 18px;
+}
+
+
 body {
   font-family: 'Montserrat', sans-serif;
 }
