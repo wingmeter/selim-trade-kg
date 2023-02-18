@@ -1,36 +1,32 @@
 import React from 'react'
 
-import { NavLink } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useMediaQuery } from 'react-responsive'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Logo from '../../assets/images/logo.png.png'
+import { ReactComponent as Logo } from '../../assets/icons/Logo.svg'
+import { MobileNavLinks } from '../../components/navbar/MobileNavLinks'
+import NavLinks from '../../components/navbar/NavLinks'
+import { DeviceSize } from '../../utils/constants'
 
 const Header = () => {
+   const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    return (
       <HeaderContainer>
          <Container>
-            <LogoImg src={Logo} alt="Logo" />
-            <NavList>
-               <li>
-                  <StyledNavLink
-                     to="main"
-                     className={({ isActive }) => (isActive ? 'active' : '')}
-                     end
-                  >
-                     Главная
-                  </StyledNavLink>
-               </li>
-               <li>
-                  <StyledNavLink to="services">Услуги</StyledNavLink>
-               </li>
-               <li>
-                  <StyledNavLink to="news">Новости</StyledNavLink>
-               </li>
-               <li>
-                  <StyledNavLink to="works">Наши работы</StyledNavLink>
-               </li>
-            </NavList>
-            <div>Инфо</div>
+            <StyledLink to="/main">
+               <Logo />
+            </StyledLink>
+            {!isMobile && <NavLinks />}
+            {isMobile && <MobileNavLinks />}
+
+            {!isMobile && (
+               <InfoPart>
+                  <p>г. Бишкек</p>
+                  <a href="tel:+996552570755">+996 (552) 57 07 55</a>
+               </InfoPart>
+            )}
          </Container>
       </HeaderContainer>
    )
@@ -43,7 +39,7 @@ const HeaderContainer = styled.header`
 `
 const Container = styled.div`
    margin: 20px auto;
-   width: 1400px;
+   max-width: 1400px;
    background: rgba(0, 0, 0, 0.4);
    backdrop-filter: blur(5px);
    border-radius: 10px;
@@ -52,35 +48,25 @@ const Container = styled.div`
    align-items: center;
    padding: 0 135px;
    justify-content: space-between;
-`
-const LogoImg = styled.img`
-   cursor: pointer;
-`
-// const Box = styled.div`
-//    padding: 0 135px;
-//    display: flex;
-//    align-items: center;
-// `
 
-const NavList = styled.ul`
-   display: flex;
-   align-items: center;
-   gap: 25px;
-
-   .active {
-      text-decoration-line: underline;
+   @media screen and (max-width: 769px) {
+      padding: 0 20px;
+      background: transparent;
    }
 `
-
-const StyledNavLink = styled(NavLink)`
-   font-family: 'Inter';
-   font-style: normal;
-   font-weight: 600;
-   font-size: 18px;
-   text-transform: lowercase;
-   color: #fefbfb;
-
-   :hover {
-      text-decoration-line: underline;
+const StyledLink = styled(Link)`
+   cursor: pointer;
+   display: flex;
+`
+const InfoPart = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: end;
+   p,
+   a {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      color: #ffffff;
    }
 `
