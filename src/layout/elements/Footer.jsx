@@ -14,21 +14,22 @@ import { DeviceSize } from '../../utils/constants'
 
 const Footer = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+   console.log(isMobile)
    return (
       <>
          <FooterContainer>
-            <Container>
-               <FirstBlock>
-                  <LogoImg src={FooterLogo} alt="" />
-                  <SocialNetworkContainer>
-                     <p>СОЦИАЛЬНЫЕ СЕТИ</p>
-                     <SocialNetwork>
-                        <Icons />
-                        <IconsTwo />
-                     </SocialNetwork>
-                  </SocialNetworkContainer>
-               </FirstBlock>
-               {!isMobile && (
+            {!isMobile && (
+               <Container>
+                  <FirstBlock>
+                     <LogoImg src={FooterLogo} alt="" />
+                     <SocialNetworkContainer>
+                        <p>СОЦИАЛЬНЫЕ СЕТИ</p>
+                        <SocialNetwork>
+                           <Icons />
+                           <IconsTwo />
+                        </SocialNetwork>
+                     </SocialNetworkContainer>
+                  </FirstBlock>
                   <SecondBlock>
                      <li>
                         <Link to="/">Главная</Link>
@@ -49,20 +50,69 @@ const Footer = () => {
                         <Link to="/"> Новости</Link>
                      </li>
                   </SecondBlock>
-               )}
-               <ThirdBlock>
-                  <WorkTime>
-                     <p>РЕЖИМ РАБОТЫ</p>
-                     <p>Пн-Пт 8:30–18:30</p>
-                     <p>Суббота 8:30–14:00</p>
-                  </WorkTime>
-                  <Phone>
-                     <p>ТЕЛЕФОН</p>
-                     <p>+996 (552) 57 07 55</p>
-                     <p>+996 (500) 88 80 51</p>
-                     <p>+996 (772) 32 76 76</p>
-                  </Phone>
-                  {isMobile && (
+                  <ThirdBlock>
+                     <WorkTime>
+                        <p>РЕЖИМ РАБОТЫ</p>
+                        <p>Пн-Пт 8:30–18:30</p>
+                        <p>Суббота 8:30–14:00</p>
+                     </WorkTime>
+                     <Phone>
+                        <p>ТЕЛЕФОН</p>
+                        <p>+996 (552) 57 07 55</p>
+                        <p>+996 (500) 88 80 51</p>
+                        <p>+996 (772) 32 76 76</p>
+                     </Phone>
+                  </ThirdBlock>
+                  <FourthBlock>
+                     <div className="mapouter">
+                        <div className="gmap_canvas">
+                           <iframe
+                              id="gmap_canvas"
+                              src="https://maps.google.com/maps?q=ayni 22
+                           &t=&z=17&ie=UTF8&iwloc=&output=embed"
+                           />
+                        </div>
+                     </div>
+                  </FourthBlock>
+               </Container>
+            )}
+
+            {isMobile && (
+               <MobileContainer>
+                  <MobileContainerTop>
+                     <LogoImg src={FooterLogo} alt="" />
+                     <ThirdBlock>
+                        <WorkTime>
+                           <p>РЕЖИМ РАБОТЫ</p>
+                           <p>Пн-Пт 8:30–18:30</p>
+                           <p>Суббота 8:30–14:00</p>
+                        </WorkTime>
+                        <Phone>
+                           <p>ТЕЛЕФОН</p>
+                           <p>+996 (552) 57 07 55</p>
+                           <p>+996 (500) 88 80 51</p>
+                           <p>+996 (772) 32 76 76</p>
+                        </Phone>
+                     </ThirdBlock>
+                     <FourthBlock>
+                        <div className="mapouter">
+                           <div className="gmap_canvas">
+                              <iframe
+                                 id="gmap_canvas"
+                                 src="https://maps.google.com/maps?q=ayni 22&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                              />
+                           </div>
+                        </div>
+                     </FourthBlock>
+                  </MobileContainerTop>
+                  <MobileContainerBottom>
+                     <SocialNetworkContainer>
+                        <p>СОЦИАЛЬНЫЕ СЕТИ</p>
+                        <SocialNetwork>
+                           <Icons />
+                           <IconsTwo />
+                        </SocialNetwork>
+                     </SocialNetworkContainer>
                      <SecondBlockMobile>
                         <ul>
                            <li>
@@ -87,19 +137,9 @@ const Footer = () => {
                            </li>
                         </ul>
                      </SecondBlockMobile>
-                  )}
-               </ThirdBlock>
-               <FourthBlock>
-                  <div className="mapouter">
-                     <div className="gmap_canvas">
-                        <iframe
-                           id="gmap_canvas"
-                           src="https://maps.google.com/maps?q=ayni 22&t=&z=17&ie=UTF8&iwloc=&output=embed"
-                        />
-                     </div>
-                  </div>
-               </FourthBlock>
-            </Container>
+                  </MobileContainerBottom>
+               </MobileContainer>
+            )}
          </FooterContainer>
          <CopyrightBlock>
             © 2023 Selim Trade. Данный сайт защищён от копирования. Любая
@@ -115,6 +155,28 @@ const FooterContainer = styled.footer`
    width: 100%;
    background: #f9f9f9;
    border-radius: 35px;
+`
+
+const MobileContainer = styled.div`
+   padding: 30px 0;
+   margin: 0 auto;
+   height: 327px;
+   max-width: 1440px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   gap: 10px;
+
+   @media screen and (max-width: 769px) {
+      height: 230px;
+      padding: 30px 15px;
+   }
+`
+
+const FirstBlock = styled.div`
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
 `
 
 const Container = styled.div`
@@ -136,9 +198,13 @@ const SecondBlockMobile = styled.div`
    gap: 10px;
    font-size: 12px;
 `
-const FirstBlock = styled.div`
+const MobileContainerBottom = styled.div`
    display: flex;
-   flex-direction: column;
+   gap: 30px;
+`
+
+const MobileContainerTop = styled.div`
+   display: flex;
    justify-content: space-between;
 `
 
@@ -237,7 +303,7 @@ const Phone = styled.div`
 `
 const CopyrightBlock = styled.div`
    background: #5061ff;
-   padding: 10px 20px;
+   padding: 10px 50px;
    font-style: normal;
    font-weight: 300;
    font-size: 16px;
