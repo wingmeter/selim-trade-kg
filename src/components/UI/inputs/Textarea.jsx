@@ -18,6 +18,7 @@ export const Textarea = forwardRef(
                fontFamily: 'var(--base-font)',
                width: '100%',
                borderRadius: '20px',
+               border: error ? '1px solid red' : '',
             }}
          />
       )
