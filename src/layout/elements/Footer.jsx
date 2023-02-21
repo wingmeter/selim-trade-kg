@@ -14,7 +14,6 @@ import { DeviceSize } from '../../utils/constants'
 
 const Footer = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
-   console.log(isMobile)
    return (
       <>
          <FooterContainer>
