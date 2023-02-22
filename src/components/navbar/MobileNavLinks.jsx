@@ -84,6 +84,7 @@ const LinksContainer = styled.div`
    height: 300px;
    z-index: 99;
    display: flex;
+   height: 300px;
    justify-content: space-between;
    width: 100%;
 `
