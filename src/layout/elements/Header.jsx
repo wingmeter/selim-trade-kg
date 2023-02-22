@@ -36,6 +36,9 @@ export default Header
 
 const HeaderContainer = styled.header`
    width: 100%;
+   position: absolute;
+   top: 0;
+   left: 0;
 `
 const Container = styled.div`
    margin: 20px auto;
