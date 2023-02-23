@@ -1,11 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-irregular-whitespace */
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
-import backgroundImage from '../../../assets/images/backgroundImage.png'
-import leafs from '../../../assets/images/leafs.png'
-// import FeedbackForm from '../../../components/form/FeedbackForm'
+import Advantages from '../../../components/our-services/Advantages'
 import Card from '../../../components/UI/cards/Card'
 import { Flex, Grid } from '../../../styles/style-for-positions/style'
 import { Text, Title } from '../../../styles/typography/style'
@@ -40,54 +39,38 @@ const cardData = [
       id: Math.random().toString(),
       img,
    },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
 ]
 
-const ServicesDetail = () => {
+const ServicesInnerPage = ({ title, image }) => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    const navigate = useNavigate()
 
    const showInnerPage = () => navigate(`/`)
    return (
-      <Container sectionImg={leafs}>
-         <img src={leafs} alt="leafs" />
-         <InnerContainer bgImg={backgroundImage}>
-            <ServiceDescription>
-               <Flex minWidth="50%">
-                  <Title size={isMobile ? '16px' : '70px'} uppercase>
-                     Наши услуги
-                  </Title>
-               </Flex>
-               <Text
-                  size={isMobile ? '14px' : '19px'}
-                  weight="300"
-                  align={isMobile && 'center'}
-               >
-                  Наши сотрудники прошли сертифицированные тренинги в Учебных
-                  центрах ГК DoorHan в г. Москва, г. Алматы, г. Астаны
-                  а так же успешно сдали экзамены и являются обладателями
-                  сертификатов по направлениям «Воротные системы, ролл ставни,
-                  ролл ворота, автоматические системы», «Монтаж автоматики».
-               </Text>
-            </ServiceDescription>
-
-            <Grid
-               width="100%"
-               columns={isMobile ? '1fr' : '1fr 1fr'}
-               justify="center"
-               rows="1fr 1fr"
-               columnGap="18px"
-               rowGap="35px"
+      <Container>
+         <HeaderBanner banner={image || img}>
+            <Title white size={isMobile ? '16px' : '70px'} uppercase>
+               {title || 'Промышленные секционные ворота'}
+            </Title>
+         </HeaderBanner>
+         <ServiceDescription>
+            <Text
+               size={isMobile ? '14px' : '19px'}
+               weight="300"
+               align={isMobile && 'center'}
             >
+               Наши сотрудники прошли сертифицированные тренинги в Учебных
+               центрах ГК DoorHan в г. Москва, г. Алматы, г. Астаны
+               а так же успешно сдали экзамены и являются обладателями
+               сертификатов по направлениям «Воротные системы, ролл ставни, ролл
+               ворота, автоматические системы», «Монтаж автоматики».
+            </Text>
+         </ServiceDescription>
+         <TypeOfItems>
+            <Title size={isMobile ? '16px' : '40px'} uppercase>
+               типы ворот
+            </Title>
+            <CardContainer>
                {cardData.map((card) => (
                   <StyledCard
                      key={card.id}
@@ -99,92 +82,114 @@ const ServicesDetail = () => {
                      </CardSubTitle>
                   </StyledCard>
                ))}
-            </Grid>
-         </InnerContainer>
+            </CardContainer>
+         </TypeOfItems>
+         <br />
+         <Advantages />
       </Container>
    )
 }
 
-export default ServicesDetail
+export default ServicesInnerPage
 
-const StyledCard = styled(Card)`
-   height: 350px;
-   display: flex;
-   flex-direction: column;
-   align-items: flex-start;
-   justify-content: end;
-   cursor: pointer;
-   :hover {
-      transform: scale(1.003);
-   }
-   @media screen and (max-width: 768px) {
-      height: 175px;
-      padding: 10px;
-   }
-`
-
-const CardSubTitle = styled(Flex)`
-   max-width: 512px;
-   background: rgba(0, 0, 0, 0.2);
-   backdrop-filter: blur(2px);
-   /* Note: backdrop-filter has minimal browser support */
-   border-radius: 20px;
-   padding: 8px 10px;
-   font-size: 25px;
-   @media screen and (max-width: 768px) {
-      padding: 5px 8px;
-      h1 {
-         font-size: 12px;
-      }
-   }
-`
-
-const InnerContainer = styled(Flex)`
-   background: url(${({ bgImg }) => bgImg});
-   background-repeat: no-repeat;
-   flex-direction: column;
-   gap: 200px;
+const CardContainer = styled(Flex)`
+   flex-wrap: nowrap;
    width: 100%;
-   min-height: 100vh;
-   align-items: flex-start;
-   padding: 0 22px 0;
-   isolation: isolate;
+   gap: 20px;
    @media screen and (max-width: 768px) {
-      padding: 0 16px 0;
-      gap: 40px;
+      flex-direction: column;
+   }
+`
+
+const HeaderBanner = styled(Flex)`
+   justify-content: center;
+   align-items: center;
+   border-bottom-right-radius: 180px;
+   background: url(${({ banner }) => banner});
+   background-repeat: no-repeat;
+   background-size: cover;
+   object-fit: cover;
+   object-position: top center;
+   padding: 150px 0px 20px;
+   height: 511px;
+   margin-bottom: 50px;
+   h1 {
+      text-align: center;
+   }
+   @media screen and (max-width: 768px) {
+      height: 260px;
+      padding: 10px 0px;
+      border-bottom-right-radius: 40px;
+      margin-bottom: 10px;
+      h1 {
+         max-width: 207px;
+      }
    }
 `
 
 const ServiceDescription = styled.div`
    display: flex;
    align-items: center;
-   /* align-items: flex-start; */
    width: 100%;
+   padding: 0px 50px;
    @media screen and (max-width: 768px) {
       flex-direction: column;
       gap: 12px;
+      padding: 0px 31px;
+   }
+`
+
+const StyledCard = styled(Card)`
+   height: 314px;
+   max-width: 256px !important;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   justify-content: end;
+   padding: 10px;
+
+   @media screen and (max-width: 768px) {
+      height: 175px;
+      padding: 10px;
+      max-width: 100% !important;
+   }
+`
+
+const CardSubTitle = styled(Flex)`
+   max-width: 221px;
+   border-radius: 20px;
+   font-size: 18px;
+   @media screen and (max-width: 768px) {
+      h1 {
+         font-size: 12px;
+      }
+   }
+`
+
+const TypeOfItems = styled(Flex)`
+   background: url(${({ bgImg }) => bgImg});
+   background-repeat: no-repeat;
+   flex-direction: column;
+   gap: 20px;
+   width: 100%;
+   max-width: 100%;
+   min-height: 100vh;
+   align-items: flex-start;
+   padding: 80px 22px 40px;
+   @media screen and (max-width: 768px) {
+      padding: 40px 16px;
+      gap: 20px;
    }
 `
 
 const Container = styled.div`
    position: relative;
-   background-repeat: no-repeat;
-   background-size: contain;
    display: flex;
    flex-direction: column;
-   padding: 200px 0px 100px;
-   max-width: 1500px;
+   max-width: 1440px;
    width: 100%;
    margin: 0 auto;
-   overflow: hidden;
-   img {
-      position: absolute;
-      top: -60px;
-      left: -80px;
-      /* transform: rotate(45deg); */
-      z-index: -3;
-   }
    @media screen and (max-width: 768px) {
-      padding: 80px 0px 80px;
+      padding: 0px 0px 10px;
    }
 `
