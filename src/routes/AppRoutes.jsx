@@ -4,6 +4,8 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 
 import AppLayout from '../layout/AppLayout'
 import MainPage from '../pages/MainPage'
+import ServicesInnerPage from '../pages/our-services/inner-page/ServicesInnerPage'
+import OurServices from '../pages/our-services/OurServicesPage'
 
 const AppRoutes = () => {
    return (
@@ -12,8 +14,8 @@ const AppRoutes = () => {
             <Route path="/" element={<Navigate to="main" />} />
             <Route path="main" element={<MainPage />} />
             <Route path="services/*" element={<Outlet />}>
-               <Route index element={<div>services</div>} />
-               <Route path=":id" element={<div>servicesInnerPage</div>} />
+               <Route index element={<OurServices />} />
+               <Route path=":id" element={<ServicesInnerPage />} />
             </Route>
             <Route path="works" element={<div>Works</div>} />
             <Route path="news/*" element={<Outlet />}>

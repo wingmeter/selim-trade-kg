@@ -39,6 +39,7 @@ const HeaderContainer = styled.header`
    position: absolute;
    top: 0;
    left: 0;
+   z-index: 11;
 `
 const Container = styled.div`
    margin: 20px auto;
