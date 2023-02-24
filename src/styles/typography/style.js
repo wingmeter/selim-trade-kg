@@ -17,6 +17,8 @@ export const Title = styled.h1`
    letter-spacing: -0.01rem;
    font-weight: ${({ weight }) => weight || '700'};
    text-transform: ${({ uppercase }) => (uppercase ? 'uppercase' : 'auto')};
+   text-align: ${({ align }) => align || 'left'};
+   max-width: ${({ mWidth }) => mWidth || ''};
    display: flex;
    align-items: center;
    gap: 6px;

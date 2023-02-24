@@ -84,7 +84,6 @@ const ServicesInnerPage = ({ title, image }) => {
                ))}
             </CardContainer>
          </TypeOfItems>
-         <br />
          <Advantages />
       </Container>
    )
@@ -173,7 +172,7 @@ const TypeOfItems = styled(Flex)`
    gap: 20px;
    width: 100%;
    max-width: 100%;
-   min-height: 100vh;
+   min-height: 30%;
    align-items: flex-start;
    padding: 80px 22px 40px;
    @media screen and (max-width: 768px) {
