@@ -4,8 +4,8 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 
 import AppLayout from '../layout/AppLayout'
 import MainPage from '../pages/MainPage'
-import OurServices from '../pages/our-services '
-import ServicesInnerPage from '../pages/our-services /inner-page'
+import ServicesInnerPage from '../pages/our-services/inner-page/ServicesInnerPage'
+import OurServices from '../pages/our-services/OurServicesPage'
 
 const AppRoutes = () => {
    return (
