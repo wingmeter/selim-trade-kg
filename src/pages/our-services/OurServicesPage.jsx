@@ -55,7 +55,7 @@ const OurServices = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    const navigate = useNavigate()
 
-   const showInnerPage = () => navigate(`/`)
+   const showInnerPage = (id) => navigate(`services/${id}`)
    return (
       <Container sectionImg={leafs}>
          <img src={leafs} alt="leafs" />

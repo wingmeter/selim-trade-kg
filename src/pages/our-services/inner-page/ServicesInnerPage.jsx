@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import Advantages from '../../../components/our-services/Advantages'
 import Card from '../../../components/UI/cards/Card'
-import { Flex, Grid } from '../../../styles/style-for-positions/style'
+import { Flex } from '../../../styles/style-for-positions/style'
 import { Text, Title } from '../../../styles/typography/style'
 import { DeviceSize } from '../../../utils/constants'
 
@@ -41,7 +41,7 @@ const cardData = [
    },
 ]
 
-const ServicesInnerPage = ({ title, image }) => {
+const ServicesInnerPage = ({ title, image, description }) => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    const navigate = useNavigate()
 
@@ -59,11 +59,8 @@ const ServicesInnerPage = ({ title, image }) => {
                weight="300"
                align={isMobile && 'center'}
             >
-               Наши сотрудники прошли сертифицированные тренинги в Учебных
-               центрах ГК DoorHan в г. Москва, г. Алматы, г. Астаны
-               а так же успешно сдали экзамены и являются обладателями
-               сертификатов по направлениям «Воротные системы, ролл ставни, ролл
-               ворота, автоматические системы», «Монтаж автоматики».
+               {description ||
+                  'Наши сотрудники прошли сертифицированные тренинги в Учебных центрах ГК DoorHan в г. Москва, г. Алматы, г. Астаны  а так же успешно сдали экзамены и являются обладателями сертификатов по направлениям Воротные системы, ролл ставни, ролл  ворота, автоматические системы, Монтаж автоматики'}
             </Text>
          </ServiceDescription>
          <TypeOfItems>
