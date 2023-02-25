@@ -3,7 +3,7 @@ import React from 'react'
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 
 import AppLayout from '../layout/AppLayout'
-import MainPage from '../pages/MainPage'
+import MainPage from '../pages/main-page/MainPage'
 
 const AppRoutes = () => {
    return (
