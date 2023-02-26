@@ -12,39 +12,42 @@ const img =
 
 const cardData = [
    {
-      title: 'Промышленные секционные ворота',
       id: Math.random().toString(),
       img,
    },
    {
-      title: 'Промышленные секционные ворота Промышленные секционные ворота',
       id: Math.random().toString(),
       img,
    },
    {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-      height: '500px',
-   },
-   {
-      title: 'Промышленные секционные ворота',
       id: Math.random().toString(),
       img,
    },
    {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-      height: '200px',
-   },
-   {
-      title: 'Промышленные секционные ворота',
       id: Math.random().toString(),
       img,
    },
    {
-      title: 'Промышленные секционные ворота',
+      id: Math.random().toString(),
+      img,
+   },
+   {
+      id: Math.random().toString(),
+      img,
+   },
+   {
+      id: Math.random().toString(),
+      img,
+   },
+   {
+      id: Math.random().toString(),
+      img,
+   },
+   {
+      id: Math.random().toString(),
+      img,
+   },
+   {
       id: Math.random().toString(),
       img,
    },
@@ -72,23 +75,25 @@ const OurWorksPage = () => {
                   проект по душе и нраву, который захотите воплотить в жизнь.
                </Text>
             </ServiceDescription>
+            {!isMobile && (
+               <CardContainer>
+                  {cardData.map((card, index) => (
+                     <StyledCard
+                        key={card.id}
+                        img={card?.img}
+                        className={`div${index + 1}`}
+                     />
+                  ))}
+               </CardContainer>
+            )}
 
-            <Grid
-               width="100%"
-               columns="repeat(auto-fit, minmax(350px, 1fr))"
-               justify="center"
-               rows="1fr 1fr"
-               columnGap="18px"
-               rowGap="35px"
-            >
-               {cardData.map((card) => (
-                  <StyledCard
-                     key={card.id}
-                     img={card?.img}
-                     gridArea={card.height}
-                  />
-               ))}
-            </Grid>
+            {isMobile && (
+               <CardContainerMobile>
+                  {cardData.map((card) => (
+                     <StyledCard key={card.id} img={card?.img} />
+                  ))}
+               </CardContainerMobile>
+            )}
          </InnerContainer>
       </Container>
    )
@@ -96,40 +101,107 @@ const OurWorksPage = () => {
 
 export default OurWorksPage
 
+const CardContainerMobile = styled(Flex)`
+   width: 100%;
+   gap: 25px;
+   flex-direction: column;
+`
+
+const CardContainer = styled(Grid)`
+   width: 100%;
+   display: grid;
+   grid-template-columns: repeat(6, 1fr);
+   grid-template-rows: repeat(4, 1fr);
+   grid-column-gap: 30px;
+   grid-row-gap: 25px;
+
+   .div1 {
+      grid-area: 1 / 1 / 3 / 3;
+      height: 390px;
+   }
+   .div2 {
+      grid-area: 1 / 3 / 2 / 5;
+      height: 278px;
+   }
+   .div3 {
+      grid-area: 1 / 5 / 2 / 7;
+      height: 278px;
+   }
+   .div4 {
+      grid-area: 2 / 1 / 3 / 3;
+      margin-top: 20px;
+      height: 270px;
+   }
+   .div5 {
+      grid-area: 2 / 3 / 3 / 7;
+      height: 374px;
+      position: relative;
+      bottom: 85px;
+   }
+   .div6 {
+      grid-area: 3 / 1 / 4 / 2;
+      height: 278px;
+      position: relative;
+      bottom: 70px;
+   }
+   .div7 {
+      grid-area: 3 / 2 / 5 / 4;
+      height: 278px;
+      position: relative;
+      bottom: 70px;
+   }
+   .div8 {
+      grid-area: 3 / 4 / 5 / 7;
+      height: 278px;
+      position: relative;
+      bottom: 70px;
+   }
+   .div9 {
+      grid-area: 4 / 1 / 6 / 5;
+      height: 278px;
+      position: relative;
+      bottom: 150px;
+   }
+   .div10 {
+      grid-area: 4 / 5 / 6 / 7;
+      height: 278px;
+      position: relative;
+      bottom: 150px;
+   }
+`
+
 const StyledCard = styled(Card)`
-   height: ${({ height }) => height || '350px'};
    display: flex;
    flex-direction: column;
    align-items: flex-start;
    justify-content: end;
    cursor: pointer;
-   /* grid-area: 2 / 2 / 3 / 5; */
    @media screen and (max-width: 768px) {
       height: 175px;
       padding: 10px;
+      max-width: 100% !important;
    }
 `
 
 const InnerContainer = styled(Flex)`
+   width: 100%;
+   gap: 140px;
+   flex-direction: column;
+   align-items: flex-start;
    background: url(${({ bgImg }) => bgImg});
    background-repeat: no-repeat;
-   flex-direction: column;
-   gap: 200px;
-   width: 100%;
-   min-height: 100vh;
-   align-items: flex-start;
    padding: 0 22px 0;
    isolation: isolate;
    @media screen and (max-width: 768px) {
-      padding: 0 16px 0;
       gap: 40px;
+      padding: 0 16px 0;
    }
 `
 
 const ServiceDescription = styled.div`
+   width: 100%;
    display: flex;
    align-items: center;
-   width: 100%;
    @media screen and (max-width: 768px) {
       flex-direction: column;
       gap: 12px;
@@ -137,17 +209,17 @@ const ServiceDescription = styled.div`
 `
 
 const Container = styled.div`
+   width: 100%;
    position: relative;
    background-repeat: no-repeat;
    background-size: contain;
    display: flex;
    flex-direction: column;
-   padding: 200px 0px 100px;
-   max-width: 1500px;
-   width: 100%;
+   padding: 200px 0px 0px;
+   max-width: 1440px;
    margin: 0 auto;
 
    @media screen and (max-width: 768px) {
-      padding: 80px 0px 80px;
+      padding: 80px 0px 40px;
    }
 `
