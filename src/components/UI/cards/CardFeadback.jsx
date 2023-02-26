@@ -13,8 +13,8 @@ const CardFeadback = ({ feedback, img, name, type }) => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    return (
       <Card
-         width={isMobile ? '242px' : '325px'}
-         padding="13px 20px 13px 8px"
+         width={isMobile ? '200px' : '325px'}
+         padding="13px 20px"
          bRadius="6px"
       >
          <Circle>
@@ -35,7 +35,12 @@ const TextWrapper = styled.div`
    display: flex;
    flex-direction: column;
    gap: 6px;
-   margin-left: 30%;
+   margin-left: 28%;
+
+   @media screen and (max-width: 769px) {
+      margin-left: 0;
+      margin-top: 5px;
+   }
 
    h4 {
       font-family: var(--base-font);
@@ -80,7 +85,6 @@ const Circle = styled.div`
    img {
       position: absolute;
       top: -30px;
-      left: 3%;
       border-radius: 50%;
       border-style: solid;
       border-color: white;
@@ -89,6 +93,14 @@ const Circle = styled.div`
       height: 74px;
       @media screen and (max-width: 769px) {
          width: 57px;
+         left: 48px;
+         top: -45px;
+         height: 55px;
+      }
+      @media screen and (max-width: 426px) {
+         width: 57px;
+         left: 44%;
+         top: -45px;
          height: 55px;
       }
    }

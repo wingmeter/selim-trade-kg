@@ -21,6 +21,7 @@ const CardStyled = styled.div`
    padding: ${({ padding }) => padding || '20px 25px'};
    max-width: ${({ maxW }) => maxW || '1300px'};
    width: ${({ width }) => width || '100% !important'};
+   height: ${({ height }) => height || ''};
    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.13);
    position: relative;
    @media (max-width: 720px) {

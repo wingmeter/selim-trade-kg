@@ -9,13 +9,19 @@ import styled from 'styled-components'
 
 import { ReactComponent as InstagramIcon } from '../../assets/icons/instagram.svg'
 import { ReactComponent as WhatsAppIcon } from '../../assets/icons/WhatsApp.svg'
+import backgroundImage from '../../assets/images/backgroundImage.png'
 import FooterLogo from '../../assets/images/footerLogo.png'
+import FeedbackForm from '../../components/form/FeedbackForm'
+import { Flex } from '../../styles/style-for-positions/style'
 import { DeviceSize } from '../../utils/constants'
 
 const Footer = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    return (
       <>
+         <FooterWrapper bgImg={backgroundImage}>
+            <FeedbackForm />
+         </FooterWrapper>
          <FooterContainer>
             {!isMobile && (
                <Container>
@@ -68,7 +74,7 @@ const Footer = () => {
                            <iframe
                               id="gmap_canvas"
                               src="https://maps.google.com/maps?q=ayni 22
-                           &t=&z=17&ie=UTF8&iwloc=&output=embed"
+                              &t=&z=17&ie=UTF8&iwloc=&output=embed"
                            />
                         </div>
                      </div>
@@ -149,6 +155,17 @@ const Footer = () => {
 }
 
 export default Footer
+
+const FooterWrapper = styled(Flex)`
+   background: url(${({ bgImg }) => bgImg});
+   background-repeat: no-repeat;
+   background-position: center;
+   flex-direction: column;
+   width: 100%;
+   gap: 50px;
+   padding: 0 22px 0;
+   padding-bottom: 60px;
+`
 
 const FooterContainer = styled.footer`
    width: 100%;

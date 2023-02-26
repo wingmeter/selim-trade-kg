@@ -86,8 +86,10 @@ export default FeedbackForm
 
 const Container = styled.div`
    max-width: 1200px;
+   width: 100%;
    margin: 0 auto;
    text-align: center;
+   background: transparent;
 
    h1 {
       font-family: 'Montserrat';
@@ -109,8 +111,11 @@ const Form = styled.form`
    margin-top: 25px;
 
    @media screen and (max-width: 769px) {
-      padding: 0 20px;
       gap: 15px;
+   }
+
+   button {
+      margin: 0 auto;
    }
 `
 

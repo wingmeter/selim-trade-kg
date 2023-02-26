@@ -28,11 +28,13 @@ export const Textarea = forwardRef(
 const StyledTextarea = styled(TextareaAutosize)`
    outline: none;
    resize: none;
+   color: #414141;
+   border-color: grey;
    &:focus {
       border-color: var(--title-color);
    }
 
    &:hover {
-      border-color: #184bcc;
+      border-color: var(--title-color);
    }
 `

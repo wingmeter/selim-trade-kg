@@ -1,16 +1,27 @@
+/* eslint-disable import/no-unresolved */
 import { Container } from '@mui/material'
+import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
-import SwiperCore, { Navigation, Pagination, Controller, Thumbs } from 'swiper'
+import SwiperCore, {
+   Navigation,
+   Pagination,
+   Controller,
+   Thumbs,
+   EffectCoverflow,
+} from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper-bundle.css'
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
 
 import { ReactComponent as LeftArrow } from '../../../assets/icons/Left1.svg'
 import { ReactComponent as RightArrow } from '../../../assets/icons/Right.svg'
 import work1 from '../../../assets/images/work1.png'
-// import Card from '../../../components/UI/cards/Card'
+import { DeviceSize } from '../../../utils/constants'
 import { SubTitle } from '../style'
 
-SwiperCore.use([Navigation, Pagination, Controller, Thumbs])
+SwiperCore.use([Navigation, Pagination, Controller, Thumbs, EffectCoverflow])
 
 const cardData = [
    {
@@ -36,37 +47,81 @@ const cardData = [
 ]
 
 const SixthSection = () => {
+   const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    return (
       <StyledSection>
          <Container>
             <StyledSubTitle>Наши работы</StyledSubTitle>
             <SwiperContainer>
-               <SwiperButton className="image-swiper-button-next">
-                  <RightArrow />
-               </SwiperButton>
-               <SwiperButton className="swiper-button image-swiper-button-prev">
-                  <LeftArrow />
-               </SwiperButton>
+               {!isMobile && (
+                  <>
+                     <SwiperButton className="image-swiper-button-next">
+                        <RightArrow />
+                     </SwiperButton>
+                     <SwiperButton className="swiper-button image-swiper-button-prev">
+                        <LeftArrow />
+                     </SwiperButton>
+                  </>
+               )}
                <Swiper
-                  id="main"
+                  id="works"
                   tag="div"
-                  spaceBetween={40}
-                  slidesPerView="auto"
-                  // centeredSlides
+                  spaceBetween={150}
+                  slidesPerView={3}
+                  effect="coverflow"
+                  loop
+                  breakpoints={{
+                     320: {
+                        width: 300,
+                        height: 150,
+                        spaceBetween: 25,
+                        slidesPerView: 2,
+                     },
+                     375: {
+                        width: 375,
+                        spaceBetween: 25,
+                        slidesPerView: 2,
+                     },
+                     425: {
+                        width: 425,
+                        spaceBetween: 50,
+                        slidesPerView: 2,
+                     },
+                     768: {
+                        width: 720,
+                        spaceBetween: 100,
+                        slidesPerView: 2,
+                     },
+                     1024: {
+                        width: 980,
+                        spaceBetween: 150,
+                        slidesPerView: 3,
+                     },
+                     1240: {
+                        spaceBetween: 150,
+                        slidesPerView: 3,
+                     },
+                  }}
+                  coverflowEffect={{
+                     rotate: 0,
+                     stretch: 0,
+                     depth: 100,
+                     modifier: 1,
+                     slideShadows: true,
+                  }}
+                  className="mySwiper"
+                  centeredSlides
                   grabCursor
                   navigation={{
                      nextEl: '.image-swiper-button-next',
                      prevEl: '.image-swiper-button-prev',
                      disabledClass: 'swiper-button-disabled',
                   }}
-                  modules={[Navigation]}
+                  modules={[Navigation, EffectCoverflow]}
                >
                   {cardData.map((card) => (
-                     <SwiperSlide
-                        key={`thumb-${card.id}`}
-                        style={{ listStyle: 'none' }}
-                     >
-                        <StyledImage img={card.img} />
+                     <SwiperSlide key={`thumb-${card.id}`}>
+                        <StyledImage src={card.img} />
                      </SwiperSlide>
                   ))}
                </Swiper>
@@ -82,6 +137,7 @@ const StyledSection = styled.section`
    height: 500px;
    @media screen and (max-width: 769px) {
       padding-top: 50px;
+      height: 400px;
    }
 
    .MuiContainer-root {
@@ -89,11 +145,29 @@ const StyledSection = styled.section`
          max-width: 1400px;
       }
    }
+
+   .swiper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 20px;
+   }
+
+   .swiper-slide img {
+      display: block;
+      width: 100%;
+   }
+
+   .swiper-3d .swiper-slide-shadow-left {
+      background-image: none;
+   }
+   .swiper-3d .swiper-slide-shadow-right {
+      background-image: none;
+   }
 `
 
 const SwiperButton = styled.div`
    position: absolute;
-   bottom: -64px;
+   top: 50%;
    z-index: 10;
    cursor: pointer;
    width: 43px;
@@ -105,11 +179,8 @@ const SwiperButton = styled.div`
    background: rgba(65, 65, 65, 0.15);
    border: 3.52891px solid #f1f6ff;
 `
-const StyledImage = styled.div`
-   background-image: url(${({ img }) => img || ''});
-   filter: drop-shadow(0px 0px 10px #105bfb);
+const StyledImage = styled.img`
    border-radius: 20px;
-   width: 440px;
    height: 300px;
 `
 const StyledSubTitle = styled(SubTitle)`
@@ -122,10 +193,16 @@ const SwiperContainer = styled.div`
    margin-top: 15px;
 
    .image-swiper-button-prev {
-      left: 5px;
+      left: 33%;
+      @media screen and (max-width: 769px) {
+         left: 20%;
+      }
    }
    .image-swiper-button-next {
-      right: 5px;
+      right: 33%;
+      @media screen and (max-width: 769px) {
+         right: 20%;
+      }
    }
    .swiper-button-disabled {
       opacity: 0.5;

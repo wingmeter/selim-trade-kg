@@ -157,7 +157,7 @@ const StyledSection = styled.section`
 
    @media screen and (max-width: 769px) {
       padding-top: 50px;
-      height: 310px;
+      height: 350px;
    }
 
    .MuiContainer-root {

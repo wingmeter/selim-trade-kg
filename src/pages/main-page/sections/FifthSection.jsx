@@ -52,6 +52,7 @@ const StyledSection = styled.section`
    height: 600px;
    @media screen and (max-width: 769px) {
       padding-top: 50px;
+      height: 350px;
    }
 
    .MuiContainer-root {
@@ -76,6 +77,14 @@ const CardContainer = styled.div`
 const StyledCard = styled(Card)`
    text-align: center;
    padding: 90px 28px;
+
+   @media screen and (max-width: 769px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 160px;
+      padding: 70px;
+   }
 `
 const StyledTitle = styled.p`
    font-family: 'Montserrat';
@@ -83,6 +92,9 @@ const StyledTitle = styled.p`
    font-weight: 800;
    font-size: 20px;
    color: #f1f6ff;
+   @media screen and (max-width: 769px) {
+      font-size: 10px;
+   }
 `
 
 const StyledButtonOutlined = styled(ButtonOutlined)`

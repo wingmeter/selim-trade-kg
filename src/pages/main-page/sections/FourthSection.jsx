@@ -62,7 +62,7 @@ const StyledSection = styled.section`
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;
-   height: 580px;
+   height: 420px;
 
    @media screen and (max-width: 769px) {
       padding-top: 50px;
@@ -77,7 +77,7 @@ const StyledSection = styled.section`
 `
 const StyledSubTitle = styled(SubTitle)`
    text-align: center;
-   margin-top: 180px;
+   margin-top: 120px;
    margin-bottom: 60px;
 
    @media screen and (max-width: 769px) {
@@ -91,9 +91,30 @@ const CardContainer = styled.div`
 
    @media screen and (max-width: 769px) {
       overflow: hidden;
+      padding: 15px 5px;
       overflow-x: scroll;
    }
 `
 const StyledCard = styled(Card)`
    text-align: center;
+
+   @media screen and (max-width: 769px) {
+      display: flex;
+      padding: 90px 28px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 130px;
+   }
+   img {
+      @media screen and (max-width: 769px) {
+         width: 50px;
+         height: 50px;
+      }
+   }
+   p {
+      @media screen and (max-width: 769px) {
+         font-size: 14px;
+      }
+   }
 `
