@@ -3,7 +3,7 @@ import React from 'react'
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 
 import AppLayout from '../layout/AppLayout'
-import MainPage from '../pages/MainPage'
+import MainPage from '../pages/main-page/MainPage'
 import ServicesInnerPage from '../pages/our-services/inner-page/ServicesInnerPage'
 import OurServices from '../pages/our-services/OurServicesPage'
 import OurWorksPage from '../pages/our-works/OurWorksPage'

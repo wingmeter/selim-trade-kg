@@ -113,6 +113,10 @@ const Form = styled.form`
    @media screen and (max-width: 769px) {
       gap: 15px;
    }
+
+   button {
+      margin: 0 auto;
+   }
 `
 
 const FormContainer = styled.div`

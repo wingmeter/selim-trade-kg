@@ -27,7 +27,6 @@ const StyledButton = styled(MuiButton)`
    font-family: var(--base-font);
    font-weight: 900;
    font-size: ${({ size }) => size || '25px'};
-   font-weight: 500;
    text-transform: lowercase;
    color: #f8f8f8;
    max-width: 100% !important;
