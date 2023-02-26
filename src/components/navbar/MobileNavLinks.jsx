@@ -81,7 +81,8 @@ const LinksContainer = styled.div`
    top: 65px;
    padding: 10px 10px;
    left: 0;
-   z-index: 999;
+   height: 300px;
+   z-index: 99;
    display: flex;
    height: 300px;
    justify-content: space-between;

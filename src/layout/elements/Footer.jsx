@@ -18,42 +18,74 @@ import { DeviceSize } from '../../utils/constants'
 const Footer = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    return (
-      <FooterWrapper bgImg={backgroundImage}>
-         <FeedbackForm />
-         <div>
-            <FooterContainer>
-               {!isMobile && (
-                  <Container>
-                     <FirstBlock>
-                        <LogoImg src={FooterLogo} alt="" />
-                        <SocialNetworkContainer>
-                           <p>СОЦИАЛЬНЫЕ СЕТИ</p>
-                           <SocialNetwork>
-                              <Icons />
-                              <IconsTwo />
-                           </SocialNetwork>
-                        </SocialNetworkContainer>
-                     </FirstBlock>
-                     <SecondBlock>
-                        <li>
-                           <Link to="/">Главная</Link>
-                        </li>
-                        <li>
-                           <Link to="/"> О Нас</Link>
-                        </li>
-                        <li>
-                           <Link to="/"> Услуги</Link>
-                        </li>
-                        <li>
-                           <Link to="/"> Работы</Link>
-                        </li>
-                        <li>
-                           <Link to="/"> Отзывы</Link>
-                        </li>
-                        <li>
-                           <Link to="/"> Новости</Link>
-                        </li>
-                     </SecondBlock>
+      <>
+         <FooterWrapper bgImg={backgroundImage}>
+            <FeedbackForm />
+         </FooterWrapper>
+         <FooterContainer>
+            {!isMobile && (
+               <Container>
+                  <FirstBlock>
+                     <LogoImg src={FooterLogo} alt="" />
+                     <SocialNetworkContainer>
+                        <p>СОЦИАЛЬНЫЕ СЕТИ</p>
+                        <SocialNetwork>
+                           <Icons />
+                           <IconsTwo />
+                        </SocialNetwork>
+                     </SocialNetworkContainer>
+                  </FirstBlock>
+                  <SecondBlock>
+                     <li>
+                        <Link to="/">Главная</Link>
+                     </li>
+                     <li>
+                        <Link to="/"> О Нас</Link>
+                     </li>
+                     <li>
+                        <Link to="/"> Услуги</Link>
+                     </li>
+                     <li>
+                        <Link to="/"> Работы</Link>
+                     </li>
+                     <li>
+                        <Link to="/"> Отзывы</Link>
+                     </li>
+                     <li>
+                        <Link to="/"> Новости</Link>
+                     </li>
+                  </SecondBlock>
+                  <ThirdBlock>
+                     <WorkTime>
+                        <p>РЕЖИМ РАБОТЫ</p>
+                        <p>Пн-Пт 8:30–18:30</p>
+                        <p>Суббота 8:30–14:00</p>
+                     </WorkTime>
+                     <Phone>
+                        <p>ТЕЛЕФОН</p>
+                        <p>+996 (552) 57 07 55</p>
+                        <p>+996 (500) 88 80 51</p>
+                        <p>+996 (772) 32 76 76</p>
+                     </Phone>
+                  </ThirdBlock>
+                  <FourthBlock>
+                     <div className="mapouter">
+                        <div className="gmap_canvas">
+                           <iframe
+                              id="gmap_canvas"
+                              src="https://maps.google.com/maps?q=ayni 22
+                              &t=&z=17&ie=UTF8&iwloc=&output=embed"
+                           />
+                        </div>
+                     </div>
+                  </FourthBlock>
+               </Container>
+            )}
+
+            {isMobile && (
+               <MobileContainer>
+                  <MobileContainerTop>
+                     <LogoImg src={FooterLogo} alt="" />
                      <ThirdBlock>
                         <WorkTime>
                            <p>РЕЖИМ РАБОТЫ</p>
@@ -72,85 +104,53 @@ const Footer = () => {
                            <div className="gmap_canvas">
                               <iframe
                                  id="gmap_canvas"
-                                 src="https://maps.google.com/maps?q=ayni 22
-                           &t=&z=17&ie=UTF8&iwloc=&output=embed"
+                                 src="https://maps.google.com/maps?q=ayni 22&t=&z=17&ie=UTF8&iwloc=&output=embed"
                               />
                            </div>
                         </div>
                      </FourthBlock>
-                  </Container>
-               )}
-
-               {isMobile && (
-                  <MobileContainer>
-                     <MobileContainerTop>
-                        <LogoImg src={FooterLogo} alt="" />
-                        <ThirdBlock>
-                           <WorkTime>
-                              <p>РЕЖИМ РАБОТЫ</p>
-                              <p>Пн-Пт 8:30–18:30</p>
-                              <p>Суббота 8:30–14:00</p>
-                           </WorkTime>
-                           <Phone>
-                              <p>ТЕЛЕФОН</p>
-                              <p>+996 (552) 57 07 55</p>
-                              <p>+996 (500) 88 80 51</p>
-                              <p>+996 (772) 32 76 76</p>
-                           </Phone>
-                        </ThirdBlock>
-                        <FourthBlock>
-                           <div className="mapouter">
-                              <div className="gmap_canvas">
-                                 <iframe
-                                    id="gmap_canvas"
-                                    src="https://maps.google.com/maps?q=ayni 22&t=&z=17&ie=UTF8&iwloc=&output=embed"
-                                 />
-                              </div>
-                           </div>
-                        </FourthBlock>
-                     </MobileContainerTop>
-                     <MobileContainerBottom>
-                        <SocialNetworkContainer>
-                           <p>СОЦИАЛЬНЫЕ СЕТИ</p>
-                           <SocialNetwork>
-                              <Icons />
-                              <IconsTwo />
-                           </SocialNetwork>
-                        </SocialNetworkContainer>
-                        <SecondBlockMobile>
-                           <ul>
-                              <li>
-                                 <Link to="/">Главная</Link>
-                              </li>
-                              <li>
-                                 <Link to="/"> О Нас</Link>
-                              </li>
-                              <li>
-                                 <Link to="/"> Услуги</Link>
-                              </li>
-                           </ul>
-                           <ul>
-                              <li>
-                                 <Link to="/"> Работы</Link>
-                              </li>
-                              <li>
-                                 <Link to="/"> Отзывы</Link>
-                              </li>
-                              <li>
-                                 <Link to="/"> Новости</Link>
-                              </li>
-                           </ul>
-                        </SecondBlockMobile>
-                     </MobileContainerBottom>
-                  </MobileContainer>
-               )}
-            </FooterContainer>
-            <CopyrightBlock>
-               © 2023 Selim Trade. Данный сайт защищён от копирования. Любая
-               передача данных в интернете запрещена.
-            </CopyrightBlock>
-         </div>
-      </FooterWrapper>
+                  </MobileContainerTop>
+                  <MobileContainerBottom>
+                     <SocialNetworkContainer>
+                        <p>СОЦИАЛЬНЫЕ СЕТИ</p>
+                        <SocialNetwork>
+                           <Icons />
+                           <IconsTwo />
+                        </SocialNetwork>
+                     </SocialNetworkContainer>
+                     <SecondBlockMobile>
+                        <ul>
+                           <li>
+                              <Link to="/">Главная</Link>
+                           </li>
+                           <li>
+                              <Link to="/"> О Нас</Link>
+                           </li>
+                           <li>
+                              <Link to="/"> Услуги</Link>
+                           </li>
+                        </ul>
+                        <ul>
+                           <li>
+                              <Link to="/"> Работы</Link>
+                           </li>
+                           <li>
+                              <Link to="/"> Отзывы</Link>
+                           </li>
+                           <li>
+                              <Link to="/"> Новости</Link>
+                           </li>
+                        </ul>
+                     </SecondBlockMobile>
+                  </MobileContainerBottom>
+               </MobileContainer>
+            )}
+         </FooterContainer>
+         <CopyrightBlock>
+            © 2023 Selim Trade. Данный сайт защищён от копирования. Любая
+            передача данных в интернете запрещена.
+         </CopyrightBlock>
+      </>
    )
 }
 
@@ -159,13 +159,12 @@ export default Footer
 const FooterWrapper = styled(Flex)`
    background: url(${({ bgImg }) => bgImg});
    background-repeat: no-repeat;
-   background-position: 15% 120%;
-   max-width: 1440px;
-   margin: 0 auto;
+   background-position: center;
    flex-direction: column;
    width: 100%;
    gap: 50px;
    padding: 0 22px 0;
+   padding-bottom: 60px;
 `
 
 const FooterContainer = styled.footer`
