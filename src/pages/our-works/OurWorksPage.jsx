@@ -59,7 +59,7 @@ const OurWorksPage = () => {
    return (
       <Container>
          <InnerContainer>
-            <ServiceDescription>
+            <OurWorksDescription>
                <Flex minWidth="40%" align="center">
                   <Title size={isMobile ? '25px' : '50px'} uppercase>
                      Наши работы
@@ -74,7 +74,7 @@ const OurWorksPage = () => {
                   вдохновиться идеями для собственного проекта. Вы найдёте
                   проект по душе и нраву, который захотите воплотить в жизнь.
                </Text>
-            </ServiceDescription>
+            </OurWorksDescription>
             {!isMobile && (
                <CardContainer>
                   {cardData.map((card, index) => (
@@ -177,6 +177,11 @@ const StyledCard = styled(Card)`
    justify-content: end;
    cursor: pointer;
    @media screen and (max-width: 768px) {
+      height: 280px;
+      padding: 10px;
+      max-width: 100% !important;
+   }
+   @media screen and (max-width: 450px) {
       height: 175px;
       padding: 10px;
       max-width: 100% !important;
@@ -198,7 +203,7 @@ const InnerContainer = styled(Flex)`
    }
 `
 
-const ServiceDescription = styled.div`
+const OurWorksDescription = styled.div`
    width: 100%;
    display: flex;
    align-items: center;
