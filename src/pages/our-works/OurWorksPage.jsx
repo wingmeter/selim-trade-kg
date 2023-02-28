@@ -2,6 +2,7 @@
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
+import backgroundImage from '../../assets/images/backgroundImage.png'
 import Card from '../../components/UI/cards/Card'
 import { Flex, Grid } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
@@ -114,6 +115,10 @@ const CardContainer = styled(Grid)`
    grid-template-rows: repeat(4, 1fr);
    grid-column-gap: 30px;
    grid-row-gap: 25px;
+   background-image: url(${backgroundImage});
+   background-repeat: no-repeat;
+   /* background-size: cover; */
+   padding: 0px 20px 0px 20px;
 
    .div1 {
       grid-area: 1 / 1 / 3 / 3;
@@ -221,7 +226,7 @@ const Container = styled.div`
    display: flex;
    flex-direction: column;
    padding: 200px 0px 0px;
-   max-width: 1440px;
+   max-width: 1500px;
    margin: 0 auto;
 
    @media screen and (max-width: 768px) {
