@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 import backgroundImage from '../../assets/images/backgroundImage.png'
 import Card from '../../components/UI/cards/Card'
-import SuccesModal from '../../components/UI/modal/SuccesModal'
 import { Flex, Grid } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
 import { DeviceSize } from '../../utils/constants'
@@ -60,7 +59,6 @@ const OurWorksPage = () => {
 
    return (
       <Container>
-         <SuccesModal open />
          <InnerContainer>
             <OurWorksDescription>
                <Flex minWidth="40%" align="center">
