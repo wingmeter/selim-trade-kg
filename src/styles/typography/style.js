@@ -39,6 +39,7 @@ export const Text = styled.p`
    letter-spacing: -0.01em;
    font-weight: ${({ weight }) => weight || '400'};
    text-align: ${({ align }) => align || 'justify'};
+   max-width: ${({ mWidth }) => mWidth || ''};
    line-height: 160%;
    display: flex;
    align-items: center;
