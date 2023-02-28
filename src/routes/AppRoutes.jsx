@@ -6,6 +6,7 @@ import AppLayout from '../layout/AppLayout'
 import MainPage from '../pages/main-page/MainPage'
 import ServicesInnerPage from '../pages/our-services/inner-page/ServicesInnerPage'
 import OurServices from '../pages/our-services/OurServicesPage'
+import OurWorksPage from '../pages/our-works/OurWorksPage'
 
 const AppRoutes = () => {
    return (
@@ -17,7 +18,7 @@ const AppRoutes = () => {
                <Route index element={<OurServices />} />
                <Route path=":id" element={<ServicesInnerPage />} />
             </Route>
-            <Route path="works" element={<div>Works</div>} />
+            <Route path="works" element={<OurWorksPage />} />
             <Route path="news/*" element={<Outlet />}>
                <Route index element={<div>News</div>} />
                <Route path=":id" element={<div>Newssdasds</div>} />

@@ -107,7 +107,6 @@ const OurServices = () => {
 export default OurServices
 
 const StyledCard = styled(Card)`
-   /* max-width: 672px; */
    height: 350px;
    display: flex;
    flex-direction: column;
@@ -143,10 +142,9 @@ const InnerContainer = styled(Flex)`
    background: url(${({ bgImg }) => bgImg});
    background-repeat: no-repeat;
    flex-direction: column;
+   align-items: flex-start;
    gap: 200px;
    width: 100%;
-   min-height: 100vh;
-   align-items: flex-start;
    padding: 0 22px 0;
    isolation: isolate;
    @media screen and (max-width: 768px) {
@@ -156,10 +154,9 @@ const InnerContainer = styled(Flex)`
 `
 
 const ServiceDescription = styled.div`
+   width: 100%;
    display: flex;
    align-items: center;
-   /* align-items: flex-start; */
-   width: 100%;
    @media screen and (max-width: 768px) {
       flex-direction: column;
       gap: 12px;
@@ -167,16 +164,16 @@ const ServiceDescription = styled.div`
 `
 
 const Container = styled.div`
-   position: relative;
-   background-repeat: no-repeat;
-   background-size: contain;
    display: flex;
    flex-direction: column;
-   padding: 200px 0px 100px;
    max-width: 1500px;
    width: 100%;
    margin: 0 auto;
    overflow: hidden;
+   position: relative;
+   background-repeat: no-repeat;
+   background-size: contain;
+   padding: 200px 0px 100px;
    img {
       position: absolute;
       top: -60px;
