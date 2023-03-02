@@ -4,6 +4,7 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 
 import AppLayout from '../layout/AppLayout'
 import MainPage from '../pages/main-page/MainPage'
+import NewsPage from '../pages/news-page/NewsPage'
 import ServicesInnerPage from '../pages/our-services/inner-page/ServicesInnerPage'
 import OurServices from '../pages/our-services/OurServicesPage'
 import OurWorksPage from '../pages/our-works/OurWorksPage'
@@ -20,7 +21,7 @@ const AppRoutes = () => {
             </Route>
             <Route path="works" element={<OurWorksPage />} />
             <Route path="news/*" element={<Outlet />}>
-               <Route index element={<div>News</div>} />
+               <Route index element={<NewsPage />} />
                <Route path=":id" element={<div>Newssdasds</div>} />
             </Route>
          </Routes>
