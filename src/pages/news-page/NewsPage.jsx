@@ -1,5 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import { useMediaQuery } from 'react-responsive'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import img from '../../assets/images/newsBG.png'
@@ -11,49 +12,49 @@ import { DeviceSize } from '../../utils/constants'
 
 const cardData = [
    {
-      id: Math.random().toString(),
+      id: 1,
       title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
       img,
    },
    {
-      id: Math.random().toString(),
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-
-      img,
-   },
-   {
-      id: Math.random().toString(),
+      id: 2,
       title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
 
       img,
    },
    {
-      id: Math.random().toString(),
+      id: 3,
+      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
+
+      img,
+   },
+   {
+      id: 4,
       title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
       img,
    },
    {
-      id: Math.random().toString(),
+      id: 5,
       title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
       img,
    },
    {
-      id: Math.random().toString(),
+      id: 6,
       title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
       img,
    },
    {
-      id: Math.random().toString(),
+      id: 7,
       title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
       img,
    },
    {
-      id: Math.random().toString(),
+      id: 8,
       title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
       img,
    },
    {
-      id: Math.random().toString(),
+      id: 9,
       title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
       img,
    },
@@ -83,9 +84,11 @@ const NewsPage = () => {
             <div>
                <CardContainer>
                   {cardData.map((data) => (
-                     <StyledCard img={data.img}>
-                        <StyledTitle>{data.title}</StyledTitle>
-                     </StyledCard>
+                     <Link to={`${data.id}`}>
+                        <StyledCard img={data.img}>
+                           <StyledTitle>{data.title}</StyledTitle>
+                        </StyledCard>
+                     </Link>
                   ))}
                </CardContainer>
                <StyledButtonOutlined>загрузить ещё</StyledButtonOutlined>
@@ -153,6 +156,7 @@ const CardContainer = styled.div`
 const StyledCard = styled(Card)`
    text-align: center;
    padding: 90px 28px;
+   cursor: pointer;
 
    @media screen and (max-width: 769px) {
       display: flex;
