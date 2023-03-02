@@ -29,7 +29,15 @@ const StyledTextarea = styled(TextareaAutosize)`
    outline: none;
    resize: none;
    color: #414141;
-   border-color: grey;
+   border-color: #a29898d0;
+   font-size: var(--base-font);
+   font-size: 20px;
+   font-weight: 500;
+   &::placeholder {
+      color: #a29898d0;
+      font-size: 20px;
+      font-weight: 500;
+   }
    &:focus {
       border-color: var(--title-color);
    }
