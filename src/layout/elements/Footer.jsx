@@ -12,6 +12,7 @@ import { ReactComponent as WhatsAppIcon } from '../../assets/icons/WhatsApp.svg'
 import backgroundImage from '../../assets/images/backgroundImage.png'
 import FooterLogo from '../../assets/images/footerLogo.png'
 import FeedbackForm from '../../components/form/FeedbackForm'
+import { ButtonCircle } from '../../components/UI/buttons/ButtonCircle'
 import { Flex } from '../../styles/style-for-positions/style'
 import { DeviceSize } from '../../utils/constants'
 
@@ -22,6 +23,11 @@ const Footer = () => {
          <FooterWrapper bgImg={backgroundImage}>
             <FeedbackForm />
          </FooterWrapper>
+         {!isMobile && (
+            <ScrollButtonWrapper>
+               <ButtonCircle />
+            </ScrollButtonWrapper>
+         )}
          <FooterContainer>
             {!isMobile && (
                <Container>
@@ -81,7 +87,6 @@ const Footer = () => {
                   </FourthBlock>
                </Container>
             )}
-
             {isMobile && (
                <MobileContainer>
                   <MobileContainerTop>
@@ -155,6 +160,13 @@ const Footer = () => {
 }
 
 export default Footer
+
+const ScrollButtonWrapper = styled(Flex)`
+   width: 100%;
+   max-width: 1500px;
+   justify-content: end;
+   position: relative;
+`
 
 const FooterWrapper = styled(Flex)`
    background: url(${({ bgImg }) => bgImg});
