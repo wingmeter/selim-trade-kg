@@ -14,6 +14,10 @@ import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
 
 // sidebar nav config
+import {
+   setUnfoldble,
+   toggleSidebar,
+} from '../../store/admin/sidebar/sidebarSlice'
 import navigation from '../_nav'
 import { ReactComponent as LogoNegative } from '../assets/brand/logo.svg'
 
@@ -21,16 +25,19 @@ import { AppSidebarNav } from './AppSidebarNav'
 
 const AppSidebar = () => {
    const dispatch = useDispatch()
-   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
-   const sidebarShow = useSelector((state) => state.sidebarShow)
 
+   const { sidebarShow, unfoldable } = useSelector((state) => state.sidebar)
+
+   const toggleSideBarHandler = (visible) => {
+      dispatch(toggleSidebar({ sidebarShow: visible }))
+   }
    return (
       <CSidebar
          position="fixed"
-         unfoldable={unfoldable}
-         visible={sidebarShow}
+         unfoldable={unfoldable.unfoldable}
+         visible={sidebarShow.sidebarShow}
          onVisibleChange={(visible) => {
-            dispatch({ type: 'set', sidebarShow: visible })
+            toggleSideBarHandler(visible)
          }}
       >
          <CSidebarBrand className="d-none d-md-flex" to="/admin">
@@ -44,7 +51,7 @@ const AppSidebar = () => {
          <CSidebarToggler
             className="d-none d-lg-flex"
             onClick={() =>
-               dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })
+               dispatch(setUnfoldble({ unfoldable: !unfoldable.unfoldable }))
             }
          />
       </CSidebar>

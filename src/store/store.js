@@ -1,17 +1,18 @@
-import { createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 
-const initialState = {
-   sidebarShow: true,
-}
+import { authApi } from './admin/auth/authApi'
+import authSlice from './admin/auth/authSlice'
+import sidebarSlice from './admin/sidebar/sidebarSlice'
 
-const changeState = (state = initialState, { type, ...rest }) => {
-   switch (type) {
-      case 'set':
-         return { ...state, ...rest }
-      default:
-         return state
-   }
-}
+const store = configureStore({
+   reducer: {
+      auth: authSlice.reducer,
+      sidebar: sidebarSlice.reducer,
 
-const store = createStore(changeState)
+      [authApi.reducerPath]: authApi.reducer,
+   },
+   middleware: (getDefaultMiddleWare) =>
+      getDefaultMiddleWare().concat(authApi.middleware),
+})
+
 export default store

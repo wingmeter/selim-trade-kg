@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 
 import { cilLockLocked, cilUser } from '@coreui/icons'
@@ -14,10 +15,50 @@ import {
    CInputGroupText,
    CRow,
 } from '@coreui/react'
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router'
 
+import { useRegisterAdminMutation } from '../../../store/admin/auth/authApi'
 import nasa from '../../assets/images/nasa.jpeg'
 
 const Register = () => {
+   const dispatch = useDispatch()
+   const [registerAdmin, { isLoading }] = useRegisterAdminMutation()
+   const navigate = useNavigate()
+
+   const {
+      register,
+      formState: { errors },
+      handleSubmit,
+      reset,
+   } = useForm({ mode: 'onChange' })
+
+   const input = {
+      username: {
+         ...register('username', {
+            required: 'Please enter your user name',
+         }),
+      },
+      password: {
+         ...register('password', {
+            required: 'Please enter your password',
+         }),
+      },
+   }
+   const navigateToLogin = () => {
+      navigate('/admin/login')
+   }
+
+   const submitHandler = async (formData) => {
+      try {
+         await registerAdmin(formData).unwrap()
+         navigateToLogin()
+      } catch (e) {
+         console.log(e)
+      }
+   }
+
    return (
       <div
          style={{
@@ -34,7 +75,7 @@ const Register = () => {
                <CCol md={9} lg={7} xl={6}>
                   <CCard className="mx-4">
                      <CCardBody className="p-4">
-                        <CForm>
+                        <CForm onSubmit={handleSubmit(submitHandler)}>
                            <h1>Register</h1>
                            <p className="text-medium-emphasis">
                               Create your account
@@ -46,15 +87,18 @@ const Register = () => {
                               <CFormInput
                                  placeholder="Username"
                                  autoComplete="username"
+                                 disabled={isLoading}
+                                 error={errors?.username}
+                                 {...input.username}
                               />
                            </CInputGroup>
-                           <CInputGroup className="mb-3">
+                           {/* <CInputGroup className="mb-3">
                               <CInputGroupText>@</CInputGroupText>
                               <CFormInput
                                  placeholder="Email"
                                  autoComplete="email"
                               />
-                           </CInputGroup>
+                           </CInputGroup> */}
                            <CInputGroup className="mb-3">
                               <CInputGroupText>
                                  <CIcon icon={cilLockLocked} />
@@ -63,9 +107,12 @@ const Register = () => {
                                  type="password"
                                  placeholder="Password"
                                  autoComplete="new-password"
+                                 disabled={isLoading}
+                                 error={errors?.password}
+                                 {...input.password}
                               />
                            </CInputGroup>
-                           <CInputGroup className="mb-4">
+                           {/* <CInputGroup className="mb-4">
                               <CInputGroupText>
                                  <CIcon icon={cilLockLocked} />
                               </CInputGroupText>
@@ -74,9 +121,11 @@ const Register = () => {
                                  placeholder="Repeat password"
                                  autoComplete="new-password"
                               />
-                           </CInputGroup>
+                           </CInputGroup> */}
                            <div className="d-grid">
-                              <CButton color="success">Create Account</CButton>
+                              <CButton type="submit" color="success">
+                                 Create Account
+                              </CButton>
                            </div>
                         </CForm>
                      </CCardBody>
