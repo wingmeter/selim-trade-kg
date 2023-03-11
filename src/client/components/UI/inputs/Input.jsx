@@ -1,25 +1,28 @@
 import { forwardRef } from 'react'
 
 import { styled, TextField } from '@mui/material'
+import { useMediaQuery } from 'react-responsive'
 
-export const Input = forwardRef(
-   ({ error, isPassword, isMobile, ...other }, ref) => {
-      return (
-         <StyledInput
-            size={isMobile ? 'small' : 'medium'}
-            ref={ref}
-            error={Boolean(error)}
-            {...other}
-            inputProps={{
-               style: {
-                  padding: '10px',
-                  fontFamily: 'var(--base-font)',
-               },
-            }}
-         />
-      )
-   }
-)
+import { DeviceSize } from '../../../../utils/constants'
+
+export const Input = forwardRef(({ error, isPassword, ...other }, ref) => {
+   const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
+   return (
+      <StyledInput
+         size={isMobile ? 'small' : 'medium'}
+         ref={ref}
+         error={Boolean(error)}
+         {...other}
+         inputProps={{
+            style: {
+               padding: '10px',
+               fontFamily: 'var(--base-font)',
+            },
+         }}
+      />
+   )
+})
 
 const StyledInput = styled(TextField)`
    &.MuiFormControl-root {
@@ -46,5 +49,8 @@ const StyledInput = styled(TextField)`
          border-color: #002cefc3;
          border: 1px solid;
       }
+   }
+   & .MuiInputBase-root {
+      font-size: ${({ size }) => (size === 'small' ? '0.875rem' : '1rem')};
    }
 `

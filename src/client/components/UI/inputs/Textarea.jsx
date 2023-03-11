@@ -1,29 +1,32 @@
 import { forwardRef } from 'react'
 
 import { styled, TextareaAutosize } from '@mui/material'
+import { useMediaQuery } from 'react-responsive'
 
-export const Textarea = forwardRef(
-   ({ error, isPassword, isMobile, ...other }, ref) => {
-      return (
-         <StyledTextarea
-            size={isMobile ? 'small' : 'medium'}
-            ref={ref}
-            error={Boolean(error)}
-            {...other}
-            aria-label="minimum height"
-            endAdornment={null}
-            minRows={3}
-            style={{
-               padding: '15px 10px',
-               fontFamily: 'var(--base-font)',
-               width: '100%',
-               borderRadius: '20px',
-               border: error ? '1px solid red' : '',
-            }}
-         />
-      )
-   }
-)
+import { DeviceSize } from '../../../../utils/constants'
+
+export const Textarea = forwardRef(({ error, isPassword, ...other }, ref) => {
+   const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
+   return (
+      <StyledTextarea
+         size={isMobile ? 'small' : 'medium'}
+         ref={ref}
+         error={Boolean(error)}
+         {...other}
+         aria-label="minimum height"
+         endAdornment={null}
+         minRows={3}
+         style={{
+            padding: '15px 10px',
+            fontFamily: 'var(--base-font)',
+            width: '100%',
+            borderRadius: '20px',
+            border: error ? '1px solid red' : '',
+         }}
+      />
+   )
+})
 
 const StyledTextarea = styled(TextareaAutosize)`
    outline: none;

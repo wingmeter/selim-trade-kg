@@ -4,14 +4,24 @@ import styled from 'styled-components'
 
 import { DeviceSize } from '../../../utils/constants'
 import backgroundImage from '../../assets/images/backgroundImage.png'
+import img from '../../assets/images/img.png'
 import Card from '../../components/UI/cards/Card'
 import { Flex, Grid } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
 
-const img =
-   'https://s3-alpha-sig.figma.com/img/3278/d093/ea8ba5bbfef695850cff22342d509911?Expires=1678060800&Signature=C8AOqRQybc640DwoU2JtVbk4fwS0~oDNNNq6AMEl0kSBYEZmLWJ87f3Jmk51HwFl~c2-BB3PwDwvdZzXG1M4O9ngIeX4TSTMo3ZdBZ3EWW0rNOlRNFuWZfBYx95CI86mVcZknGMJfWq22Gu8z2667MkagoZCEaxDbAfTEoQRlsN4AHicMLeLRguT1TZpOLo3~Pc~QFpKy3oBFLrvca~niSwR5vY0RW~lwPeGJFG9E5kCr-hAHhvs1efgagSvhUL72eP8MZGN4I6LG6gsStoeVlvEDunPvskroYyvN31EmMJ6Jvk2LcEB7lvJcsmCXhL-7xG4k28dEJTyalTU1etF7A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
-
 const cardData = [
+   {
+      id: Math.random().toString(),
+      img,
+   },
+   {
+      id: Math.random().toString(),
+      img,
+   },
+   {
+      id: Math.random().toString(),
+      img,
+   },
    {
       id: Math.random().toString(),
       img,
@@ -76,37 +86,26 @@ const OurWorksPage = () => {
                   проект по душе и нраву, который захотите воплотить в жизнь.
                </Text>
             </OurWorksDescription>
-            {!isMobile && (
-               <CardContainer>
-                  {cardData.map((card, index) => (
-                     <StyledCard
-                        key={card.id}
-                        img={card?.img}
-                        className={`div${index + 1}`}
-                     />
-                  ))}
-               </CardContainer>
-            )}
-
-            {isMobile && (
-               <CardContainerMobile>
-                  {cardData.map((card) => (
-                     <StyledCard key={card.id} img={card?.img} />
-                  ))}
-               </CardContainerMobile>
-            )}
+            <CardContainer>
+               {cardData.map((card, index) => {
+                  if (index <= 9) {
+                     return (
+                        <StyledCard
+                           key={card.id}
+                           img={card?.img}
+                           className={`div${index + 1}`}
+                        />
+                     )
+                  }
+                  return ''
+               })}
+            </CardContainer>
          </InnerContainer>
       </Container>
    )
 }
 
 export default OurWorksPage
-
-const CardContainerMobile = styled(Flex)`
-   width: 100%;
-   gap: 25px;
-   flex-direction: column;
-`
 
 const CardContainer = styled(Grid)`
    width: 100%;
@@ -115,9 +114,6 @@ const CardContainer = styled(Grid)`
    grid-template-rows: repeat(4, 1fr);
    grid-column-gap: 30px;
    grid-row-gap: 25px;
-   background-image: url(${backgroundImage});
-   background-repeat: no-repeat;
-   /* background-size: cover; */
    padding: 0px 20px 0px 20px;
 
    .div1 {
@@ -173,6 +169,24 @@ const CardContainer = styled(Grid)`
       position: relative;
       bottom: 150px;
    }
+   @media (max-width: 900px) {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      padding: 0px 0px 20px;
+      div {
+         position: static !important;
+         height: 280px !important;
+         width: 100%;
+         grid-area: auto !important;
+         margin: 0 !important;
+      }
+   }
+   @media (max-width: 750px) {
+      grid-template-columns: 1fr 1fr;
+   }
+   @media (max-width: 550px) {
+      grid-template-columns: 1fr;
+   }
 `
 
 const StyledCard = styled(Card)`
@@ -198,8 +212,9 @@ const InnerContainer = styled(Flex)`
    gap: 140px;
    flex-direction: column;
    align-items: flex-start;
-   background: url(${({ bgImg }) => bgImg});
    background-repeat: no-repeat;
+   max-width: 1400px;
+   margin: 0 auto;
    padding: 0 22px 0;
    isolation: isolate;
    @media screen and (max-width: 768px) {
@@ -221,15 +236,14 @@ const OurWorksDescription = styled.div`
 const Container = styled.div`
    width: 100%;
    position: relative;
+   background-image: url(${backgroundImage});
    background-repeat: no-repeat;
    background-size: contain;
    display: flex;
    flex-direction: column;
    padding: 200px 0px 0px;
-   max-width: 1500px;
-   margin: 0 auto;
 
    @media screen and (max-width: 768px) {
-      padding: 80px 0px 40px;
+      padding: 80px 0px 20px;
    }
 `

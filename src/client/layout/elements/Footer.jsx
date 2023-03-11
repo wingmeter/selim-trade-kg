@@ -163,15 +163,17 @@ export default Footer
 
 const ScrollButtonWrapper = styled(Flex)`
    width: 100%;
-   max-width: 1500px;
+   max-width: 1400px;
    justify-content: end;
    position: relative;
+   margin: 0 auto;
 `
 
 const FooterWrapper = styled(Flex)`
    background: url(${({ bgImg }) => bgImg});
    background-repeat: no-repeat;
    background-position: center;
+   background-size: cover;
    flex-direction: column;
    width: 100%;
    gap: 50px;

@@ -2,11 +2,9 @@ import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
 import { DeviceSize } from '../../../utils/constants'
+import img from '../../assets/images/img.png'
 import { Flex } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
-
-const img =
-   'https://s3-alpha-sig.figma.com/img/3278/d093/ea8ba5bbfef695850cff22342d509911?Expires=1678060800&Signature=C8AOqRQybc640DwoU2JtVbk4fwS0~oDNNNq6AMEl0kSBYEZmLWJ87f3Jmk51HwFl~c2-BB3PwDwvdZzXG1M4O9ngIeX4TSTMo3ZdBZ3EWW0rNOlRNFuWZfBYx95CI86mVcZknGMJfWq22Gu8z2667MkagoZCEaxDbAfTEoQRlsN4AHicMLeLRguT1TZpOLo3~Pc~QFpKy3oBFLrvca~niSwR5vY0RW~lwPeGJFG9E5kCr-hAHhvs1efgagSvhUL72eP8MZGN4I6LG6gsStoeVlvEDunPvskroYyvN31EmMJ6Jvk2LcEB7lvJcsmCXhL-7xG4k28dEJTyalTU1etF7A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
 
 const cardData = [
    {
@@ -41,7 +39,7 @@ const Advantages = () => {
 
    return (
       <Container>
-         <Title size={isMobile ? '16px' : '40px'} uppercase>
+         <Title size={isMobile ? '16px' : '40px'} uppercase m="0px 0px 20px">
             Основные преимущества
          </Title>
          <ContainerCards>
@@ -85,7 +83,7 @@ const BigNumber = styled.h1`
    text-align: justify;
    text-transform: uppercase;
    color: rgba(235, 235, 235, 0.5);
-   @media screen and (max-width: 768px) {
+   @media screen and (max-width: 100px) {
       font-size: 214px;
       top: -40%;
    }
@@ -107,10 +105,14 @@ const AdvantagesCard = styled(Flex)`
 `
 
 const ContainerCards = styled(Flex)`
-   gap: 30px;
-   flex-wrap: wrap;
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   grid-template-rows: repeat(1fr auto);
+   column-gap: 45px;
+   row-gap: 60px;
    @media screen and (max-width: 900px) {
-      gap: 40px;
+      column-gap: 40px;
+      row-gap: 50px;
    }
 `
 
