@@ -109,7 +109,7 @@ const Footer = () => {
                            <div className="gmap_canvas">
                               <iframe
                                  id="gmap_canvas"
-                                 src="https://maps.google.com/maps?q=ayni 22&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                                 src="https://maps.google.com/maps?q=ayni22&t=&z=17&ie=UTF8&iwloc=&output=embed"
                               />
                            </div>
                         </div>

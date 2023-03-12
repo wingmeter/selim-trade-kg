@@ -98,7 +98,7 @@ const SixthSection = () => {
                         slidesPerView: 3,
                      },
                      1240: {
-                        spaceBetween: 150,
+                        spaceBetween: 170,
                         slidesPerView: 3,
                      },
                   }}
@@ -147,7 +147,6 @@ const StyledSection = styled.section`
    }
 
    .swiper {
-      max-width: 1200px;
       margin: 0 auto;
       padding-top: 20px;
    }
@@ -181,7 +180,7 @@ const SwiperButton = styled.div`
 `
 const StyledImage = styled.img`
    border-radius: 20px;
-   height: 300px;
+   max-height: 420px;
 `
 const StyledSubTitle = styled(SubTitle)`
    text-align: center;
