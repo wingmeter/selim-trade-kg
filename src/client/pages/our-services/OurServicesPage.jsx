@@ -1,4 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-irregular-whitespace */
+
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
@@ -8,6 +10,7 @@ import backgroundImage from '../../assets/images/backgroundImage.png'
 import img from '../../assets/images/img.png'
 import leafs from '../../assets/images/leafs.png'
 import Card from '../../components/UI/cards/Card'
+import SkeletonCard from '../../components/UI/scleton/SkeletonCard'
 import { Flex, Grid } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
 
@@ -56,7 +59,7 @@ const OurServices = () => {
    const showInnerPage = (id) => navigate(`${id}`)
    return (
       <Container sectionImg={leafs}>
-         <img src={leafs} alt="leafs" />
+         <img src={leafs} alt="leafs" loading="lazy" />
          <InnerContainer>
             <ServiceDescription>
                <Flex minWidth="50%">
@@ -78,17 +81,21 @@ const OurServices = () => {
             </ServiceDescription>
             <CardsBackground>
                <StyledGrid columns={isMobile ? '1fr' : '1fr 1fr'}>
-                  {cardData.map((card) => (
-                     <StyledCard
-                        key={card.id}
-                        img={card?.img}
-                        onClick={() => showInnerPage(card.id)}
-                     >
-                        <CardSubTitle>
-                           <Title white>{card?.title}</Title>
-                        </CardSubTitle>
-                     </StyledCard>
-                  ))}
+                  {cardData.map((card) =>
+                     card ? (
+                        <StyledCard
+                           key={card.id}
+                           img={card?.img}
+                           onClick={() => showInnerPage(card.id)}
+                        >
+                           <CardSubTitle>
+                              <Title white>{card?.title}</Title>
+                           </CardSubTitle>
+                        </StyledCard>
+                     ) : (
+                        <SkeletonCard key={card.id} />
+                     )
+                  )}
                </StyledGrid>
             </CardsBackground>
          </InnerContainer>
@@ -107,6 +114,10 @@ const StyledGrid = styled(Grid)`
    grid-template-rows: 1fr 1fr;
    column-gap: 18px;
    row-gap: 35px;
+   @media screen and (max-width: 900px) {
+      padding: 0;
+      row-gap: 30px;
+   }
    @media screen and (max-width: 768px) {
       padding: 0;
       row-gap: 30px;

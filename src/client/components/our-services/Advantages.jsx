@@ -54,11 +54,7 @@ const Advantages = () => {
                   >
                      {el.title}
                   </Title>
-                  <Text
-                     size={isMobile ? '14px' : '20px'}
-                     weight="300"
-                     align="justify"
-                  >
+                  <Text size={isMobile ? '14px' : '20px'} weight="300">
                      Данная серия ворот спроектирована специально для перекрытия
                      больших проёмов на промышленных объектах.
                   </Text>
@@ -83,9 +79,9 @@ const BigNumber = styled.h1`
    text-align: justify;
    text-transform: uppercase;
    color: rgba(235, 235, 235, 0.5);
-   @media screen and (max-width: 100px) {
+   @media screen and (max-width: 768px) {
       font-size: 214px;
-      top: -40%;
+      top: -30%;
    }
 `
 
@@ -98,9 +94,15 @@ const AdvantagesCard = styled(Flex)`
    flex-direction: column;
    background: url(${({ bgImg }) => bgImg});
    position: relative;
-   @media screen and (max-width: 957px) {
+   @media screen and (max-width: 1200px) {
       padding: 20px 0px;
       max-width: 100%;
+   }
+   @media screen and (max-width: 758px) {
+      padding: 20px 0px;
+      max-width: 95%;
+      align-items: center;
+      margin: 0 auto;
    }
 `
 
@@ -110,19 +112,24 @@ const ContainerCards = styled(Flex)`
    grid-template-rows: repeat(1fr auto);
    column-gap: 45px;
    row-gap: 60px;
-   @media screen and (max-width: 900px) {
+   @media screen and (max-width: 1200px) {
+      grid-template-columns: 1fr 1fr;
       column-gap: 40px;
       row-gap: 50px;
+   }
+   @media screen and (max-width: 768px) {
+      grid-template-columns: 1fr;
+      row-gap: 40px;
    }
 `
 
 const Container = styled(Flex)`
-   background-repeat: no-repeat;
-   flex-direction: column;
-   gap: 60px;
    width: 100%;
-   max-width: 100%;
+   max-width: 1440px;
+   margin: 0 auto;
+   gap: 60px;
    align-items: flex-start;
+   flex-direction: column;
    padding: 80px 22px 40px;
    @media screen and (max-width: 900px) {
       padding: 40px 16px;
