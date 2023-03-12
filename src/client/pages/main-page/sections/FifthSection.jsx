@@ -32,7 +32,7 @@ const FifthSection = () => {
             <StyledSubTitle>Последние новости</StyledSubTitle>
             <CardContainer>
                {cardData.map((data) => (
-                  <StyledCard img={data.img}>
+                  <StyledCard img={data.img} key={data.id}>
                      <StyledTitle>{data.title}</StyledTitle>
                   </StyledCard>
                ))}

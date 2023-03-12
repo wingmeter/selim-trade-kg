@@ -1,22 +1,35 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useMediaQuery } from 'react-responsive'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { DeviceSize } from '../../../utils/constants'
+import { ReactComponent as BlackLogo } from '../../assets/icons/BlackLogo.svg'
 import { ReactComponent as Logo } from '../../assets/icons/Logo.svg'
 import { MobileNavLinks } from '../../components/navbar/MobileNavLinks'
 import NavLinks from '../../components/navbar/NavLinks'
 
 const Header = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
+   const location = useLocation()
+
    return (
       <HeaderContainer>
          <Container>
             <StyledLink to="/main">
-               <Logo />
+               {isMobile ? (
+                  location.pathname === '/main' ? (
+                     <Logo />
+                  ) : (
+                     <BlackLogo />
+                  )
+               ) : (
+                  <Logo />
+               )}
             </StyledLink>
             {!isMobile && <NavLinks />}
             {isMobile && <MobileNavLinks />}
@@ -56,6 +69,7 @@ const Container = styled.div`
    @media screen and (max-width: 769px) {
       padding: 0 20px;
       background: transparent;
+      backdrop-filter: none;
    }
 `
 const StyledLink = styled(Link)`

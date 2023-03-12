@@ -69,7 +69,6 @@ const FeedbackForm = () => {
                placeholder="cообщение"
                name="message"
                error={errors.message}
-               helperText={errors.message}
                onChange={(e) => handleInputChange(e)}
             />
             {isMobile && (

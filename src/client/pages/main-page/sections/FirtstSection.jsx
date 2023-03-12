@@ -1,11 +1,15 @@
 import { Container } from '@mui/material'
+import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
+import { DeviceSize } from '../../../../utils/constants'
 import { ReactComponent as VorotaIcon } from '../../../assets/icons/Vorota.svg'
 import bg from '../../../assets/images/bg1.png'
 import { Button } from '../../../components/UI/buttons/Button'
+import CircleText from '../../../components/UI/CircleText'
 
 const FirtstSection = () => {
+   const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    return (
       <FirstSection>
          <Container>
@@ -16,6 +20,11 @@ const FirtstSection = () => {
                Найдите идеальный вариант сами <br /> или предоставьте это нам
             </SubTitle>
             <Button startIcon={<VorotaIcon />}>заказать ворота</Button>
+            {!isMobile && (
+               <BottomCircle>
+                  <CircleText text="CКРОЛЛ • CКРОЛЛ • CКРОЛЛ • CКРОЛЛ • CКРОЛЛ • CКРОЛЛ •" />
+               </BottomCircle>
+            )}
          </Container>
       </FirstSection>
    )
@@ -29,10 +38,10 @@ const FirstSection = styled.section`
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;
-   height: 820px;
+   height: 770px;
 
    @media screen and (max-width: 769px) {
-      height: 460px;
+      height: 390px;
    }
 
    .MuiContainer-root {
@@ -72,3 +81,4 @@ const Title = styled.h1`
       font-size: 25px;
    }
 `
+const BottomCircle = styled.div``
