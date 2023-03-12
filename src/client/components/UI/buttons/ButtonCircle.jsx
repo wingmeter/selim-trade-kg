@@ -1,5 +1,5 @@
-import { styled } from '@mui/material'
 import MuiButton from '@mui/material/Button'
+import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '../../../assets/icons/arrowUp.svg'
 
@@ -11,31 +11,29 @@ export const ButtonCircle = ({ fullWidth, isMobile, ...props }) => {
       })
    }
    return (
-      <StyledButton
-         size={isMobile ? 'small' : 'medium'}
-         fullWidth={fullWidth}
-         onClick={scrollTopHandler}
-         {...props}
-      >
-         <ArrowUp />
-      </StyledButton>
+      <ButtonWrapper>
+         <StyledButton
+            size={isMobile ? 'small' : 'medium'}
+            fullWidth={fullWidth}
+            onClick={scrollTopHandler}
+            {...props}
+         >
+            <ArrowUp />
+         </StyledButton>
+      </ButtonWrapper>
    )
 }
 
-const StyledButton = styled(MuiButton)`
-   width: 80px;
-   height: 80px;
-   padding: 0.5rem;
+const ButtonWrapper = styled.div`
+   padding: 1rem;
+   background: transparent;
    border-radius: 50%;
-   background: linear-gradient(90.13deg, #105bfb 0.1%, #5061ff 134.04%);
    position: absolute;
    right: 0;
-   bottom: -25px;
+   bottom: -45px;
    transition: transform 0.2s ease-out;
    transform: scale(1);
-
    &:hover {
-      background-color: #5061ff;
       opacity: 0.8;
       transition: transform 0.2s ease-out;
       transform: scale(1.2);
@@ -58,12 +56,19 @@ const StyledButton = styled(MuiButton)`
          transform: translateY(0rem);
       }
    }
+`
+const StyledButton = styled(MuiButton)`
+   width: 80px;
+   height: 80px;
+   padding: 0.5rem;
+   border-radius: 50% !important;
+   background: linear-gradient(90.13deg, #105bfb 0.1%, #5061ff 134.04%);
 
    &.MuiButton-contained {
       &:hover {
          box-shadow: none;
          background-color: #3772ff !important;
-         transition: transform 0.2s ease-out;
+         transition: transform 0.2s ease-out !important;
          transform: scale(0.1);
       }
       &:active {

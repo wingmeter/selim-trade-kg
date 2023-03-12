@@ -14,7 +14,7 @@ const AppFooter = () => {
          <div className="ms-auto ">
             <span className="me-1 ">developed by </span>
             <strong style={{ fontSize: '12px', textAlign: 'center' }}>
-               Syimyk and Nurseyit
+               <code>Syimyk</code> and <code>Nurseyit</code>
             </strong>
          </div>
       </CFooter>
