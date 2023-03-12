@@ -44,7 +44,7 @@ const SeventhSection = () => {
             <StyledSubTitle>Сервис</StyledSubTitle>
             <CardContainer>
                {cardData.map((data) => (
-                  <StyledCard>
+                  <StyledCard key={data.id}>
                      <img src={data.img} alt={data.title} />
                      <p>{data.title}</p>
                   </StyledCard>

@@ -44,7 +44,7 @@ const FourthSection = () => {
             <StyledSubTitle>Наши преимущества</StyledSubTitle>
             <CardContainer>
                {cardData.map((data) => (
-                  <StyledCard>
+                  <StyledCard key={data.id}>
                      <img src={data.img} alt={data.title} />
                      <p>{data.title}</p>
                   </StyledCard>

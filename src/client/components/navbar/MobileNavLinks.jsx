@@ -10,9 +10,15 @@ import { MenuToggle } from './MenuToggle'
 export function MobileNavLinks() {
    const [isOpen, setOpen] = useState(false)
 
+   const mainPathName = window.location.pathname
+
    return (
       <NavLinksContainer>
-         <MenuToggle isOpen={isOpen} toggle={() => setOpen(!isOpen)} />
+         <MenuToggle
+            color={mainPathName === '/main' ? '#fff' : '#000'}
+            isOpen={isOpen}
+            toggle={() => setOpen(!isOpen)}
+         />
          {isOpen && (
             <LinksContainer>
                <LinksWrapper>
@@ -77,8 +83,8 @@ const Link = styled(RouteLink)`
 `
 const LinksContainer = styled.div`
    background: #f9f9f9;
-   position: fixed;
-   top: 65px;
+   position: absolute;
+   top: 75px;
    padding: 10px 10px;
    left: 0;
    height: 300px;

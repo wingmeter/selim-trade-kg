@@ -48,5 +48,6 @@ const StyledNavLink = styled(NavLink)`
 
    :hover {
       text-decoration-line: underline;
+      color: #fefbfb;
    }
 `
