@@ -1,4 +1,5 @@
 import { Container } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import leaf from '../../../assets/images/leaf.png'
@@ -26,6 +27,7 @@ const cardData = [
 ]
 
 const FifthSection = () => {
+   const navigate = useNavigate()
    return (
       <StyledSection>
          <Container>
@@ -37,7 +39,14 @@ const FifthSection = () => {
                   </StyledCard>
                ))}
             </CardContainer>
-            <StyledButtonOutlined>смотреть все</StyledButtonOutlined>
+            <StyledButtonOutlined
+               onClick={() => {
+                  navigate('/news')
+                  window.scrollTo(0, 0)
+               }}
+            >
+               смотреть все
+            </StyledButtonOutlined>
          </Container>
       </StyledSection>
    )

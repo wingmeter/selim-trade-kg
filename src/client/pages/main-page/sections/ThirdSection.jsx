@@ -1,5 +1,6 @@
 import { Container } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import SwiperCore, { Navigation, Pagination, Controller, Thumbs } from 'swiper'
 // import { Swiper, SwiperSlide } from 'swiper/react'
@@ -50,6 +51,7 @@ const cardData = [
 SwiperCore.use([Navigation, Pagination, Controller, Thumbs])
 
 const ThirdSection = () => {
+   const navigate = useNavigate()
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    return (
       <StyledSection>
@@ -109,7 +111,14 @@ const ThirdSection = () => {
                </SwiperContainer>
             )}
 
-            <StyledButtonOutlined>смотреть все</StyledButtonOutlined>
+            <StyledButtonOutlined
+               onClick={() => {
+                  navigate('/services')
+                  window.scrollTo(0, 0)
+               }}
+            >
+               смотреть все
+            </StyledButtonOutlined>
          </Container>
       </StyledSection>
    )
