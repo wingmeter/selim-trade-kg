@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
@@ -28,6 +28,7 @@ import nasa from '../../assets/images/nasa.jpeg'
 const Login = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
+   const [errMsg, setErrMsg] = useState('')
 
    const [loginAdmin, { data, isLoading, isError, isSuccess, error }] =
       useLoginAdminMutation()
@@ -55,8 +56,8 @@ const Login = () => {
    const submitHandler = async (formData) => {
       try {
          await loginAdmin(formData)
-      } catch (error) {
-         console.log(error?.message || 'something went wrong')
+      } catch (err) {
+         console.log(err)
       }
    }
 
@@ -69,21 +70,21 @@ const Login = () => {
       )
 
       switch (role) {
+         case ROLES.SUPER_ADMIN:
+            navigate('/admin/dashboard/#')
+            break
          case ROLES.ADMIN:
             navigate('/admin/dashboard', { replace: true })
-            break
-         case ROLES.SUPER_ADMIN:
-            navigate('/admin/dashboard')
-
             break
          default:
             break
       }
    }
-
    useEffect(() => {
       if (isSuccess) callAfterLogin(data)
-      if (isError) console.log(`something went wrong`)
+      if (isError) {
+         setErrMsg(error?.data?.message)
+      }
    }, [isError, isSuccess])
 
    return (
@@ -99,7 +100,7 @@ const Login = () => {
       >
          <CContainer>
             <CRow className="justify-content-center">
-               <CCol md={8}>
+               <CCol md={6}>
                   <CCardGroup>
                      <CCard className="p-4">
                         <CCardBody>
@@ -108,6 +109,9 @@ const Login = () => {
                               <p className="text-medium-emphasis">
                                  Sign In to your account
                               </p>
+
+                              <p style={{ color: 'red' }}>{errMsg}</p>
+
                               <CInputGroup className="mb-3">
                                  <CInputGroupText>
                                     <CIcon icon={cilUser} />
@@ -150,31 +154,6 @@ const Login = () => {
                                  </CCol>
                               </CRow>
                            </CForm>
-                        </CCardBody>
-                     </CCard>
-                     <CCard
-                        className="text-white bg-primary py-5"
-                        style={{ width: '44%' }}
-                     >
-                        <CCardBody className="text-center">
-                           <div>
-                              <h2>Sign up</h2>
-                              <p>
-                                 Lorem ipsum dolor sit amet, consectetur
-                                 adipisicing elit, sed do eiusmod tempor
-                                 incididunt ut labore et dolore magna aliqua.
-                              </p>
-                              <Link to="/admin/register">
-                                 <CButton
-                                    color="primary"
-                                    className="mt-3"
-                                    active
-                                    tabIndex={-1}
-                                 >
-                                    Register Now!
-                                 </CButton>
-                              </Link>
-                           </div>
                         </CCardBody>
                      </CCard>
                   </CCardGroup>
