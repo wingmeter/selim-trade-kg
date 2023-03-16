@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Routes, Route, Outlet, Navigate } from 'react-router-dom'
 
+import Page404 from '../../admin/pages/not-found/Page404'
 import AppLayout from '../../client/layout/AppLayout'
 import MainPage from '../../client/pages/main-page/MainPage'
 import NewsInnerPage from '../../client/pages/news-page/NewsInnerPage'
@@ -28,6 +29,7 @@ const AppRoutes = () => {
             </Route>
          </Route>
          <Route path="admin/*" element={<AdminRoutes />} />
+         <Route path="*" name="Page 404" element={<Page404 />} />
       </Routes>
    )
 }
