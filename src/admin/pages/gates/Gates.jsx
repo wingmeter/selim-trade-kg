@@ -1,136 +1,113 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+/* eslint-disable react/no-array-index-key */
+import React, { useEffect, useState } from 'react'
 
+import { cilDelete, cilPen, cilTrash } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
-   CCard,
-   CCardBody,
-   CCardHeader,
-   CCol,
-   CForm,
+   CContainer,
    CButton,
+   CCol,
+   CRow,
+   CTable,
+   CCard,
+   CCardTitle,
+   CCardHeader,
+   CCardBody,
    CFormInput,
-   CFormLabel,
-   CFormControlWrapper,
-   CTableDataCell,
-   CTabPane,
-   CNavLink,
-   CNavItem,
-   CTabContent,
-   CNav,
+   CTableHead,
+   CTableBody,
+   CImage,
 } from '@coreui/react'
+import { IconButton } from '@mui/material'
+import { useNavigate } from 'react-router'
 
-const GatesList = ({ gates }) => {
-   const fields = ['id', 'name', 'description']
+import { cardData } from '../../../client/pages/our-services/OurServicesPage'
+import { Flex } from '../../../client/styles/style-for-positions/style'
 
-   return (
-      <CCard>
-         <CCardHeader>Gates</CCardHeader>
-         <CCardBody>
-            <CTableDataCell
-               items={gates}
-               fields={fields}
-               // hover
-               // striped
-               // bordered
-               size="sm"
-               itemsPerPage={5}
-               // pagination
-            />
-         </CCardBody>
-      </CCard>
-   )
-}
+const Clients = () => {
+   const navigate = useNavigate()
+   const [loading, setLoading] = useState(false)
+   const [searchKey, setSearchKey] = useState(null)
+   const [items, setItems] = useState([])
+   const [dateFrom, setDateFrom] = useState(new Date().toJSON().slice(0, 10))
+   const [dateTo, setDateTo] = useState(new Date().toJSON().slice(0, 10))
+   const [searchFilter, setSearchFilter] = useState('true')
 
-const GatesForm = ({ onSubmit }) => {
-   const [newGate, setNewGate] = useState({ name: '', description: '' })
-   const handleNameChange = (event) =>
-      setNewGate({ ...newGate, name: event.target.value })
-   const handleDescriptionChange = (event) =>
-      setNewGate({ ...newGate, description: event.target.value })
-
-   const handleSubmit = (event) => {
-      event.preventDefault()
-      onSubmit(newGate)
-      setNewGate({ name: '', description: '' })
+   const searchFor = (val) => {
+      setSearchKey(val)
    }
 
+   const deleteModal = () => {}
+
    return (
-      <CCard>
-         <CCardHeader>Add Gate</CCardHeader>
-         <CCardBody>
-            <CForm onSubmit={handleSubmit}>
-               <CFormControlWrapper>
-                  <CFormLabel htmlFor="name">Name</CFormLabel>
-                  <CFormInput
-                     id="name"
-                     value={newGate.name}
-                     onChange={handleNameChange}
-                     required
-                  />
-               </CFormControlWrapper>
-               <CFormControlWrapper>
-                  <CFormLabel htmlFor="description">Description</CFormLabel>
-                  <CFormInput
-                     id="description"
-                     value={newGate.description}
-                     onChange={handleDescriptionChange}
-                     required
-                  />
-               </CFormControlWrapper>
-               <CButton type="submit" color="primary">
-                  Add Gate
-               </CButton>
-            </CForm>
-         </CCardBody>
-      </CCard>
+      <CContainer>
+         <CCard>
+            <CCardHeader>
+               <CRow>
+                  <CCol>
+                     <CCardTitle>Clients</CCardTitle>
+                  </CCol>
+                  <CCol sm="3" className="d-flex flex-row-reverse">
+                     <CRow>
+                        <CButton
+                           className="Loat-right"
+                           color="success"
+                           onClick={() => navigate('/admin/gates/create')}
+                        >
+                           Создать
+                        </CButton>
+                     </CRow>
+                     <CRow />
+                  </CCol>
+               </CRow>
+            </CCardHeader>
+            <CCardBody>
+               {loading ? (
+                  <span>Loading...</span>
+               ) : (
+                  <div>
+                     <CRow className="my-2" />
+                     {searchFilter === 'true' && (
+                        <CFormInput
+                           placeholder="Поиск ..."
+                           onChange={(e) => {
+                              searchFor(e.target.value)
+                           }}
+                        />
+                     )}
+                     <Flex direction="column" gap="20px" p="20px 0px">
+                        {cardData.map((gate) => (
+                           <CCard key={gate.id}>
+                              <CImage
+                                 src={gate.img}
+                                 width={200}
+                                 height={200}
+                                 rounded
+                              />
+                              {gate.title}
+                              <span>created at: 10.10.2023</span>
+                              <Flex
+                                 width="100%"
+                                 justify="end"
+                                 gap="20px"
+                                 p="10px"
+                              >
+                                 <IconButton>
+                                    <CIcon icon={cilPen} />
+                                 </IconButton>
+                                 <IconButton>
+                                    <CIcon icon={cilTrash} />
+                                 </IconButton>
+                              </Flex>
+                           </CCard>
+                        ))}
+                     </Flex>
+                  </div>
+               )}
+            </CCardBody>
+         </CCard>
+      </CContainer>
    )
 }
 
-const Gates = () => {
-   const [activeTab, setActiveTab] = useState('list')
-   const [gates, setGates] = useState([
-      { id: 1, name: 'Gate A', description: 'This is Gate A.' },
-      { id: 2, name: 'Gate B', description: 'This is Gate B.' },
-   ])
-
-   const handleAddGate = (newGate) => {
-      setGates([...gates, { id: gates.length + 1, ...newGate }])
-   }
-
-   return (
-      <CCol>
-         <CTabContent activeTab={activeTab}>
-            <CNav
-               component="nav"
-               variant="pills"
-               className="flex-column flex-sm-row"
-            >
-               <CNavItem>
-                  <CNavLink onClick={() => setActiveTab('list')}>
-                     Gates List
-                  </CNavLink>
-               </CNavItem>
-               <CNavItem>
-                  <CNavLink onClick={() => setActiveTab('create')}>
-                     Create Gate
-                  </CNavLink>
-               </CNavItem>
-            </CNav>
-            <CTabContent>
-               <CTabPane data-tab="list">
-                  {/* {activeTab === 'list' && */}
-                  {/* <GatesList gates={gates} /> */}
-                  {/* } */}
-               </CTabPane>
-               <CTabPane data-tab="create">
-                  {/* {activeTab === 'create' && ( */}
-                  <GatesForm onSubmit={handleAddGate} />
-                  {/* )} */}
-               </CTabPane>
-            </CTabContent>
-         </CTabContent>
-      </CCol>
-   )
-}
-
-export default Gates
+export default Clients
