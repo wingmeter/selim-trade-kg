@@ -20,6 +20,7 @@ import {
    CDropdownToggle,
 } from '@coreui/react'
 
+import { logOut } from '../../../utils/helpers/general'
 import avatar8 from '../../assets/images/avatars/8.jpg'
 
 const AppHeaderDropdown = () => {
@@ -66,7 +67,7 @@ const AppHeaderDropdown = () => {
             </CDropdownItem>
 
             <CDropdownDivider />
-            <CDropdownItem href="#">
+            <CDropdownItem onClick={() => logOut()}>
                <CIcon icon={cilAccountLogout} className="me-2" />
                Log Out
             </CDropdownItem>

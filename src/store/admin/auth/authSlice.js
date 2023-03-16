@@ -18,12 +18,13 @@ const authSlice = createSlice({
    reducers: {
       saveData(state, action) {
          const adminData = action.payload
-         state.role = adminData.role
-         state.token = adminData.token
+         state.role = adminData?.admin?.roles?.[0]
+         state.token = adminData?.accessToken
+         state.refreshToken = adminData?.refreshToken
          saveToLocalStorage(TOKEN_KEY, {
-            token: adminData.token,
-            role: adminData.role,
-            refreshToken: adminData.refreshToken,
+            token: adminData?.accessToken,
+            role: adminData?.admin?.roles?.[0],
+            refreshToken: adminData?.refreshToken,
          })
       },
    },
