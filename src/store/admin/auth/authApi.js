@@ -8,7 +8,7 @@ export const authApi = createApi({
    endpoints: (build) => ({
       registerAdmin: build.mutation({
          query: (body) => ({
-            url: 'api/v1/auth/register',
+            url: 'api/v1/admin/register',
             method: 'POST',
             body,
          }),

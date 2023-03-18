@@ -27,3 +27,11 @@ export const logOut = () => {
    removeFromLocalStorage(TOKEN_KEY)
    window.location.reload()
 }
+export const checkRole = (role) => {
+   return role === getFromLocalStorage(TOKEN_KEY)?.role
+}
+
+// get adim id
+export const getAdminId = () => {
+   return getFromLocalStorage(AUTH_KEY)?.id
+}
