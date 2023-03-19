@@ -12,9 +12,9 @@ import { useNavigate } from 'react-router'
 
 import { Flex } from '../../../client/styles/style-for-positions/style'
 import { useGetAllGateTypesQuery } from '../../../store/admin/gate-types/gateTypesApi'
-import GateTypeCard from '../../components/gates-type/GateCard'
+import GateTypeCard from '../../components/gates-type/GateTypeCard'
 
-const GateTypes = () => {
+const GateTypesView = () => {
    const navigate = useNavigate()
 
    const { data: gateTypes, isFetching } = useGetAllGateTypesQuery({
@@ -67,4 +67,4 @@ const GateTypes = () => {
    )
 }
 
-export default GateTypes
+export default GateTypesView

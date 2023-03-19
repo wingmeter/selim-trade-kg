@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
    CButton,
@@ -6,7 +6,6 @@ import {
    CCardBody,
    CCardHeader,
    CCol,
-   CContainer,
    CForm,
    CFormInput,
    CFormLabel,
@@ -15,8 +14,8 @@ import {
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
 
-import { Flex } from '../../../client/styles/style-for-positions/style'
-import { useCreateGateMutation } from '../../../store/admin/gates/gatesApi'
+import { Flex } from '../../../../client/styles/style-for-positions/style'
+import { useCreateGateMutation } from '../../../../store/admin/gate-types/gateTypesApi'
 
 const CreateGate = () => {
    const navigate = useNavigate()
@@ -51,13 +50,12 @@ const CreateGate = () => {
       setValidated(true)
 
       const formData = new FormData()
-      const gateData = {
-         name: formData.append('name', name),
-         image: formData.append('image', images.file),
-      }
+
+      formData.append('name', name)
+      formData.append('image', images.file)
 
       try {
-         await createGate({ gateData, gateTypeId: typeId }).unwrap()
+         await createGate({ formData, gateTypeId: typeId }).unwrap()
          navigateToLogin()
       } catch (e) {
          console.log(e)

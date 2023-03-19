@@ -1,8 +1,9 @@
+import { useState } from 'react'
+
 import {
    CButton,
    CCard,
    CCardBody,
-   CCardGroup,
    CCardHeader,
    CCardImage,
    CCardSubtitle,
@@ -14,17 +15,15 @@ import {
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
 
-import { Flex } from '../../../client/styles/style-for-positions/style'
 import { useGetGateTypeByIdQuery } from '../../../store/admin/gate-types/gateTypesApi'
 import { BASE_URL } from '../../../utils/constants'
-import GateCard from '../../components/gates/GateCard'
+import GateCard from '../../components/gates-type/gates/GateCard'
 
-const GateTypesInner = () => {
+const GateTypesInnerView = () => {
    const navigate = useNavigate()
    const { typeId } = useParams()
 
    const { data: gateType, isFetching } = useGetGateTypeByIdQuery(typeId)
-   console.log(gateType)
 
    return (
       <CContainer>
@@ -66,17 +65,13 @@ const GateTypesInner = () => {
             <CCardHeader className="d-flex justify-content-between mb-5 align-items-center">
                <CCardTitle>Gates</CCardTitle>
                <CButton onClick={() => navigate(`gate/create`)}>
-                  Add gate
+                  Create New Gate
                </CButton>
             </CCardHeader>
-            <CRow
-               className="gap-3"
-               xs={{ cols: 1, gutter: 1 }}
-               md={{ cols: 3 }}
-            >
+            <CRow xs={{ cols: 2, gutter: 1 }} md={{ cols: 4 }}>
                {gateType?.gateList?.map((gate) => (
                   <CCol>
-                     <GateCard key={gate.id} gate={gate} />
+                     <GateCard key={gate.id} gate={gate} gateTypeId={typeId} />
                   </CCol>
                ))}
             </CRow>
@@ -85,4 +80,4 @@ const GateTypesInner = () => {
    )
 }
 
-export default GateTypesInner
+export default GateTypesInnerView

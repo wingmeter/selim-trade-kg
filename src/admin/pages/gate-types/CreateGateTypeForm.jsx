@@ -16,7 +16,7 @@ import {
 import { useNavigate } from 'react-router'
 
 import { Flex } from '../../../client/styles/style-for-positions/style'
-import { useCreateGateMutation } from '../../../store/admin/gates/gatesApi'
+import { useCreateGateMutation } from '../../../store/admin/gate-types/gateTypesApi'
 
 const CreateGate = () => {
    const navigate = useNavigate()
@@ -31,6 +31,7 @@ const CreateGate = () => {
       navigate('/admin/gate-types')
    }
 
+   // drop image
    const onDrop = ({ target }) => {
       const fileData = target.files
       if (fileData[0].size / 1000 < 5000) {
@@ -41,7 +42,7 @@ const CreateGate = () => {
          setErrorPhoto(true)
       }
    }
-
+   // create gate type
    const submitHandler = async () => {
       if (!images.file && !name) {
          setValidated(true)
@@ -77,7 +78,7 @@ const CreateGate = () => {
       <CContainer>
          <CCard>
             <CCardHeader className="d-flex flex-row align-items-center">
-               <CCol>Create Gate</CCol>
+               <CCol>Create Gate Types</CCol>
                <CButton onClick={() => navigate(-1)}>Go Back</CButton>
             </CCardHeader>
             <CCardBody>

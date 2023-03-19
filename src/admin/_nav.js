@@ -1,6 +1,6 @@
 import {
    cilChart,
-   cilDoor,
+   // cilDoor,
    cilMobileLandscape,
    cilNotes,
    cilOpentype,
@@ -32,12 +32,12 @@ const nav = [
       to: '/admin/news',
       icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
    },
-   {
-      component: CNavItem,
-      name: 'Gates',
-      to: '/admin/gates',
-      icon: <CIcon icon={cilDoor} customClassName="nav-icon" />,
-   },
+   // {
+   //    component: CNavItem,
+   //    name: 'Gates',
+   //    to: '/admin/gates',
+   //    icon: <CIcon icon={cilDoor} customClassName="nav-icon" />,
+   // },
    {
       component: CNavItem,
       name: 'Gate types',

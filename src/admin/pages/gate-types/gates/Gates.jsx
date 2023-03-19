@@ -13,9 +13,9 @@ import {
 } from '@coreui/react'
 import { useNavigate } from 'react-router'
 
-import { Flex } from '../../../client/styles/style-for-positions/style'
-import { useGetAllGatesQuery } from '../../../store/admin/gates/gatesApi'
-import GateCard from '../../components/gates/GateCard'
+import { Flex } from '../../../../client/styles/style-for-positions/style'
+import { useGetAllGatesQuery } from '../../../../store/admin/gates/gatesApi'
+import GateCard from '../../../components/gates-type/gates/GateCard'
 
 const Clients = () => {
    const navigate = useNavigate()
