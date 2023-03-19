@@ -19,17 +19,19 @@ import {
    CModalTitle,
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
+import { useNavigate } from 'react-router'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
 import {
    useLazyGetGateTypeByIdQuery,
    useDeleteGateMutation,
 } from '../../../../store/admin/gate-types/gateTypesApi'
-import { BASE_URL, ROLES } from '../../../../utils/constants'
-import { checkRole } from '../../../../utils/helpers/general'
+import { ROLES } from '../../../../utils/constants'
+import { checkRole, getImgUrl } from '../../../../utils/helpers/general'
 
 const GateCard = ({ gate, gateTypeId }) => {
    const [visible, setVisible] = useState(false)
+   const navigate = useNavigate()
 
    const [deleteGate, { isLoading: isDeleting }] = useDeleteGateMutation()
    const { getGateTypeById } = useLazyGetGateTypeByIdQuery()
@@ -40,12 +42,12 @@ const GateCard = ({ gate, gateTypeId }) => {
          setVisible(false)
          getGateTypeById(gateTypeId)
       } catch (error) {
-         console.log(error || 'something went wrong')
+         console.error(error || 'something went wrong')
       }
    }
 
    const editGateHandler = (gateId) => {
-      // navigate to form with id
+      navigate(`gate/edit/${gateId}`)
    }
    return (
       <>
@@ -80,11 +82,7 @@ const GateCard = ({ gate, gateTypeId }) => {
          </CModal>
 
          <CCard key={gate.id}>
-            <CCardImage
-               src={`${BASE_URL}${gate.photoUrl}`}
-               height={250}
-               rounded
-            />
+            <CCardImage src={getImgUrl(gate?.photoUrl)} height={250} rounded />
             <CCardBody>
                <CCardTitle>{gate.name}</CCardTitle>
                <br />

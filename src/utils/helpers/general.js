@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 
-import { AUTH_KEY, TOKEN_KEY } from '../constants'
+import { AUTH_KEY, BASE_URL, TOKEN_KEY } from '../constants'
 
 // local storage helpers
 export const saveToLocalStorage = (key, data) => {
@@ -34,4 +34,10 @@ export const checkRole = (role) => {
 // get adim id
 export const getAdminId = () => {
    return getFromLocalStorage(AUTH_KEY)?.id
+}
+
+// get image url
+
+export const getImgUrl = (url) => {
+   return `${BASE_URL}${url}`
 }

@@ -68,7 +68,7 @@ const GateTypesInnerView = () => {
                   Create New Gate
                </CButton>
             </CCardHeader>
-            <CRow xs={{ cols: 2, gutter: 1 }} md={{ cols: 4 }}>
+            <CRow xs={{ cols: 2, gutter: 1 }} md={{ cols: 3 }}>
                {gateType?.gateList?.map((gate) => (
                   <CCol>
                      <GateCard key={gate.id} gate={gate} gateTypeId={typeId} />

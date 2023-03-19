@@ -25,8 +25,18 @@ const routes = [
    { path: '/dashboard', name: 'Dashboard', element: Dashboard },
    { path: '/gates/create', name: 'Create Gate', element: CreateGate },
    {
+      path: 'gate-types/:typeId/gate/edit/:gateId',
+      name: 'Edit Gate',
+      element: CreateGate,
+   },
+   {
       path: '/gate-types/create',
       name: 'Create Gate Type',
+      element: CreateGateType,
+   },
+   {
+      path: '/gate-types/edit/:typeId',
+      name: 'Edit Gate Type',
       element: CreateGateType,
    },
    { path: '/gate-types', name: 'Gate Types', element: GateTypesView },

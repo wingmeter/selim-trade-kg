@@ -13,10 +13,15 @@ import {
    CImage,
    CRow,
 } from '@coreui/react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 import { Flex } from '../../../client/styles/style-for-positions/style'
-import { useCreateGateMutation } from '../../../store/admin/gate-types/gateTypesApi'
+import {
+   useCreateGateTypeMutation,
+   useLazyGetGateTypeByIdQuery,
+   useUpdateGateTypeMutation,
+} from '../../../store/admin/gate-types/gateTypesApi'
+import { getImgUrl } from '../../../utils/helpers/general'
 
 const CreateGate = () => {
    const navigate = useNavigate()
@@ -24,12 +29,11 @@ const CreateGate = () => {
    const [images, setImage] = useState({ image: null, file: null })
    const [errorPhoto, setErrorPhoto] = useState(false)
    const [validated, setValidated] = useState(false)
+   const { typeId } = useParams()
 
-   const [createGate, { isLoading }] = useCreateGateMutation()
-
-   const navigateToLogin = () => {
-      navigate('/admin/gate-types')
-   }
+   const [createGateType, { isLoading }] = useCreateGateTypeMutation()
+   const [getGateTypeById, { data: gateType }] = useLazyGetGateTypeByIdQuery()
+   const [updateGateType, { isUpdating }] = useUpdateGateTypeMutation()
 
    // drop image
    const onDrop = ({ target }) => {
@@ -51,19 +55,33 @@ const CreateGate = () => {
       setValidated(true)
 
       const formData = new FormData()
-      const gateData = {
-         name,
-         // id: getAdminId(),
-         image: formData.append('image', images.file),
-      }
+      formData.append('name', name)
+      formData.append('image', images.file)
 
-      try {
-         await createGate({ gateData }).unwrap()
-         navigateToLogin()
-      } catch (e) {
-         console.log(e)
+      if (!typeId) {
+         try {
+            await createGateType(formData).unwrap()
+            navigate('/admin/gate-types')
+         } catch (e) {
+            console.error(e)
+         }
+      } else {
+         try {
+            await updateGateType({ formData, typeId })
+         } catch (e) {
+            console.error(e)
+         }
       }
    }
+   // ------------effects------------------------------------
+   useEffect(() => {
+      if (typeId) getGateTypeById(typeId)
+   }, [])
+
+   useEffect(() => {
+      setImage({ image: getImgUrl(gateType?.backgroundUrl) || null })
+      setName(gateType?.name || '')
+   }, [gateType])
 
    useEffect(() => {
       const errorPhotoTime = setTimeout(() => {
@@ -122,7 +140,7 @@ const CreateGate = () => {
                   <br />
                   <Flex margin="20px 0px" justify="end">
                      <CButton disabled={isLoading} onClick={submitHandler}>
-                        Создать gate type
+                        {typeId ? 'Edit Gate Type' : 'Create Gate Type'}
                      </CButton>
                   </Flex>
                </CForm>

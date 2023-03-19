@@ -17,8 +17,8 @@ export const gatesTypeApi = createApi({
          providesTags: ['GateTypes'],
       }),
       getGateTypeById: build.query({
-         query: (id) => ({
-            url: `api/v1/gate-types/${id}`,
+         query: (typeId) => ({
+            url: `api/v1/gate-types/${typeId}`,
             method: 'GET',
          }),
          providesTags: ['SingleGateType'],
@@ -34,16 +34,17 @@ export const gatesTypeApi = createApi({
       }),
       // put method
       updateGateType: build.mutation({
-         query: (id) => ({
-            url: `api/v1/gate-types/${id}`,
+         query: ({ formData, typeId }) => ({
+            url: `api/v1/gate-types/${typeId}`,
             method: 'PUT',
+            body: formData,
          }),
          invalidatesTags: ['GateTypes'],
       }),
       // delete method
       deleteGateType: build.mutation({
-         query: (id) => ({
-            url: `api/v1/gate-types/${id}`,
+         query: (typeId) => ({
+            url: `api/v1/gate-types/${typeId}`,
             method: 'DELETE',
          }),
          invalidatesTags: ['GateTypes'],
@@ -76,10 +77,10 @@ export const gatesTypeApi = createApi({
       }),
       // put method
       updateGate: build.mutation({
-         query: ({ gateId, body }) => ({
+         query: ({ gateId, formData }) => ({
             url: `api/v1/gate/${gateId}`,
             method: 'PUT',
-            body,
+            body: formData,
          }),
          invalidatesTags: ['SingleGateType'],
       }),
@@ -104,6 +105,7 @@ export const {
    // gates hooks
    useGetAllGatesQuery,
    useGetSingleGateByIdQuery,
+   useLazyGetSingleGateByIdQuery,
    useCreateGateMutation,
    useDeleteGateMutation,
    useUpdateGateMutation,

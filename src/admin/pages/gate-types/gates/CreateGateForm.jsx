@@ -13,19 +13,27 @@ import {
    CRow,
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
-import { useCreateGateMutation } from '../../../../store/admin/gate-types/gateTypesApi'
+import {
+   useCreateGateMutation,
+   useLazyGetSingleGateByIdQuery,
+   useUpdateGateMutation,
+} from '../../../../store/admin/gate-types/gateTypesApi'
+import { getImgUrl } from '../../../../utils/helpers/general'
 
 const CreateGate = () => {
    const navigate = useNavigate()
-   const { typeId } = useParams()
+   const { typeId, gateId } = useParams()
    const [name, setName] = useState('')
    const [images, setImage] = useState({ image: null, file: null })
    const [errorPhoto, setErrorPhoto] = useState(false)
    const [validated, setValidated] = useState(false)
 
    const [createGate, { isLoading }] = useCreateGateMutation()
+   const [updateGate, { isUpdating }] = useUpdateGateMutation()
+   const [getSingleGateById, { data: gate }] = useLazyGetSingleGateByIdQuery()
 
    const navigateToLogin = () => {
       navigate(-1)
@@ -50,17 +58,35 @@ const CreateGate = () => {
       setValidated(true)
 
       const formData = new FormData()
-
       formData.append('name', name)
       formData.append('image', images.file)
 
-      try {
-         await createGate({ formData, gateTypeId: typeId }).unwrap()
-         navigateToLogin()
-      } catch (e) {
-         console.log(e)
+      if (!gateId) {
+         try {
+            await createGate({ formData, gateTypeId: typeId }).unwrap()
+            navigateToLogin()
+         } catch (e) {
+            console.error(e)
+         }
+      } else {
+         try {
+            await updateGate({ formData, gateId }).unwrap()
+            navigateToLogin()
+         } catch (e) {
+            console.error(e)
+         }
       }
    }
+
+   // ------------effects------------------------------------
+   useEffect(() => {
+      if (gateId) getSingleGateById({ gateId })
+   }, [])
+
+   useEffect(() => {
+      setImage({ image: getImgUrl(gate?.photoUrl) || null })
+      setName(gate?.name || '')
+   }, [gate])
 
    useEffect(() => {
       const errorPhotoTime = setTimeout(() => {
@@ -85,7 +111,7 @@ const CreateGate = () => {
                      <CFormInput
                         placeholder="Gate Name"
                         type="string"
-                        value={name}
+                        value={name || ''}
                         required
                         onChange={(e) => setName(e.target.value)}
                         id="validationTextarea"
@@ -97,6 +123,7 @@ const CreateGate = () => {
                   <CRow>
                      <CFormLabel>Image</CFormLabel>
                      <CFormInput
+                        value={images?.file}
                         type="file"
                         onChange={onDrop}
                         id="validationTextarea"
