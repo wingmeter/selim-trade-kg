@@ -33,6 +33,7 @@ const CreateGate = () => {
 
    const [createGateType, { isLoading }] = useCreateGateTypeMutation()
    const [getGateTypeById, { data: gateType }] = useLazyGetGateTypeByIdQuery()
+   // eslint-disable-next-line no-unused-vars
    const [updateGateType, { isUpdating }] = useUpdateGateTypeMutation()
 
    // drop image

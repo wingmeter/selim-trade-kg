@@ -18,24 +18,25 @@ import { useSearchParams } from 'react-router-dom'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
 import {
-   useCreateGateMutation,
-   useLazyGetSingleGateByIdQuery,
-   useUpdateGateMutation,
-} from '../../../../store/admin/gate-types/gateTypesApi'
+   useLazyGetNewsByIdQuery,
+   useUpdateNewsMutation,
+   useCreateNewsMutation,
+} from '../../../../store/admin/news/newsApi'
 import { getImgUrl } from '../../../../utils/helpers/general'
 
-const CreateGate = () => {
+const CreateNewsForm = () => {
    const navigate = useNavigate()
-   const { typeId, gateId } = useParams()
-   const [name, setName] = useState('')
+   const { newsId } = useParams()
+   const [title, setTitle] = useState('')
+   const [description, setDescription] = useState('')
    const [images, setImage] = useState({ image: null, file: null })
    const [errorPhoto, setErrorPhoto] = useState(false)
    const [validated, setValidated] = useState(false)
 
-   const [createGate, { isLoading }] = useCreateGateMutation()
+   const [createNews, { isLoading }] = useCreateNewsMutation()
    // eslint-disable-next-line no-unused-vars
-   const [updateGate, { isUpdating }] = useUpdateGateMutation()
-   const [getSingleGateById, { data: gate }] = useLazyGetSingleGateByIdQuery()
+   const [updateNews, { isUpdating }] = useUpdateNewsMutation()
+   const [getNewsById, { data: news }] = useLazyGetNewsByIdQuery()
 
    const navigateToLogin = () => {
       navigate(-1)
@@ -53,26 +54,27 @@ const CreateGate = () => {
    }
 
    const submitHandler = async () => {
-      if (!images.file && !name) {
+      if (!images.file && !title && !description) {
          setValidated(true)
          return
       }
       setValidated(true)
 
       const formData = new FormData()
-      formData.append('name', name)
+      formData.append('title', title)
+      formData.append('description', description)
       formData.append('image', images.file)
 
-      if (!gateId) {
+      if (!newsId) {
          try {
-            await createGate({ formData, gateTypeId: typeId }).unwrap()
+            await createNews({ formData }).unwrap()
             navigateToLogin()
          } catch (e) {
             console.error(e)
          }
       } else {
          try {
-            await updateGate({ formData, gateId }).unwrap()
+            await updateNews({ formData }).unwrap()
             navigateToLogin()
          } catch (e) {
             console.error(e)
@@ -82,13 +84,14 @@ const CreateGate = () => {
 
    // ------------effects------------------------------------
    useEffect(() => {
-      if (gateId) getSingleGateById({ gateId })
+      if (newsId) getNewsById({ newsId })
    }, [])
 
    useEffect(() => {
-      setImage({ image: getImgUrl(gate?.photoUrl) || null })
-      setName(gate?.name || '')
-   }, [gate])
+      setImage({ image: getImgUrl(news?.photoUrl) || null })
+      setTitle(news?.name || '')
+      setDescription(news?.description || '')
+   }, [news])
 
    useEffect(() => {
       const errorPhotoTime = setTimeout(() => {
@@ -109,15 +112,29 @@ const CreateGate = () => {
             <CForm validated={validated}>
                <Flex direction="column" p="1rem 16px">
                   <CRow>
-                     <CFormLabel>Name</CFormLabel>
+                     <CFormLabel>Title</CFormLabel>
                      <CFormInput
-                        placeholder="Gate Name"
+                        placeholder="News Title"
                         type="string"
-                        value={name || ''}
+                        value={title || ''}
                         required
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setTitle(e.target.value)}
                         id="validationTextarea"
-                        feedbackInvalid="name is empty"
+                        feedbackInvalid="Name is required"
+                        aria-label="file example"
+                     />
+                  </CRow>
+                  <br />
+                  <CRow>
+                     <CFormLabel>Description</CFormLabel>
+                     <CFormInput
+                        placeholder="News Description"
+                        type="string"
+                        value={description || ''}
+                        required
+                        onChange={(e) => setDescription(e.target.value)}
+                        id="validationTextarea"
+                        feedbackInvalid="Description is required"
                         aria-label="file example"
                      />
                   </CRow>
@@ -136,7 +153,7 @@ const CreateGate = () => {
                   </CRow>
                </Flex>
 
-               {images.image && (
+               {!images.image && (
                   <CImage
                      src={images.image}
                      alt="uploaded image"
@@ -156,4 +173,4 @@ const CreateGate = () => {
    )
 }
 
-export default CreateGate
+export default CreateNewsForm

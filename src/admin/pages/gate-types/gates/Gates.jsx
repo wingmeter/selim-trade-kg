@@ -14,7 +14,7 @@ import {
 import { useNavigate } from 'react-router'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
-import { useGetAllGatesQuery } from '../../../../store/admin/gates/gatesApi'
+import { useGetAllGatesQuery } from '../../../../store/admin/gate-types/gateTypesApi'
 import GateCard from '../../../components/gates-type/gates/GateCard'
 
 const Clients = () => {
