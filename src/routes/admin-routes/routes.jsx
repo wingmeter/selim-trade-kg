@@ -1,6 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
 
+const WorksView = React.lazy(() => import('../../admin/pages/works/WorksView'))
+const WorksInner = React.lazy(() =>
+   import('../../admin/pages/works/WorksInner')
+)
+
 const CreateGate = React.lazy(() =>
    import('../../admin/pages/gate-types/gates/CreateGateForm')
 )
@@ -49,6 +54,16 @@ const routes = [
       path: '/gate-types/:typeId/gate/create',
       name: 'Gate Types Inner Page',
       element: CreateGate,
+   },
+   {
+      path: '/works',
+      name: 'Our Works',
+      element: WorksView,
+   },
+   {
+      path: '/works/:worksId',
+      name: 'Works Inner Page',
+      element: WorksInner,
    },
 ]
 
