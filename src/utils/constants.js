@@ -11,4 +11,4 @@ export const ROLES = {
 }
 export const TOKEN_KEY = '@DMIN_TOKEN'
 export const AUTH_KEY = '_SELIM_TR@DE_AUTH_KEY'
-export const BASE_URL = 'http://161.35.29.179:8080/'
+export const BASE_URL = 'http://161.35.29.179:8080'
