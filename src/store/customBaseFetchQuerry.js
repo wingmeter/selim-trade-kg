@@ -35,9 +35,14 @@ export const baseQueryWithReauth = async (args, api, extraOptions) => {
          // retry the original query with new access token
          result = await baseQuery(args, api, extraOptions)
       } else {
-         console.log('refresh token not found')
-         // logOut()
+         alert(result?.data?.message)
+         logOut()
       }
+   } else if (
+      result?.error?.status === 403 ||
+      result?.response?.status === 403
+   ) {
+      alert(result?.data?.message)
    }
    return result
 }

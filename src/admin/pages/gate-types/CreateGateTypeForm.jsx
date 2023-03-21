@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { cilTrash } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
    CButton,
    CCard,
@@ -13,6 +15,7 @@ import {
    CImage,
    CRow,
 } from '@coreui/react'
+import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
 
 import { Flex } from '../../../client/styles/style-for-positions/style'
@@ -116,26 +119,41 @@ const CreateGate = () => {
                         />
                      </CRow>
                      <br />
-                     <CRow>
-                        <CFormLabel>Image</CFormLabel>
-                        <CFormInput
-                           type="file"
-                           onChange={onDrop}
-                           id="validationTextarea"
-                           feedbackInvalid="Image is not selected"
-                           aria-label="file example"
-                           required
-                        />
-                     </CRow>
+                     {!images.file && !images.image && (
+                        <CRow>
+                           <CFormLabel>Image</CFormLabel>
+                           <CFormInput
+                              type="file"
+                              onChange={onDrop}
+                              id="validationTextarea"
+                              feedbackInvalid="Image is not selected"
+                              aria-label="file example"
+                              required
+                           />
+                        </CRow>
+                     )}
                   </Flex>
 
                   {images.image && (
-                     <CImage
-                        src={images.image}
-                        alt="uploaded image"
-                        width={300}
-                        rounded
-                     />
+                     <Flex direction="column">
+                        <CImage
+                           src={images.image}
+                           alt="uploaded image"
+                           width={300}
+                           rounded
+                        />
+                        <Flex align="center">
+                           Delete Photo
+                           <IconButton>
+                              <CIcon
+                                 icon={cilTrash}
+                                 onClick={() =>
+                                    setImage({ image: null, file: null })
+                                 }
+                              />
+                           </IconButton>
+                        </Flex>
+                     </Flex>
                   )}
                   <br />
                   <Flex margin="20px 0px" justify="end">

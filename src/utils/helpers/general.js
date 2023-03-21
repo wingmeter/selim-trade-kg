@@ -39,5 +39,6 @@ export const getAdminId = () => {
 // get image url
 
 export const getImgUrl = (url) => {
-   return `${BASE_URL}${url}`
+   if (url) return `${BASE_URL}${url}`
+   return null
 }
