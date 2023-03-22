@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { cilTrash } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
    CButton,
    CCard,
@@ -12,6 +14,7 @@ import {
    CImage,
    CRow,
 } from '@coreui/react'
+import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
 // eslint-disable-next-line no-unused-vars
 import { useSearchParams } from 'react-router-dom'
@@ -62,6 +65,10 @@ const CreateGate = () => {
       const formData = new FormData()
       formData.append('name', name)
       formData.append('image', images.file)
+      if (!images.file) {
+         formData.delete('image')
+      }
+      console.log(formData)
 
       if (!gateId) {
          try {
@@ -86,7 +93,9 @@ const CreateGate = () => {
    }, [])
 
    useEffect(() => {
-      setImage({ image: getImgUrl(gate?.photoUrl) || null })
+      setImage({
+         image: getImgUrl(gate?.photoUrl) || null,
+      })
       setName(gate?.name || '')
    }, [gate])
 
@@ -102,7 +111,7 @@ const CreateGate = () => {
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
-            <CCol>Create Gate</CCol>
+            <CCol>{gateId ? 'Edit Gate' : 'Create Gate'}</CCol>
             <CButton onClick={() => navigate(-1)}>Go Back</CButton>
          </CCardHeader>
          <CCardBody>
@@ -122,27 +131,41 @@ const CreateGate = () => {
                      />
                   </CRow>
                   <br />
-                  <CRow>
-                     <CFormLabel>Image</CFormLabel>
-                     <CFormInput
-                        value={images?.file}
-                        type="file"
-                        onChange={onDrop}
-                        id="validationTextarea"
-                        feedbackInvalid="Image is not selected"
-                        aria-label="file example"
-                        required
-                     />
-                  </CRow>
+                  {!images.file && !images.image && (
+                     <CRow>
+                        <CFormLabel>Image</CFormLabel>
+                        <CFormInput
+                           type="file"
+                           onChange={onDrop}
+                           id="validationTextarea"
+                           feedbackInvalid="Image is not selected"
+                           aria-label="file example"
+                           required
+                        />
+                     </CRow>
+                  )}
                </Flex>
 
                {images.image && (
-                  <CImage
-                     src={images.image}
-                     alt="uploaded image"
-                     width={300}
-                     rounded
-                  />
+                  <Flex direction="column">
+                     <CImage
+                        src={images.image}
+                        alt="uploaded image"
+                        width={300}
+                        rounded
+                     />
+                     <Flex align="center">
+                        Delete Photo
+                        <IconButton>
+                           <CIcon
+                              icon={cilTrash}
+                              onClick={() =>
+                                 setImage({ image: null, file: null })
+                              }
+                           />
+                        </IconButton>
+                     </Flex>
+                  </Flex>
                )}
                <br />
                <Flex margin="20px 0px" justify="end">

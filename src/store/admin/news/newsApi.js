@@ -8,11 +8,11 @@ export const newsApi = createApi({
    tagTypes: ['News', 'SingleNews'],
    endpoints: (build) => ({
       getAllNews: build.query({
-         query: ({ page, filter }) => ({
+         query: ({ pageNo, filter }) => ({
             url: 'api/v1/news',
             method: 'GET',
             // filter need to fix
-            params: { page, size: 8, filter },
+            params: { pageNo, pageSize: 8, filter },
          }),
          providesTags: ['News'],
       }),
