@@ -3,7 +3,7 @@ import React from 'react'
 
 const WorksView = React.lazy(() => import('../../admin/pages/works/WorksView'))
 const WorksInner = React.lazy(() =>
-   import('../../admin/pages/works/WorksInner')
+   import('../../admin/pages/works/inner-pages/WorksInner')
 )
 
 const CreateGate = React.lazy(() =>
@@ -32,6 +32,13 @@ const CreateNewsForm = React.lazy(() =>
 )
 
 const NewsInnerView = React.lazy(() =>
+   import('../../admin/pages/news/inner-pages/NewsInnerView')
+)
+const WorksCreateFrom = React.lazy(() =>
+   import('../../admin/pages/works/inner-pages/WorksCreateForm')
+)
+
+const WorksInnerView = React.lazy(() =>
    import('../../admin/pages/news/inner-pages/NewsInnerView')
 )
 
@@ -87,6 +94,12 @@ const routes = [
       name: 'Works Inner Page',
       element: WorksInner,
    },
+   // {
+   //    path: '/works/:worksId/edit',
+   //    name: 'Update Works',
+   //    element: WorksCreateFrom,
+   // },
+   { path: '/works/create', name: 'Create Works', element: WorksCreateFrom },
 ]
 
 export default routes
