@@ -23,6 +23,18 @@ const GateTypesInnerView = React.lazy(() =>
    import('../../admin/pages/gate-types/GateTypesInnerView')
 )
 
+// News
+
+const News = React.lazy(() => import('../../admin/pages/news/NewsView'))
+
+const CreateNewsForm = React.lazy(() =>
+   import('../../admin/pages/news/inner-pages/CreateNewsForm')
+)
+
+const NewsInnerView = React.lazy(() =>
+   import('../../admin/pages/news/inner-pages/NewsInnerView')
+)
+
 // Base
 
 const routes = [
@@ -55,6 +67,16 @@ const routes = [
       name: 'Gate Types Inner Page',
       element: CreateGate,
    },
+   // News
+   { path: '/news', name: 'News', element: News },
+   {
+      path: '/news/create',
+      name: 'Create News',
+      element: CreateNewsForm,
+   },
+   { path: '/news/:newsId/edit', name: 'Update News', element: CreateNewsForm },
+   { path: '/news/:newsId', name: 'Create News', element: NewsInnerView },
+   // Works
    {
       path: '/works',
       name: 'Our Works',

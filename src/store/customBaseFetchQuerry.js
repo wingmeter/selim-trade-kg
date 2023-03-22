@@ -4,7 +4,6 @@ import { BASE_URL } from '../utils/constants'
 import { logOut } from '../utils/helpers/general'
 
 import { authActions } from './admin/auth/authSlice'
-// import { logOut, saveToSessionStorage } from '../utils/helpers'
 
 const baseQuery = fetchBaseQuery({
    baseUrl: BASE_URL,
