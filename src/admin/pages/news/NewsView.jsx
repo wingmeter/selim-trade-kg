@@ -10,11 +10,25 @@ import {
 } from '@coreui/react'
 import { useNavigate } from 'react-router'
 
+import { Flex } from '../../../client/styles/style-for-positions/style'
+import { useGetAllNewsQuery } from '../../../store/admin/news/newsApi'
+import NewsCard from '../../components/news/NewsCard'
+
 const News = () => {
    const navigate = useNavigate()
 
+   const { data: news, isFetching } = useGetAllNewsQuery({
+      page: 3,
+   })
+
+   const renderGates = () => {
+      return news?.content?.map((newsData) => (
+         <NewsCard key={newsData.id} news={newsData} />
+      ))
+   }
+
    return (
-      <CContainer>
+      <CContainer className="mb-5">
          <CCard>
             <CCardHeader>
                <CRow>
@@ -35,7 +49,19 @@ const News = () => {
                   </CCol>
                </CRow>
             </CCardHeader>
-            <CCardBody>asd</CCardBody>
+            <CCardBody>
+               {isFetching ? (
+                  <span>Loading...</span>
+               ) : (
+                  <div>
+                     <CRow className="my-2" />
+
+                     <Flex direction="column" gap="20px" p="20px 0px">
+                        {renderGates()}
+                     </Flex>
+                  </div>
+               )}
+            </CCardBody>
          </CCard>
       </CContainer>
    )

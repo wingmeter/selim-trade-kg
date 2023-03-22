@@ -34,8 +34,8 @@ export const newsApi = createApi({
       }),
       // put method
       updateNews: build.mutation({
-         query: ({ formData, typeId }) => ({
-            url: `api/v1/news/${typeId}`,
+         query: ({ formData, newsId }) => ({
+            url: `api/v1/news/${newsId}`,
             method: 'PUT',
             body: formData,
          }),

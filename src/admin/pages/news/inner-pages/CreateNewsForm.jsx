@@ -27,6 +27,7 @@ import { getImgUrl } from '../../../../utils/helpers/general'
 const CreateNewsForm = () => {
    const navigate = useNavigate()
    const { newsId } = useParams()
+
    const [title, setTitle] = useState('')
    const [description, setDescription] = useState('')
    const [images, setImage] = useState({ image: null, file: null })
@@ -56,9 +57,7 @@ const CreateNewsForm = () => {
    const submitHandler = async () => {
       if (!images.file && !title && !description) {
          setValidated(true)
-         return
       }
-      setValidated(true)
 
       const formData = new FormData()
       formData.append('title', title)
@@ -67,14 +66,15 @@ const CreateNewsForm = () => {
 
       if (!newsId) {
          try {
-            await createNews({ formData }).unwrap()
+            await createNews(formData).unwrap()
             navigateToLogin()
          } catch (e) {
             console.error(e)
          }
       } else {
          try {
-            await updateNews({ formData }).unwrap()
+            console.log(newsId)
+            await updateNews({ formData, newsId })
             navigateToLogin()
          } catch (e) {
             console.error(e)
@@ -84,12 +84,12 @@ const CreateNewsForm = () => {
 
    // ------------effects------------------------------------
    useEffect(() => {
-      if (newsId) getNewsById({ newsId })
+      if (newsId) getNewsById(newsId)
    }, [])
 
    useEffect(() => {
       setImage({ image: getImgUrl(news?.photoUrl) || null })
-      setTitle(news?.name || '')
+      setTitle(news?.title || '')
       setDescription(news?.description || '')
    }, [news])
 
@@ -142,7 +142,6 @@ const CreateNewsForm = () => {
                   <CRow>
                      <CFormLabel>Image</CFormLabel>
                      <CFormInput
-                        value={images?.file}
                         type="file"
                         onChange={onDrop}
                         id="validationTextarea"
@@ -153,9 +152,9 @@ const CreateNewsForm = () => {
                   </CRow>
                </Flex>
 
-               {!images.image && (
+               {images?.image && (
                   <CImage
-                     src={images.image}
+                     src={images?.image}
                      alt="uploaded image"
                      width={300}
                      rounded
