@@ -30,6 +30,20 @@ const NewsInnerView = React.lazy(() =>
    import('../../admin/pages/news/inner-pages/NewsInnerView')
 )
 
+// Reviews
+
+const CreateReviewForm = React.lazy(() =>
+   import('../../admin/pages/reviews/inner-pages/CreateReviewForm')
+)
+
+const ReviewsInnerView = React.lazy(() =>
+   import('../../admin/pages/reviews/inner-pages/ReviewsInnerView')
+)
+
+const ReviewsView = React.lazy(() =>
+   import('../../admin/pages/reviews/ReviewsView')
+)
+
 // Base
 
 const routes = [
@@ -71,6 +85,23 @@ const routes = [
    },
    { path: '/news/:newsId/edit', name: 'Update News', element: CreateNewsForm },
    { path: '/news/:newsId', name: 'Create News', element: NewsInnerView },
+
+   { path: '/reviews', name: 'Reviews', element: ReviewsView },
+   {
+      path: '/reviews/create',
+      name: 'Create News',
+      element: CreateReviewForm,
+   },
+   {
+      path: '/reviews/:reviewsId/edit',
+      name: 'Update News',
+      element: CreateReviewForm,
+   },
+   {
+      path: '/reviews/:reviewsId',
+      name: 'Create News',
+      element: ReviewsInnerView,
+   },
 ]
 
 export default routes

@@ -4,6 +4,7 @@ import {
    cilMobileLandscape,
    cilNotes,
    cilOpentype,
+   cilPeople,
    cilSpeedometer,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
@@ -31,6 +32,12 @@ const nav = [
       name: 'News',
       to: '/admin/news',
       icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
+   },
+   {
+      component: CNavItem,
+      name: 'Reviews',
+      to: '/admin/reviews',
+      icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
    },
    // {
    //    component: CNavItem,

@@ -11,14 +11,14 @@ import {
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
 
-import { useGetNewsByIdQuery } from '../../../../store/admin/news/newsApi'
+import { useGetReviewsByIdQuery } from '../../../../store/admin/reviews/reviewApi'
 import { BASE_URL } from '../../../../utils/constants'
 
-const NewsInnerView = () => {
+const ReviewsInnerView = () => {
    const navigate = useNavigate()
-   const { newsId } = useParams()
+   const { reviewsId } = useParams()
 
-   const { data: news, isFetching } = useGetNewsByIdQuery(newsId)
+   const { data: review, isFetching } = useGetReviewsByIdQuery(reviewsId)
 
    return (
       <CContainer>
@@ -33,27 +33,29 @@ const NewsInnerView = () => {
                ) : (
                   <CCard style={{ padding: '0.5rem 1rem' }}>
                      <CCardImage
-                        src={`${BASE_URL}${news?.photoUrl}`}
+                        src={`${BASE_URL}${review?.photoUrl}`}
                         alt="bg imgae"
                         height={500}
                         style={{ objectFit: 'contain' }}
                      />
                      <br />
-                     <CCardTitle>{news?.title}</CCardTitle>
+                     <CCardTitle>{review?.name}</CCardTitle>
                      <br />
-                     <CCardTitle>{news?.description}</CCardTitle>
+                     <CCardTitle>{review?.gate}</CCardTitle>
+                     <br />
+                     <CCardSubtitle>{review?.text}</CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created Date: {news?.createdDate}
+                        Created Date: {review?.created_date}
                      </CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created By: {news?.createdBy?.username}
+                        Created By: {review?.createdBy?.username}
                      </CCardSubtitle>
                      <br />
                      <CCardText>
                         Status:
-                        {news?.createdBy?.active ? 'Active' : 'Inactive'}
+                        {review?.createdBy?.active ? 'Active' : 'Inactive'}
                      </CCardText>
                      <br />
                   </CCard>
@@ -64,4 +66,4 @@ const NewsInnerView = () => {
    )
 }
 
-export default NewsInnerView
+export default ReviewsInnerView
