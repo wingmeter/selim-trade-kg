@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 
 import { cilTrash } from '@coreui/icons'
@@ -16,8 +17,6 @@ import {
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
-// eslint-disable-next-line no-unused-vars
-import { useSearchParams } from 'react-router-dom'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
 import {
@@ -36,7 +35,6 @@ const CreateWorksForm = () => {
    const [validated, setValidated] = useState(false)
 
    const [createWorks, { isLoading }] = useCreateWorksMutation()
-   // eslint-disable-next-line no-unused-vars
    const [updateNews, { isUpdating }] = useUpdateNewsMutation()
    const [getWorksById, { data: works }] = useLazyGetNewsByIdQuery()
 
@@ -58,22 +56,15 @@ const CreateWorksForm = () => {
    const submitHandler = async () => {
       if (!images.file) {
          setValidated(true)
+         return
       }
 
       const formData = new FormData()
       formData.append('image', images.file)
 
-      if (!worksId) {
+      if (!worksId && images.file) {
          try {
             await createWorks(formData).unwrap()
-            navigateToLogin()
-         } catch (e) {
-            console.error(e)
-         }
-      } else {
-         try {
-            console.log(worksId)
-            await updateNews({ formData, worksId })
             navigateToLogin()
          } catch (e) {
             console.error(e)
@@ -81,14 +72,10 @@ const CreateWorksForm = () => {
       }
    }
 
-   // ------------effects------------------------------------
+   // ------------effects------------------
    useEffect(() => {
       if (worksId) getWorksById(worksId)
    }, [])
-
-   useEffect(() => {
-      setImage({ image: getImgUrl(works?.photoUrl) || null })
-   }, [works])
 
    useEffect(() => {
       const errorPhotoTime = setTimeout(() => {
@@ -110,15 +97,17 @@ const CreateWorksForm = () => {
                <Flex direction="column" p="1rem 16px">
                   {!images.file && !images.image && (
                      <CRow>
-                        <CFormLabel>Image</CFormLabel>
-                        <CFormInput
-                           type="file"
-                           onChange={onDrop}
-                           id="validationTextarea"
-                           feedbackInvalid="Image is not selected"
-                           aria-label="file example"
-                           required
-                        />
+                        <CCol>
+                           <CFormLabel>Image</CFormLabel>
+                           <CFormInput
+                              type="file"
+                              onChange={onDrop}
+                              id="validationTextarea"
+                              feedbackInvalid="Image is not selected"
+                              aria-label="file example"
+                              required
+                           />
+                        </CCol>
                      </CRow>
                   )}
                </Flex>

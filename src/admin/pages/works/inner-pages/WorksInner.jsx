@@ -25,7 +25,7 @@ const WorksInner = () => {
          <CCard>
             <CCardHeader className="d-flex align-items-center gap-4">
                <CButton onClick={() => navigate(-1)}>Go Back</CButton>
-               <CCardTitle>Gate Inner Page</CCardTitle>
+               <CCardTitle>Works Inner Page</CCardTitle>
             </CCardHeader>
             <CCardBody>
                {isFetching ? (

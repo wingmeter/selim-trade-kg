@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { useState } from 'react'
 
 import {
@@ -20,7 +21,6 @@ import {
 } from '../../../store/admin/works/worksApi'
 import { getImgUrl } from '../../../utils/helpers/general'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/deleteIcon.svg'
-import { ReactComponent as UpdateIcon } from '../../assets/icons/updateIcon.svg'
 import TableList from '../../components/table/TableList'
 import AppPagination from '../../components/UI/AppPagination'
 
@@ -64,39 +64,31 @@ const WorksView = () => {
       {
          key: 'photoUrl',
          header: 'Фото',
-         width: 50,
-         // eslint-disable-next-line react/no-unstable-nested-components
+         width: 125,
          cell: (item) => (
             <TableImage src={getImgUrl(item.photoUrl)} alt={item.photoUrl} />
          ),
       },
-      { key: 'title', header: 'Title', width: 100 },
+      {
+         key: 'created_date',
+         header: 'Время создания',
+         width: 100,
+         cell: (item) => <span>{item?.created_date?.split(',')[1]}</span>,
+      },
       {
          key: 'created_date',
          header: 'Дата создания',
          width: 120,
       },
-      // {
-      //    key: 'description',
-      //    header: 'Description',
-      //    width: 150,
-      // },
+
       {
          key: 'actions',
          header: 'Действия',
          width: 100,
-         // eslint-disable-next-line react/no-unstable-nested-components
+
          cell: (item) => {
             return (
                <ActionContainer>
-                  <IconButton
-                     onClick={(e) => {
-                        e.stopPropagation()
-                        navigate(`${item.id}/edit`)
-                     }}
-                  >
-                     <UpdateIcon />
-                  </IconButton>
                   <IconButton
                      onClick={(e) => {
                         e.stopPropagation()
@@ -123,7 +115,7 @@ const WorksView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Created Works</CCardTitle>
+                     <CCardTitle>Published Our Works</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>
@@ -169,8 +161,8 @@ const WorksView = () => {
 export default WorksView
 
 const TableImage = styled.img`
-   width: 70px;
-   height: 70px;
+   width: 100px;
+   height: 100px;
    object-fit: contain;
 `
 const TableListContainer = styled.div`

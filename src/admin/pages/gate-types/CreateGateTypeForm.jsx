@@ -71,7 +71,8 @@ const CreateGate = () => {
          }
       } else {
          try {
-            await updateGateType({ formData, typeId })
+            await updateGateType({ formData, typeId }).unwrap()
+            navigate('/admin/gate-types')
          } catch (e) {
             console.error(e)
          }
@@ -83,7 +84,10 @@ const CreateGate = () => {
    }, [])
 
    useEffect(() => {
-      setImage({ image: getImgUrl(gateType?.backgroundUrl) || null })
+      setImage({
+         image: getImgUrl(gateType?.backgroundUrl) || null,
+         file: null,
+      })
       setName(gateType?.name || '')
    }, [gateType])
 
