@@ -10,6 +10,7 @@ import {
    CCol,
    CContainer,
    CRow,
+   CTableDataCell,
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router'
@@ -84,6 +85,8 @@ const ReviewsView = () => {
          key: 'text',
          header: 'Description',
          width: 150,
+         // eslint-disable-next-line react/no-unstable-nested-components
+         cell: (item) => <TableDescription>{item.text}</TableDescription>,
       },
       {
          key: 'gate',
@@ -178,6 +181,16 @@ const ReviewsView = () => {
 }
 
 export default ReviewsView
+
+const TableDescription = styled.p`
+   text-overflow: ellipsis !important;
+   display: -webkit-box;
+   -webkit-line-clamp: 1;
+   -webkit-box-orient: vertical;
+   @media (max-width: 500px) {
+      font-size: 12px;
+   }
+`
 
 const TableImage = styled.img`
    width: 70px;
