@@ -6,9 +6,12 @@ import {
    cilOpentype,
    cilSettings,
    cilSpeedometer,
+   cilUserX,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { CNavItem } from '@coreui/react'
+
+import { ROLES } from '../utils/constants'
 
 const nav = [
    {
@@ -50,6 +53,14 @@ const nav = [
       name: 'Something else',
       to: '/admin/dashboard',
       icon: <CIcon icon={cilMobileLandscape} customClassName="nav-icon" />,
+   },
+
+   {
+      component: CNavItem,
+      name: 'Admin Controls',
+      to: '/admin/controls',
+      role: ROLES.SUPER_ADMIN,
+      icon: <CIcon icon={cilUserX} customClassName="nav-icon" />,
    },
 ]
 

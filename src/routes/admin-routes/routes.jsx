@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
 
+import { ROLES } from '../../utils/constants'
+
 const WorksView = React.lazy(() => import('../../admin/pages/works/WorksView'))
 const WorksInner = React.lazy(() =>
    import('../../admin/pages/works/inner-pages/WorksInner')
@@ -38,8 +40,14 @@ const WorksCreateFrom = React.lazy(() =>
    import('../../admin/pages/works/inner-pages/WorksCreateForm')
 )
 
-const WorksInnerView = React.lazy(() =>
-   import('../../admin/pages/news/inner-pages/NewsInnerView')
+const AdminControlsView = React.lazy(() =>
+   import('../../admin/pages/admin-controls/AdminControlsView')
+)
+const AdminControlInner = React.lazy(() =>
+   import('../../admin/pages/admin-controls/inner-pages/AdminControlnner')
+)
+const AdminRegisterForm = React.lazy(() =>
+   import('../../admin/pages/admin-controls/inner-pages/AdminRegisterForm')
 )
 
 // Base
@@ -100,6 +108,32 @@ const routes = [
    //    element: WorksCreateFrom,
    // },
    { path: '/works/create', name: 'Create Works', element: WorksCreateFrom },
+
+   // admin controls
+   {
+      path: '/controls',
+      name: 'Admin Controls',
+      element: AdminControlsView,
+      role: ROLES.SUPER_ADMIN,
+   },
+   {
+      path: '/controls/:adminId',
+      name: 'Admin Controls Inner',
+      element: AdminControlInner,
+      role: ROLES.SUPER_ADMIN,
+   },
+   {
+      path: '/controls/:adminId/edit',
+      name: 'Admin Controls Inner',
+      element: AdminRegisterForm,
+      role: ROLES.SUPER_ADMIN,
+   },
+   {
+      path: '/controls/register',
+      name: 'Admin Controls Inner',
+      element: AdminRegisterForm,
+      role: ROLES.SUPER_ADMIN,
+   },
 ]
 
 export default routes

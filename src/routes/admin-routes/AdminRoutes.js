@@ -28,20 +28,20 @@ const Page404 = React.lazy(() => import('../../admin/pages/not-found/Page404'))
 // )
 
 const AdminRoutes = () => {
-   const { role } = useSelector((state) => state.auth)
+   // const { role } = useSelector((state) => state.auth)
    return (
       <Suspense fallback={loading}>
          <Routes>
             <Route exact path="/login" name="Login Page" element={<Login />} />
 
-            {role === ROLES.SUPER_ADMIN && (
+            {/* {role === ROLES.SUPER_ADMIN && (
                <Route
                   exact
                   path="/register"
                   name="Register Page"
                   element={<Register />}
                />
-            )}
+            )} */}
 
             <Route exact path="/404" name="Page 404" element={<Page404 />} />
             <Route exact path="/500" name="Page 500" element={<div>500</div>} />
