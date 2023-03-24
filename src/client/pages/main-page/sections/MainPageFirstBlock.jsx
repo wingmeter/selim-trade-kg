@@ -8,10 +8,10 @@ import bg from '../../../assets/images/bg1.png'
 import { Button } from '../../../components/UI/buttons/Button'
 import CircleText from '../../../components/UI/CircleText'
 
-const FirtstSection = () => {
+const FirstSection = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    return (
-      <FirstSection>
+      <FirstSSection>
          <Container>
             <Title>
                Современная <br /> и надёжная защита
@@ -26,13 +26,13 @@ const FirtstSection = () => {
                </BottomCircle>
             )}
          </Container>
-      </FirstSection>
+      </FirstSSection>
    )
 }
 
-export default FirtstSection
+export default FirstSection
 
-const FirstSection = styled.section`
+const FirstSSection = styled.section`
    padding-top: 150px;
    background-image: url(${bg});
    background-position: center;

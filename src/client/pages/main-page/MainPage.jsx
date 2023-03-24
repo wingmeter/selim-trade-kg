@@ -1,23 +1,23 @@
-import EighthSection from './sections/EighthSection'
-import FifthSection from './sections/FifthSection'
-import FirtstSection from './sections/FirtstSection'
-import FourthSection from './sections/FourthSection'
-import SecondSection from './sections/SecondSection'
-import SeventhSection from './sections/SeventhSection'
-import SixthSection from './sections/SixthSection'
-import ThirdSection from './sections/ThirdSection'
+import MainPageEighthBlock from './sections/MainPageEighthBlock'
+import MainPageFifthBlock from './sections/MainPageFifthBlock'
+import MainPageFirstBlock from './sections/MainPageFirstBlock'
+import MainPageFourthBlock from './sections/MainPageFourthBlock'
+import MainPageSecondBlock from './sections/MainPageSecondBlock'
+import MainPageSeventhBlock from './sections/MainPageSeventhBlock'
+import MainPageSixthBlock from './sections/MainPageSixthBlock'
+import MainPageThirdBlock from './sections/MainPageThirdBlock'
 
 const MainPage = () => {
    return (
       <>
-         <FirtstSection />
-         <SecondSection />
-         <ThirdSection />
-         <FourthSection />
-         <FifthSection />
-         <SixthSection />
-         <SeventhSection />
-         <EighthSection />
+         <MainPageFirstBlock />
+         <MainPageSecondBlock />
+         <MainPageThirdBlock />
+         <MainPageFourthBlock />
+         <MainPageFifthBlock />
+         <MainPageSixthBlock />
+         <MainPageSeventhBlock />
+         <MainPageEighthBlock />
       </>
    )
 }

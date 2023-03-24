@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { cilTrash } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
 import {
    CButton,
    CCard,
@@ -14,31 +12,32 @@ import {
    CImage,
    CRow,
 } from '@coreui/react'
-import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
 // eslint-disable-next-line no-unused-vars
 import { useSearchParams } from 'react-router-dom'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
 import {
-   useCreateGateMutation,
-   useLazyGetSingleGateByIdQuery,
-   useUpdateGateMutation,
-} from '../../../../store/admin/gate-types/gateTypesApi'
+   useLazyGetNewsByIdQuery,
+   useUpdateNewsMutation,
+   useCreateNewsMutation,
+} from '../../../../store/admin/news/newsApi'
 import { getImgUrl } from '../../../../utils/helpers/general'
 
-const CreateGate = () => {
+const CreateNewsForm = () => {
    const navigate = useNavigate()
-   const { typeId, gateId } = useParams()
-   const [name, setName] = useState('')
+   const { newsId } = useParams()
+
+   const [title, setTitle] = useState('')
+   const [description, setDescription] = useState('')
    const [images, setImage] = useState({ image: null, file: null })
    const [errorPhoto, setErrorPhoto] = useState(false)
    const [validated, setValidated] = useState(false)
 
-   const [createGate, { isLoading }] = useCreateGateMutation()
+   const [createNews, { isLoading }] = useCreateNewsMutation()
    // eslint-disable-next-line no-unused-vars
-   const [updateGate, { isUpdating }] = useUpdateGateMutation()
-   const [getSingleGateById, { data: gate }] = useLazyGetSingleGateByIdQuery()
+   const [updateNews, { isUpdating }] = useUpdateNewsMutation()
+   const [getNewsById, { data: news }] = useLazyGetNewsByIdQuery()
 
    const navigateToLogin = () => {
       navigate(-1)
@@ -56,30 +55,26 @@ const CreateGate = () => {
    }
 
    const submitHandler = async () => {
-      if (!images.file && !name) {
+      if (!images.file && !title && !description) {
          setValidated(true)
-         return
       }
-      setValidated(true)
 
       const formData = new FormData()
-      formData.append('name', name)
+      formData.append('title', title)
+      formData.append('description', description)
       formData.append('image', images.file)
-      if (!images.file) {
-         formData.delete('image')
-      }
-      console.log(formData)
 
-      if (!gateId) {
+      if (!newsId) {
          try {
-            await createGate({ formData, gateTypeId: typeId }).unwrap()
+            await createNews(formData).unwrap()
             navigateToLogin()
          } catch (e) {
             console.error(e)
          }
       } else {
          try {
-            await updateGate({ formData, gateId }).unwrap()
+            console.log(newsId)
+            await updateNews({ formData, newsId })
             navigateToLogin()
          } catch (e) {
             console.error(e)
@@ -89,15 +84,14 @@ const CreateGate = () => {
 
    // ------------effects------------------------------------
    useEffect(() => {
-      if (gateId) getSingleGateById({ gateId })
+      if (newsId) getNewsById(newsId)
    }, [])
 
    useEffect(() => {
-      setImage({
-         image: getImgUrl(gate?.photoUrl) || null,
-      })
-      setName(gate?.name || '')
-   }, [gate])
+      setImage({ image: getImgUrl(news?.photoUrl) || null })
+      setTitle(news?.title || '')
+      setDescription(news?.description || '')
+   }, [news])
 
    useEffect(() => {
       const errorPhotoTime = setTimeout(() => {
@@ -111,61 +105,60 @@ const CreateGate = () => {
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
-            <CCol>{gateId ? 'Edit Gate' : 'Create Gate'}</CCol>
+            <CCol>Create Gate</CCol>
             <CButton onClick={() => navigate(-1)}>Go Back</CButton>
          </CCardHeader>
          <CCardBody>
             <CForm validated={validated}>
                <Flex direction="column" p="1rem 16px">
                   <CRow>
-                     <CFormLabel>Name</CFormLabel>
+                     <CFormLabel>Title</CFormLabel>
                      <CFormInput
-                        placeholder="Gate Name"
+                        placeholder="News Title"
                         type="string"
-                        value={name || ''}
+                        value={title || ''}
                         required
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setTitle(e.target.value)}
                         id="validationTextarea"
-                        feedbackInvalid="name is empty"
+                        feedbackInvalid="Name is required"
                         aria-label="file example"
                      />
                   </CRow>
                   <br />
-                  {!images.file && !images.image && (
-                     <CRow>
-                        <CFormLabel>Image</CFormLabel>
-                        <CFormInput
-                           type="file"
-                           onChange={onDrop}
-                           id="validationTextarea"
-                           feedbackInvalid="Image is not selected"
-                           aria-label="file example"
-                           required
-                        />
-                     </CRow>
-                  )}
+                  <CRow>
+                     <CFormLabel>Description</CFormLabel>
+                     <CFormInput
+                        placeholder="News Description"
+                        type="string"
+                        value={description || ''}
+                        required
+                        onChange={(e) => setDescription(e.target.value)}
+                        id="validationTextarea"
+                        feedbackInvalid="Description is required"
+                        aria-label="file example"
+                     />
+                  </CRow>
+                  <br />
+                  <CRow>
+                     <CFormLabel>Image</CFormLabel>
+                     <CFormInput
+                        type="file"
+                        onChange={onDrop}
+                        id="validationTextarea"
+                        feedbackInvalid="Image is not selected"
+                        aria-label="file example"
+                        required
+                     />
+                  </CRow>
                </Flex>
 
-               {images.image && (
-                  <Flex direction="column">
-                     <CImage
-                        src={images.image}
-                        alt="uploaded image"
-                        width={300}
-                        rounded
-                     />
-                     <Flex align="center">
-                        Delete Photo
-                        <IconButton>
-                           <CIcon
-                              icon={cilTrash}
-                              onClick={() =>
-                                 setImage({ image: null, file: null })
-                              }
-                           />
-                        </IconButton>
-                     </Flex>
-                  </Flex>
+               {images?.image && (
+                  <CImage
+                     src={images?.image}
+                     alt="uploaded image"
+                     width={300}
+                     rounded
+                  />
                )}
                <br />
                <Flex margin="20px 0px" justify="end">
@@ -179,4 +172,4 @@ const CreateGate = () => {
    )
 }
 
-export default CreateGate
+export default CreateNewsForm
