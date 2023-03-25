@@ -1,6 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
 
+const WorksView = React.lazy(() => import('../../admin/pages/works/WorksView'))
+const WorksInner = React.lazy(() =>
+   import('../../admin/pages/works/inner-pages/WorksInner')
+)
+
 const CreateGate = React.lazy(() =>
    import('../../admin/pages/gate-types/gates/CreateGateForm')
 )
@@ -27,6 +32,13 @@ const CreateNewsForm = React.lazy(() =>
 )
 
 const NewsInnerView = React.lazy(() =>
+   import('../../admin/pages/news/inner-pages/NewsInnerView')
+)
+const WorksCreateFrom = React.lazy(() =>
+   import('../../admin/pages/works/inner-pages/WorksCreateForm')
+)
+
+const WorksInnerView = React.lazy(() =>
    import('../../admin/pages/news/inner-pages/NewsInnerView')
 )
 
@@ -85,7 +97,23 @@ const routes = [
    },
    { path: '/news/:newsId/edit', name: 'Update News', element: CreateNewsForm },
    { path: '/news/:newsId', name: 'Create News', element: NewsInnerView },
-
+   // Works
+   {
+      path: '/works',
+      name: 'Our Works',
+      element: WorksView,
+   },
+   {
+      path: '/works/:worksId',
+      name: 'Works Inner Page',
+      element: WorksInner,
+   },
+   // {
+   //    path: '/works/:worksId/edit',
+   //    name: 'Update Works',
+   //    element: WorksCreateFrom,
+   // },
+   { path: '/works/create', name: 'Create Works', element: WorksCreateFrom },
    { path: '/reviews', name: 'Reviews', element: ReviewsView },
    {
       path: '/reviews/create',

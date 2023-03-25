@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import {
    CButton,
    CModal,
@@ -71,11 +72,11 @@ function TableList({
                            onClose={() => setVisible(false)}
                         >
                            <CModalHeader>
-                              <CModalTitle>Delete Gate Type</CModalTitle>
+                              <CModalTitle>Delete Works Photo</CModalTitle>
                            </CModalHeader>
                            <CModalBody>
-                              Are you really want to delete this gate type ? All
-                              informations will be removed!
+                              Are you really want to delete ? All informations
+                              will be removed!
                            </CModalBody>
                            <CModalFooter>
                               <CButton
@@ -112,12 +113,12 @@ function TableList({
                                     />
                                  </BodyCell>
                               )}
-                              {columns.map((col) => {
+                              {columns.map((col, index) => {
                                  if (col.cell) {
                                     return (
                                        <BodyCell
                                           width={col.width}
-                                          key={col.key}
+                                          key={col.key + index}
                                           style={col.style}
                                        >
                                           {col.cell(row)}
@@ -125,7 +126,10 @@ function TableList({
                                     )
                                  }
                                  return (
-                                    <BodyCell width={col.width} key={col.key}>
+                                    <BodyCell
+                                       width={col.width}
+                                       key={col.key + index}
+                                    >
                                        {row[col.key]}
                                     </BodyCell>
                                  )
