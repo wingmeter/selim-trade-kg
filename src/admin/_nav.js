@@ -4,11 +4,8 @@ import {
    cilMobileLandscape,
    cilNotes,
    cilOpentype,
-<<<<<<< HEAD
    cilPeople,
-=======
    cilSettings,
->>>>>>> fdf2c19c145984d2bae8b9a6b17c9cf16e7439c8
    cilSpeedometer,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
@@ -39,7 +36,6 @@ const nav = [
    },
    {
       component: CNavItem,
-<<<<<<< HEAD
       name: 'Reviews',
       to: '/admin/reviews',
       icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
@@ -50,12 +46,12 @@ const nav = [
    //    to: '/admin/gates',
    //    icon: <CIcon icon={cilDoor} customClassName="nav-icon" />,
    // },
-=======
+   {
+      component: CNavItem,
       name: 'Our Works',
       to: '/admin/works',
       icon: <CIcon icon={cilSettings} customClassName="nav-icon" />,
    },
->>>>>>> fdf2c19c145984d2bae8b9a6b17c9cf16e7439c8
    {
       component: CNavItem,
       name: 'Gate types',
