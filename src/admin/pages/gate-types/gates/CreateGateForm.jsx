@@ -89,7 +89,7 @@ const CreateGate = () => {
 
    // ------------effects------------------------------------
    useEffect(() => {
-      if (gateId) getSingleGateById({ gateId })
+      if (gateId) getSingleGateById(gateId)
    }, [])
 
    useEffect(() => {

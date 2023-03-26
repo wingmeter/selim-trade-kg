@@ -9,6 +9,7 @@ import {
    CCardTitle,
    CCol,
    CContainer,
+   CFormSwitch,
    CRow,
    CSpinner,
 } from '@coreui/react'
@@ -33,9 +34,7 @@ const GateTypesView = () => {
       page: 1,
    })
 
-   const { data: gateTypes, isFetching } = useGetAllGateTypesQuery({
-      page: 3,
-   })
+   const { data: gateTypes, isFetching } = useGetAllGateTypesQuery(queryParams)
    const [deleteGateType, { isLoading: isDeleting }] =
       useDeleteGateTypeMutation()
 
@@ -55,6 +54,14 @@ const GateTypesView = () => {
          setVisible(false)
       } catch (error) {
          console.error(error || 'something went wrong')
+      }
+   }
+   const changeStatusHandler = async (e, status) => {
+      e.stopPropagation()
+      try {
+         // await updateAdmin({ active: !status })
+      } catch (error) {
+         console.error(error)
       }
    }
 
@@ -91,6 +98,25 @@ const GateTypesView = () => {
          cell: (item) => <span>{item.createdBy.username}</span>,
       },
       {
+         key: 'active',
+         header: 'Status',
+         width: 100,
+         cell: (item) => (
+            <ActionContainer>
+               <CFormSwitch
+                  size="md"
+                  label={item.createdBy.active ? 'Enable' : 'Disable'}
+                  checked={item.createdBy.active}
+                  onChange={(event) => {
+                     event.stopPropagation()
+                     changeStatusHandler(event, item.active)
+                  }}
+                  // disabled={isUpdateing}
+               />
+            </ActionContainer>
+         ),
+      },
+      {
          key: 'actions',
          header: 'Действия',
          width: 100,
@@ -120,8 +146,10 @@ const GateTypesView = () => {
       },
    ]
 
-   const onNavigetToInnerPage = (id) => {
-      navigate(`${id}`)
+   const onNavigetToInnerPage = (e, id) => {
+      if (e.target.tagName.toLowerCase() !== 'input') {
+         navigate(`${id}`)
+      }
    }
 
    const data = gateTypes?.content
