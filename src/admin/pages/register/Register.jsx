@@ -1,140 +1,140 @@
-/* eslint-disable no-unused-vars */
-import React from 'react'
+// /* eslint-disable no-unused-vars */
+// import React from 'react'
 
-import { cilLockLocked, cilUser } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
-import {
-   CButton,
-   CCard,
-   CCardBody,
-   CCol,
-   CContainer,
-   CForm,
-   CFormInput,
-   CInputGroup,
-   CInputGroupText,
-   CRow,
-} from '@coreui/react'
-import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router'
+// import { cilLockLocked, cilUser } from '@coreui/icons'
+// import CIcon from '@coreui/icons-react'
+// import {
+//    CButton,
+//    CCard,
+//    CCardBody,
+//    CCol,
+//    CContainer,
+//    CForm,
+//    CFormInput,
+//    CInputGroup,
+//    CInputGroupText,
+//    CRow,
+// } from '@coreui/react'
+// import { useForm } from 'react-hook-form'
+// import { useDispatch } from 'react-redux'
+// import { useNavigate } from 'react-router'
 
-import { useRegisterAdminMutation } from '../../../store/admin/auth/authApi'
-import nasa from '../../assets/images/nasa.jpeg'
+// import { useRegisterAdminMutation } from '../../../store/admin/auth/authApi'
+// import nasa from '../../assets/images/nasa.jpeg'
 
-const Register = () => {
-   const dispatch = useDispatch()
-   const [registerAdmin, { isLoading }] = useRegisterAdminMutation()
-   const navigate = useNavigate()
+// const Register = () => {
+//    const dispatch = useDispatch()
+//    const [registerAdmin, { isLoading }] = useRegisterAdminMutation()
+//    const navigate = useNavigate()
 
-   const {
-      register,
-      formState: { errors },
-      handleSubmit,
-      reset,
-   } = useForm({ mode: 'onChange' })
+//    const {
+//       register,
+//       formState: { errors },
+//       handleSubmit,
+//       reset,
+//    } = useForm({ mode: 'onChange' })
 
-   const input = {
-      username: {
-         ...register('username', {
-            required: 'Please enter your user name',
-         }),
-      },
-      password: {
-         ...register('password', {
-            required: 'Please enter your password',
-         }),
-      },
-   }
-   const navigateToLogin = () => {
-      navigate('/admin/login')
-   }
+//    const input = {
+//       username: {
+//          ...register('username', {
+//             required: 'Please enter your user name',
+//          }),
+//       },
+//       password: {
+//          ...register('password', {
+//             required: 'Please enter your password',
+//          }),
+//       },
+//    }
+//    const navigateToLogin = () => {
+//       navigate('/admin/login')
+//    }
 
-   const submitHandler = async (formData) => {
-      try {
-         await registerAdmin(formData).unwrap()
-         navigateToLogin()
-      } catch (e) {
-         console.log(e)
-      }
-   }
+//    const submitHandler = async (formData) => {
+//       try {
+//          await registerAdmin(formData).unwrap()
+//          navigateToLogin()
+//       } catch (e) {
+//          console.log(e)
+//       }
+//    }
 
-   return (
-      <div
-         style={{
-            background: `url(${nasa})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            objectPosition: 'top center',
-            objectFit: 'cover',
-         }}
-         className="bg-light min-vh-100 d-flex flex-row align-items-center"
-      >
-         <CContainer>
-            <CRow className="justify-content-center">
-               <CCol md={9} lg={7} xl={6}>
-                  <CCard className="mx-4">
-                     <CCardBody className="p-4">
-                        <CForm onSubmit={handleSubmit(submitHandler)}>
-                           <h1>Register</h1>
-                           <p className="text-medium-emphasis">
-                              Create your account
-                           </p>
-                           <CInputGroup className="mb-3">
-                              <CInputGroupText>
-                                 <CIcon icon={cilUser} />
-                              </CInputGroupText>
-                              <CFormInput
-                                 placeholder="Username"
-                                 autoComplete="username"
-                                 disabled={isLoading}
-                                 error={errors?.username}
-                                 {...input.username}
-                              />
-                           </CInputGroup>
-                           {/* <CInputGroup className="mb-3">
-                              <CInputGroupText>@</CInputGroupText>
-                              <CFormInput
-                                 placeholder="Email"
-                                 autoComplete="email"
-                              />
-                           </CInputGroup> */}
-                           <CInputGroup className="mb-3">
-                              <CInputGroupText>
-                                 <CIcon icon={cilLockLocked} />
-                              </CInputGroupText>
-                              <CFormInput
-                                 type="password"
-                                 placeholder="Password"
-                                 autoComplete="new-password"
-                                 disabled={isLoading}
-                                 error={errors?.password}
-                                 {...input.password}
-                              />
-                           </CInputGroup>
-                           {/* <CInputGroup className="mb-4">
-                              <CInputGroupText>
-                                 <CIcon icon={cilLockLocked} />
-                              </CInputGroupText>
-                              <CFormInput
-                                 type="password"
-                                 placeholder="Repeat password"
-                                 autoComplete="new-password"
-                              />
-                           </CInputGroup> */}
-                           <div className="d-grid">
-                              <CButton type="submit" color="success">
-                                 Create Account
-                              </CButton>
-                           </div>
-                        </CForm>
-                     </CCardBody>
-                  </CCard>
-               </CCol>
-            </CRow>
-         </CContainer>
-      </div>
-   )
-}
+//    return (
+//       <div
+//          style={{
+//             background: `url(${nasa})`,
+//             backgroundRepeat: 'no-repeat',
+//             backgroundSize: 'cover',
+//             objectPosition: 'top center',
+//             objectFit: 'cover',
+//          }}
+//          className="bg-light min-vh-100 d-flex flex-row align-items-center"
+//       >
+//          <CContainer>
+//             <CRow className="justify-content-center">
+//                <CCol md={9} lg={7} xl={6}>
+//                   <CCard className="mx-4">
+//                      <CCardBody className="p-4">
+//                         <CForm onSubmit={handleSubmit(submitHandler)}>
+//                            <h1>Register</h1>
+//                            <p className="text-medium-emphasis">
+//                               Create your account
+//                            </p>
+//                            <CInputGroup className="mb-3">
+//                               <CInputGroupText>
+//                                  <CIcon icon={cilUser} />
+//                               </CInputGroupText>
+//                               <CFormInput
+//                                  placeholder="Username"
+//                                  autoComplete="username"
+//                                  disabled={isLoading}
+//                                  error={errors?.username}
+//                                  {...input.username}
+//                               />
+//                            </CInputGroup>
+//                            {/* <CInputGroup className="mb-3">
+//                               <CInputGroupText>@</CInputGroupText>
+//                               <CFormInput
+//                                  placeholder="Email"
+//                                  autoComplete="email"
+//                               />
+//                            </CInputGroup> */}
+//                            <CInputGroup className="mb-3">
+//                               <CInputGroupText>
+//                                  <CIcon icon={cilLockLocked} />
+//                               </CInputGroupText>
+//                               <CFormInput
+//                                  type="password"
+//                                  placeholder="Password"
+//                                  autoComplete="new-password"
+//                                  disabled={isLoading}
+//                                  error={errors?.password}
+//                                  {...input.password}
+//                               />
+//                            </CInputGroup>
+//                            {/* <CInputGroup className="mb-4">
+//                               <CInputGroupText>
+//                                  <CIcon icon={cilLockLocked} />
+//                               </CInputGroupText>
+//                               <CFormInput
+//                                  type="password"
+//                                  placeholder="Repeat password"
+//                                  autoComplete="new-password"
+//                               />
+//                            </CInputGroup> */}
+//                            <div className="d-grid">
+//                               <CButton type="submit" color="success">
+//                                  Create Account
+//                               </CButton>
+//                            </div>
+//                         </CForm>
+//                      </CCardBody>
+//                   </CCard>
+//                </CCol>
+//             </CRow>
+//          </CContainer>
+//       </div>
+//    )
+// }
 
-export default Register
+// export default Register

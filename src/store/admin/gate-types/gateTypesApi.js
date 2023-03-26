@@ -60,7 +60,7 @@ export const gatesTypeApi = createApi({
          }),
       }),
       getSingleGateById: build.query({
-         query: ({ gateId }) => ({
+         query: (gateId) => ({
             url: `api/v1/gate/${gateId}`,
             method: 'GET',
          }),

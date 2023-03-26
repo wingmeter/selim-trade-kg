@@ -55,6 +55,9 @@ const ReviewsInnerView = React.lazy(() =>
 const ReviewsView = React.lazy(() =>
    import('../../admin/pages/reviews/ReviewsView')
 )
+const GateInnerView = React.lazy(() =>
+   import('../../admin/components/gates-type/gates/GateInner')
+)
 
 // Base
 
@@ -68,12 +71,17 @@ const routes = [
       element: CreateGate,
    },
    {
+      path: 'gate-types/:typeId/gate/:gateId',
+      name: 'Gate Inner View',
+      element: GateInnerView,
+   },
+   {
       path: '/gate-types/create',
       name: 'Create Gate Type',
       element: CreateGateType,
    },
    {
-      path: '/gate-types/edit/:typeId',
+      path: '/gate-types/:typeId/edit',
       name: 'Edit Gate Type',
       element: CreateGateType,
    },
