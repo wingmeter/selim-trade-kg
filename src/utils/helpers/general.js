@@ -42,3 +42,14 @@ export const getImgUrl = (url) => {
    if (url) return `${BASE_URL}${url}`
    return null
 }
+
+// ger error message
+export const getErrorMessage = (error) => {
+   return (
+      error?.data?.message ||
+      error?.data?.error ||
+      error?.error ||
+      error?.message ||
+      'Something Went Wrong'
+   )
+}

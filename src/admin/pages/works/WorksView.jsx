@@ -10,6 +10,7 @@ import {
    CCol,
    CContainer,
    CRow,
+   CSpinner,
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router'
@@ -115,7 +116,7 @@ const WorksView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Published Our Works</CCardTitle>
+                     <CCardTitle>Published Works Photos</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>
@@ -133,7 +134,7 @@ const WorksView = () => {
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <span>Loading...</span>
+                  <CSpinner color="primary" />
                ) : (
                   <TableListContainer>
                      <TableList

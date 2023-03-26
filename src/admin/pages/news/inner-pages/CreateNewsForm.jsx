@@ -22,7 +22,11 @@ import {
    useUpdateNewsMutation,
    useCreateNewsMutation,
 } from '../../../../store/admin/news/newsApi'
-import { getImgUrl } from '../../../../utils/helpers/general'
+import { getErrorMessage, getImgUrl } from '../../../../utils/helpers/general'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../../components/UI/notification/Notification'
 
 const CreateNewsForm = () => {
    const navigate = useNavigate()
@@ -39,8 +43,9 @@ const CreateNewsForm = () => {
    const [updateNews, { isUpdating }] = useUpdateNewsMutation()
    const [getNewsById, { data: news }] = useLazyGetNewsByIdQuery()
 
-   const navigateToLogin = () => {
+   const navigateBack = () => {
       navigate(-1)
+      showSuccessMessage({ message: 'Succesfully published news!' })
    }
 
    const onDrop = ({ target }) => {
@@ -67,17 +72,16 @@ const CreateNewsForm = () => {
       if (!newsId) {
          try {
             await createNews(formData).unwrap()
-            navigateToLogin()
+            navigateBack()
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       } else {
          try {
-            console.log(newsId)
             await updateNews({ formData, newsId })
-            navigateToLogin()
+            navigateBack()
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       }
    }

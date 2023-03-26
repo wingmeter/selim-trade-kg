@@ -31,7 +31,11 @@ import {
    useUpdateAdminMutation,
 } from '../../../../store/admin/admin-controls/adminControlApi'
 import { DeviceSize } from '../../../../utils/constants'
-import { getImgUrl } from '../../../../utils/helpers/general'
+import { getErrorMessage, getImgUrl } from '../../../../utils/helpers/general'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../../components/UI/notification/Notification'
 
 const AdminRegisterForm = () => {
    const navigate = useNavigate()
@@ -65,6 +69,7 @@ const AdminRegisterForm = () => {
    const navigateAdminList = () => {
       reset()
       navigate('/admin/controls')
+      showSuccessMessage({ message: 'Successfully created new admin!' })
    }
 
    const submitHandler = async (formData) => {
@@ -73,14 +78,14 @@ const AdminRegisterForm = () => {
             await registerAdmin(formData).unwrap()
             navigateAdminList()
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       } else {
          try {
             await updateAdmin({ data, adminId }).unwrap()
             navigateAdminList()
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       }
    }
