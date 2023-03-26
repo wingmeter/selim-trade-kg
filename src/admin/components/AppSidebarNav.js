@@ -6,8 +6,6 @@ import { CBadge } from '@coreui/react'
 import { useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { ROLES } from '../../utils/constants'
-
 export const AppSidebarNav = ({ items }) => {
    const { role } = useSelector((state) => state.auth)
    const location = useLocation()

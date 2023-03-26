@@ -5,7 +5,7 @@ import { baseQueryWithReauth } from '../../customBaseFetchQuerry'
 export const adminControlsApi = createApi({
    reducerPath: 'adminControlsApi',
    baseQuery: baseQueryWithReauth,
-   tagTypes: ['Work', 'Admins'],
+   tagTypes: ['GetAdmin', 'Admins'],
    endpoints: (build) => ({
       // ------------------------------get all
       getAllAdmins: build.query({
@@ -19,12 +19,12 @@ export const adminControlsApi = createApi({
       }),
 
       // -----------------------------get by id method
-      getWorksById: build.query({
-         query: (workId) => ({
-            url: `api/v1/work/${workId}`,
+      getAdminById: build.query({
+         query: (adminId) => ({
+            url: `api/v1/admin/${adminId}`,
             method: 'GET',
          }),
-         providesTags: ['Work'],
+         providesTags: ['GetAdmin'],
       }),
 
       // ------------------------------post method
@@ -38,14 +38,31 @@ export const adminControlsApi = createApi({
       }),
 
       // ------------------------------delete method
-      enableAdmin: build.mutation({
-         query: (workId) => ({
-            url: `api/v1/work/${workId}`,
-            method: 'DELETE',
+      makeSuperAdmin: build.query({
+         query: (adminId) => ({
+            url: `api/v1/admin/make-super-admin/${adminId}`,
+            method: 'GET',
          }),
-         invalidatesTags: ['AllWorks'],
+         invalidatesTags: ['GetAdmin'],
+      }),
+
+      // -------------------------------- register
+      registerAdmin: build.mutation({
+         query: (body) => ({
+            url: 'api/v1/admin/register',
+            method: 'POST',
+            body,
+         }),
+         invalidatesTags: ['Admins'],
       }),
    }),
 })
 
-export const { useGetAllAdminsQuery, useUpdateAdminMutation } = adminControlsApi
+export const {
+   useGetAllAdminsQuery,
+   useUpdateAdminMutation,
+   useGetAdminByIdQuery,
+   useLazyMakeSuperAdminQuery,
+   useRegisterAdminMutation,
+   useLazyGetAdminByIdQuery,
+} = adminControlsApi

@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 import {
+   CAvatar,
    CButton,
    CCard,
    CCardBody,
@@ -9,6 +10,7 @@ import {
    CCardTitle,
    CCol,
    CContainer,
+   CFormSwitch,
    CRow,
    CSpinner,
 } from '@coreui/react'
@@ -16,23 +18,22 @@ import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
-import { useGetAllAdminsQuery } from '../../../store/admin/admin-controls/adminControlApi'
-import { useDeleteWorksMutation } from '../../../store/admin/works/worksApi'
-import { getImgUrl } from '../../../utils/helpers/general'
-import { ReactComponent as DeleteIcon } from '../../assets/icons/deleteIcon.svg'
+import {
+   useGetAllAdminsQuery,
+   useUpdateAdminMutation,
+} from '../../../store/admin/admin-controls/adminControlApi'
 import { ReactComponent as UpdateIcon } from '../../assets/icons/updateIcon.svg'
-import Checkbox from '../../components/checkbox/Checkbox'
 import TableList from '../../components/table/TableList'
 import AppPagination from '../../components/UI/AppPagination'
 
 const AdminControlsView = () => {
    const navigate = useNavigate()
-   const [deleteWorks, { isLoading: isDeleting }] = useDeleteWorksMutation()
-   const [visible, setVisible] = useState(false)
    const [queryParams, setQueryParams] = useState({
       page: 1,
    })
+   const [visible, setVisible] = useState(false)
 
+   const [updateAdmin, { isLoading: isUpdateing }] = useUpdateAdminMutation()
    const { data: admins, isFetching } = useGetAllAdminsQuery({
       pageNo: queryParams.page - 1,
    })
@@ -47,12 +48,12 @@ const AdminControlsView = () => {
       window.scroll(0, 0)
    }
 
-   const deleteGateTypeHandler = async (workId) => {
+   const changeStatusHandler = async (e, status) => {
+      e.stopPropagation()
       try {
-         await deleteWorks(workId).unwrap()
-         setVisible(false)
+         await updateAdmin({ active: !status })
       } catch (error) {
-         console.error(error || 'something went wrong')
+         console.error(error)
       }
    }
 
@@ -60,40 +61,51 @@ const AdminControlsView = () => {
       {
          key: 'id',
          header: 'ID',
-         width: 40,
+         width: 30,
+      },
+      {
+         key: 'username',
+         header: 'profile',
+         width: 70,
+         cell: (item) => (
+            <CAvatar
+               color="secondary"
+               status={item?.active ? 'success' : 'danger'}
+               size="md"
+            >
+               {item?.username?.split('')[0]?.toUpperCase()}
+            </CAvatar>
+         ),
       },
       {
          key: 'username',
          header: 'User Name',
-         width: 120,
+         width: 100,
       },
       {
          key: 'roles',
-         header: 'Roles',
+         header: 'Role',
          width: 100,
       },
-      // {
-      //    key: 'photoUrl',
-      //    header: 'Фото',
-      //    width: 125,
-      //    cell: (item) => (
-      //       <TableImage src={getImgUrl(item.photoUrl)} alt={item.photoUrl} />
-      //    ),
-      // },
       {
          key: 'active',
          header: 'Status',
          width: 80,
          cell: (item) => (
-            <Checkbox checked={item.active} onChange={(e) => null} />
+            <ActionContainer>
+               <CFormSwitch
+                  size="md"
+                  label={item.active ? 'Enable' : 'Disable'}
+                  checked={item.active}
+                  onChange={(event) => {
+                     event.stopPropagation()
+                     changeStatusHandler(event, item.active)
+                  }}
+                  disabled={isUpdateing}
+               />
+            </ActionContainer>
          ),
       },
-      // {
-      //    key: 'created_date',
-      //    header: 'Дата создания',
-      //    width: 120,
-      // },
-
       {
          key: 'actions',
          header: 'Действия',
@@ -110,22 +122,16 @@ const AdminControlsView = () => {
                   >
                      <UpdateIcon />
                   </IconButton>
-                  <IconButton
-                     onClick={(e) => {
-                        e.stopPropagation()
-                        setVisible(item.id)
-                     }}
-                  >
-                     <DeleteIcon />
-                  </IconButton>
                </ActionContainer>
             )
          },
       },
    ]
 
-   const onNavigetToInnerPage = (id) => {
-      navigate(`${id}`)
+   const onNavigetToInnerPage = (e, id) => {
+      if (e.target.tagName.toLowerCase() !== 'input') {
+         navigate(`${id}`)
+      }
    }
 
    const data = admins?.content
@@ -136,7 +142,7 @@ const AdminControlsView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Published Our Works</CCardTitle>
+                     <CCardTitle>Admins</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>
@@ -160,11 +166,9 @@ const AdminControlsView = () => {
                      <TableList
                         data={data}
                         columns={columnsConfig}
-                        onNavigetToInnerPage={onNavigetToInnerPage}
-                        deleteById={deleteGateTypeHandler}
+                        onNavigetToInnerPage={(e) => onNavigetToInnerPage(e)}
                         setVisible={setVisible}
                         visible={visible}
-                        isFetching={isDeleting}
                      />
                      <AppPagination
                         totalPage={admins?.totalPages}
@@ -181,11 +185,6 @@ const AdminControlsView = () => {
 
 export default AdminControlsView
 
-const TableImage = styled.img`
-   width: 100px;
-   height: 100px;
-   object-fit: contain;
-`
 const TableListContainer = styled.div`
    max-width: 1000px;
    margin: 0 auto;
@@ -194,6 +193,9 @@ const ActionContainer = styled.div`
    display: flex;
    gap: 12px;
    svg {
+      cursor: pointer;
+   }
+   input {
       cursor: pointer;
    }
 `

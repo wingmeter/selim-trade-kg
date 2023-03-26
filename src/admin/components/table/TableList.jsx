@@ -98,7 +98,7 @@ function TableList({
                         </CModal>
                         <Row
                            key={row.id}
-                           onClick={() => onNavigetToInnerPage(row.id)}
+                           onClick={(e) => onNavigetToInnerPage(e, row.id)}
                         >
                            <Div>
                               {checkbox && (

@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 
-import { useRegisterAdminMutation } from '../../../store/admin/auth/authApi'
+import { useRegisterAdminMutation } from '../../../store/admin/admin-controls/adminControlApi'
 import nasa from '../../assets/images/nasa.jpeg'
 
 const Register = () => {

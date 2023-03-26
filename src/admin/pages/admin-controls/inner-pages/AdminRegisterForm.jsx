@@ -20,18 +20,28 @@ import {
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
 import { useForm } from 'react-hook-form'
+import { useMediaQuery } from 'react-responsive'
 import { useNavigate, useParams } from 'react-router'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
-import { useRegisterAdminMutation } from '../../../../store/admin/auth/authApi'
-import { useCreateWorksMutation } from '../../../../store/admin/works/worksApi'
+import {
+   useGetAdminByIdQuery,
+   useLazyGetAdminByIdQuery,
+   useRegisterAdminMutation,
+   useUpdateAdminMutation,
+} from '../../../../store/admin/admin-controls/adminControlApi'
+import { DeviceSize } from '../../../../utils/constants'
 import { getImgUrl } from '../../../../utils/helpers/general'
 
 const AdminRegisterForm = () => {
    const navigate = useNavigate()
    const { adminId } = useParams()
+   const [data, setData] = useState({})
+   const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
+   const [getAdminById, { data: admin, isGeting }] = useLazyGetAdminByIdQuery()
    const [registerAdmin, { isLoading }] = useRegisterAdminMutation()
+   const [updateAdmin, { isUpdating }] = useUpdateAdminMutation()
 
    const {
       register,
@@ -52,46 +62,61 @@ const AdminRegisterForm = () => {
          }),
       },
    }
-   const navigateToLogin = () => {
-      navigate('/admin/login')
+   const navigateAdminList = () => {
+      reset()
+      navigate('/admin/controls')
    }
 
    const submitHandler = async (formData) => {
-      try {
-         await registerAdmin(formData).unwrap()
-         navigateToLogin()
-      } catch (e) {
-         console.log(e)
+      if (!adminId) {
+         try {
+            await registerAdmin(formData).unwrap()
+            navigateAdminList()
+         } catch (e) {
+            console.error(e)
+         }
+      } else {
+         try {
+            await updateAdmin({ data, adminId }).unwrap()
+            navigateAdminList()
+         } catch (e) {
+            console.error(e)
+         }
       }
    }
 
    // ------------effects------------------
    useEffect(() => {
-      // if (adminId) getWorksById(adminId)
+      if (adminId) getAdminById(adminId)
    }, [])
+   useEffect(() => {
+      setData({ username: admin?.username, password: admin?.password })
+   }, [adminId])
 
    return (
       <CContainer>
          <CRow style={{ height: '60vh' }}>
             <CCol md={20} lg={9} xl={10}>
-               <CCard className="mx-1" style={{ padding: '2rem 2rem 4rem' }}>
-                  <CCardBody className="p-4">
+               <CCard className={`${isMobile ? 'mx-1' : 'mx-2'}`}>
+                  <CCardHeader>
+                     <CButton onClick={navigateAdminList}>Go Back</CButton>
+                  </CCardHeader>
+                  <CCardBody className={isMobile ? 'p-2' : 'p-4'}>
                      <CForm onSubmit={handleSubmit(submitHandler)}>
-                        <h1>Register</h1>
+                        <h1>{adminId ? 'Update' : 'Register'}</h1>
                         <p className="text-medium-emphasis">
                            {adminId
                               ? 'Update admin account'
                               : 'Create new admin account'}
                         </p>
                         <br />
-                        <br />
                         <CInputGroup className="mb-4">
                            <CInputGroupText>
                               <CIcon icon={cilUser} />
                            </CInputGroupText>
                            <CFormInput
+                              defaultValue={data?.username || ''}
                               placeholder="Username"
-                              autoComplete="username"
                               disabled={isLoading}
                               error={errors?.username}
                               {...input.username}
@@ -102,9 +127,9 @@ const AdminRegisterForm = () => {
                               <CIcon icon={cilLockLocked} />
                            </CInputGroupText>
                            <CFormInput
+                              defaultValue={data?.password || ''}
                               type="password"
                               placeholder="Password"
-                              autoComplete="new-password"
                               disabled={isLoading}
                               error={errors?.password}
                               {...input.password}
@@ -119,6 +144,12 @@ const AdminRegisterForm = () => {
                         </div>
                      </CForm>
                   </CCardBody>
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
                </CCard>
             </CCol>
          </CRow>
