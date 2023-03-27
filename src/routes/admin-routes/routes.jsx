@@ -6,6 +6,12 @@ const WorksInner = React.lazy(() =>
    import('../../admin/pages/works/inner-pages/WorksInner')
 )
 
+const OrderView = React.lazy(() => import('../../admin/pages/order/Order'))
+
+const OrderInnerPage = React.lazy(() =>
+   import('../../admin/pages/order/OrderInnerPage')
+)
+
 const CreateGate = React.lazy(() =>
    import('../../admin/pages/gate-types/gates/CreateGateForm')
 )
@@ -64,6 +70,16 @@ const GateInnerView = React.lazy(() =>
 const routes = [
    { path: '/', exact: true, name: 'Home' },
    { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+   {
+      path: '/order',
+      name: 'Orders',
+      element: OrderView,
+   },
+   {
+      path: '/order/:orderId',
+      name: 'Order Inner Page',
+      element: OrderInnerPage,
+   },
    { path: '/gates/create', name: 'Create Gate', element: CreateGate },
    {
       path: 'gate-types/:typeId/gate/edit/:gateId',

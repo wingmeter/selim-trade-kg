@@ -11,14 +11,14 @@ import {
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
 
-import { useGetWorksByIdQuery } from '../../../../store/admin/works/worksApi'
-import { getImgUrl } from '../../../../utils/helpers/general'
+import { useGetOrderByIdQuery } from '../../../store/admin/order/orderApi'
+import { getImgUrl } from '../../../utils/helpers/general'
 
-const WorksInner = () => {
+const OrderInnerPage = () => {
    const navigate = useNavigate()
-   const { worksId } = useParams()
+   const { orderId } = useParams()
 
-   const { data: work, isFetching } = useGetWorksByIdQuery(worksId)
+   const { data: order, isFetching } = useGetOrderByIdQuery(orderId)
 
    return (
       <CContainer>
@@ -32,26 +32,17 @@ const WorksInner = () => {
                   <span>Loading...</span>
                ) : (
                   <CCard style={{ padding: '0.5rem 1rem' }}>
-                     <CCardImage
-                        src={getImgUrl(work?.photoUrl)}
-                        alt={work?.photoUrl}
-                        height={500}
-                        style={{ objectFit: 'contain' }}
-                     />
+                     <CCardTitle>Name: {order?.name}</CCardTitle>
                      <br />
-                     <CCardTitle>{work?.title}</CCardTitle>
+                     <CCardSubtitle>Message: {order?.message}</CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created Date: {work?.created_date}
-                     </CCardSubtitle>
-                     <br />
-                     <CCardSubtitle>
-                        Created By: {work?.createdBy?.username}
+                        Phone Number: {order?.phoneNumber}
                      </CCardSubtitle>
                      <br />
                      <CCardText>
                         Status:
-                        {work?.createdBy?.active ? 'Active' : 'Inactive'}
+                        {order?.createdBy?.active ? 'Active' : 'Inactive'}
                      </CCardText>
                      <br />
                   </CCard>
@@ -62,4 +53,4 @@ const WorksInner = () => {
    )
 }
 
-export default WorksInner
+export default OrderInnerPage
