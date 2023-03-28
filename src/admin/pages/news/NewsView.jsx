@@ -113,7 +113,7 @@ const News = () => {
       },
    ]
 
-   const onNavigetToInnerPage = (id) => {
+   const onNavigetToInnerPage = (_, id) => {
       navigate(`${id}`)
    }
 

@@ -120,7 +120,7 @@ const ReviewsView = () => {
       },
    ]
 
-   const onNavigetToInnerPage = (id) => {
+   const onNavigetToInnerPage = (_, id) => {
       navigate(`${id}`)
    }
 
