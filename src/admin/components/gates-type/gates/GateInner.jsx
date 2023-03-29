@@ -12,10 +12,8 @@ import {
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
 
-import { useGetGateTypeByIdQuery } from '../../../store/admin/gate-types/gateTypesApi'
-import { BASE_URL } from '../../../utils/constants'
-
-import GatesView from './gates/Gates'
+import { useGetSingleGateByIdQuery } from '../../../../store/admin/gate-types/gateTypesApi'
+import { getImgUrl } from '../../../../utils/helpers/general'
 
 function getLastValue(array) {
    const name = array[array.length - 1]?.username
@@ -24,11 +22,11 @@ function getLastValue(array) {
    return `${name}, in ${date}`
 }
 
-const GateTypesInnerView = () => {
+const GateInnerView = () => {
    const navigate = useNavigate()
-   const { typeId } = useParams()
+   const { gateId } = useParams()
 
-   const { data: gateType, isFetching } = useGetGateTypeByIdQuery(typeId)
+   const { data: gate, isFetching } = useGetSingleGateByIdQuery(gateId)
 
    return (
       <CContainer>
@@ -43,30 +41,30 @@ const GateTypesInnerView = () => {
                ) : (
                   <CCard style={{ padding: '0.5rem 1rem' }}>
                      <CCardImage
-                        src={`${BASE_URL}${gateType?.backgroundUrl}`}
+                        src={getImgUrl(gate?.photoUrl)}
                         alt="bg imgae"
                      />
                      <br />
-                     <CCardTitle>{gateType?.name}</CCardTitle>
+                     <CCardTitle>{gate?.name}</CCardTitle>
                      <br />
                      <CCardSubtitle>
-                        Created Date: {gateType?.created_date}
+                        Created Date: {gate?.created_date}
                      </CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created By: {gateType?.createdBy?.username}
+                        Created By: {gate?.createdBy?.username}
                      </CCardSubtitle>
                      <br />
                      <CCardText>
                         Status:
-                        {gateType?.createdBy?.active ? 'Active' : 'Inactive'}
+                        {gate?.createdBy?.active ? 'Active' : 'Inactive'}
                      </CCardText>
                      <br />
-                     {gateType?.updatedByList.length !== 0 && (
+                     {gate?.updatedByList?.length !== 0 && (
                         <CCardSubtitle className="mb-2 text-medium-emphasis">
                            Last updated by:{' '}
                            <span style={{ color: 'green' }}>
-                              {getLastValue(gateType?.updatedByList)}
+                              {getLastValue(gate?.updatedByList)}
                            </span>
                         </CCardSubtitle>
                      )}
@@ -76,10 +74,8 @@ const GateTypesInnerView = () => {
                )}
             </CCardBody>
          </CCard>
-         <br />
-         <GatesView gates={gateType?.gateList} isFetching={isFetching} />
       </CContainer>
    )
 }
 
-export default GateTypesInnerView
+export default GateInnerView

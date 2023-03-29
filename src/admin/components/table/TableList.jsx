@@ -30,7 +30,6 @@ function TableList({
    visible,
    isFetching,
 }) {
-   console.log(data)
    return (
       <TableContainer>
          <MuiTable width={width}>
@@ -176,6 +175,7 @@ const BodyCell = styled(TableCell)`
    height: 74px;
    max-height: 74px;
    text-align: left;
+   overflow: hidden;
 `
 
 const Div = styled('div')`

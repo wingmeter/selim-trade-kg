@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable no-nested-ternary */
 import { useState } from 'react'
 
 import {
@@ -10,30 +10,31 @@ import {
    CCol,
    CContainer,
    CRow,
-   CSpinner,
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
 import {
-   useDeleteWorksMutation,
-   useGetAllWorksQuery,
-} from '../../../store/admin/works/worksApi'
-import { getImgUrl } from '../../../utils/helpers/general'
+   useDeleteReviewsMutation,
+   useGetAllReviewsQuery,
+} from '../../../store/admin/reviews/reviewApi'
+import { BASE_URL } from '../../../utils/constants'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/deleteIcon.svg'
+import { ReactComponent as UpdateIcon } from '../../assets/icons/updateIcon.svg'
 import TableList from '../../components/table/TableList'
 import AppPagination from '../../components/UI/AppPagination'
 
-const WorksView = () => {
+const ReviewsView = () => {
    const navigate = useNavigate()
-   const [deleteWorks, { isLoading: isDeleting }] = useDeleteWorksMutation()
+   const [deleteReviewById, { isLoading: isDeleting }] =
+      useDeleteReviewsMutation()
    const [visible, setVisible] = useState(false)
    const [queryParams, setQueryParams] = useState({
       page: 1,
    })
 
-   const { data: works, isFetching } = useGetAllWorksQuery({
+   const { data: reviews, isFetching } = useGetAllReviewsQuery({
       pageNo: queryParams.page - 1,
    })
 
@@ -47,16 +48,15 @@ const WorksView = () => {
       window.scroll(0, 0)
    }
 
-   const deleteGateTypeHandler = async (workId) => {
+   const deleteReviewsHandler = async (id) => {
       try {
-         await deleteWorks(workId).unwrap()
+         await deleteReviewById(id).unwrap()
          setVisible(false)
       } catch (error) {
          console.error(error || 'something went wrong')
       }
    }
-
-   const columnsConfig = [
+   const columns = [
       {
          key: 'id',
          header: 'ID',
@@ -65,31 +65,47 @@ const WorksView = () => {
       {
          key: 'photoUrl',
          header: 'Фото',
-         width: 125,
+         width: 80,
+         // eslint-disable-next-line react/no-unstable-nested-components
          cell: (item) => (
-            <TableImage src={getImgUrl(item.photoUrl)} alt={item.photoUrl} />
+            <TableImage
+               src={`${BASE_URL}${item.photoUrl}`}
+               alt={item.photoUrl}
+            />
          ),
       },
-      {
-         key: 'created_date',
-         header: 'Время создания',
-         width: 100,
-         cell: (item) => <span>{item?.created_date?.split(',')[1]}</span>,
-      },
+      { key: 'name', header: 'Name', width: 100 },
       {
          key: 'created_date',
          header: 'Дата создания',
          width: 120,
       },
-
+      {
+         key: 'text',
+         header: 'Description',
+         width: 150,
+      },
+      {
+         key: 'gate',
+         header: 'Gate',
+         width: 150,
+      },
       {
          key: 'actions',
          header: 'Действия',
          width: 100,
-
+         // eslint-disable-next-line react/no-unstable-nested-components
          cell: (item) => {
             return (
                <ActionContainer>
+                  <IconButton
+                     onClick={(e) => {
+                        e.stopPropagation()
+                        navigate(`${item.id}/edit`)
+                     }}
+                  >
+                     <UpdateIcon />
+                  </IconButton>
                   <IconButton
                      onClick={(e) => {
                         e.stopPropagation()
@@ -105,11 +121,10 @@ const WorksView = () => {
    ]
 
    const onNavigetToInnerPage = (_, id) => {
-      console.log(id)
       navigate(`${id}`)
    }
 
-   const data = works?.content
+   const data = reviews?.content
 
    return (
       <CContainer className="mb-5">
@@ -117,14 +132,14 @@ const WorksView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Published Works Photos</CCardTitle>
+                     <CCardTitle>Created Reviews</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>
                         <CButton
                            className="Loat-right"
                            color="success"
-                           onClick={() => navigate('/admin/works/create')}
+                           onClick={() => navigate('/admin/reviews/create')}
                         >
                            Создать
                         </CButton>
@@ -135,20 +150,22 @@ const WorksView = () => {
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <CSpinner color="primary" />
+                  <span>Loading...</span>
+               ) : !reviews.content ? (
+                  <span>Пока данных нету</span>
                ) : (
                   <TableListContainer>
                      <TableList
                         data={data}
-                        columns={columnsConfig}
+                        columns={columns}
                         onNavigetToInnerPage={onNavigetToInnerPage}
-                        deleteById={deleteGateTypeHandler}
+                        deleteById={deleteReviewsHandler}
                         setVisible={setVisible}
                         visible={visible}
                         isFetching={isDeleting}
                      />
                      <AppPagination
-                        totalPage={works.totalPages}
+                        totalPage={reviews.totalPages}
                         page={queryParams.page}
                         onChange={handleChangePage}
                      />
@@ -160,11 +177,11 @@ const WorksView = () => {
    )
 }
 
-export default WorksView
+export default ReviewsView
 
 const TableImage = styled.img`
-   width: 100px;
-   height: 100px;
+   width: 70px;
+   height: 70px;
    object-fit: contain;
 `
 const TableListContainer = styled.div`

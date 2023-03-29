@@ -5,6 +5,7 @@ import { authApi } from './admin/auth/authApi'
 import authSlice from './admin/auth/authSlice'
 import { gatesTypeApi } from './admin/gate-types/gateTypesApi'
 import { newsApi } from './admin/news/newsApi'
+import { reviewApi } from './admin/reviews/reviewApi'
 import sidebarSlice from './admin/sidebar/sidebarSlice'
 import { worksApi } from './admin/works/worksApi'
 
@@ -16,6 +17,8 @@ const store = configureStore({
       [authApi.reducerPath]: authApi.reducer,
       [gatesTypeApi.reducerPath]: gatesTypeApi.reducer,
       [newsApi.reducerPath]: newsApi.reducer,
+
+      [reviewApi.reducerPath]: reviewApi.reducer,
       [worksApi.reducerPath]: worksApi.reducer,
       [adminControlsApi.reducerPath]: adminControlsApi.reducer,
    },
@@ -25,7 +28,8 @@ const store = configureStore({
          gatesTypeApi.middleware,
          newsApi.middleware,
          worksApi.middleware,
-         adminControlsApi.middleware
+         adminControlsApi.middleware,
+         reviewApi.middleware
       ),
 })
 
