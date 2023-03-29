@@ -12,13 +12,10 @@ import {
    CContainer,
    CForm,
    CFormInput,
-   CFormLabel,
-   CImage,
    CInputGroup,
    CInputGroupText,
    CRow,
 } from '@coreui/react'
-import { IconButton } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate, useParams } from 'react-router'
@@ -41,18 +38,23 @@ const AdminRegisterForm = () => {
    const navigate = useNavigate()
    const { adminId } = useParams()
    const [data, setData] = useState({})
+   const [showPassField, SetPassField] = useState(false)
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
    const [getAdminById, { data: admin, isGeting }] = useLazyGetAdminByIdQuery()
-   const [registerAdmin, { isLoading }] = useRegisterAdminMutation()
-   const [updateAdmin, { isUpdating }] = useUpdateAdminMutation()
+   const [registerAdmin, { isLoading: isRegistering }] =
+      useRegisterAdminMutation()
+   const [updateAdmin, { isLoading: isUpdating }] = useUpdateAdminMutation()
 
    const {
       register,
       formState: { errors },
       handleSubmit,
+      watch,
       reset,
    } = useForm({ mode: 'onChange' })
+
+   const isRegistration = !adminId
 
    const input = {
       username: {
@@ -63,19 +65,24 @@ const AdminRegisterForm = () => {
       password: {
          ...register('password', {
             required: 'Please enter your password',
+            pattern: {
+               value: /^(?=.*\d)(?=.*[a-z]).{6,32}$/,
+               message:
+                  'Password should be between 6 and 32 characters, and contain at least one lowercase letter and one digit.',
+            },
          }),
       },
    }
    const navigateAdminList = () => {
       reset()
       navigate('/admin/controls')
-      showSuccessMessage({ message: 'Successfully created new admin!' })
    }
 
    const submitHandler = async (formData) => {
-      if (!adminId) {
+      if (isRegistration) {
          try {
             await registerAdmin(formData).unwrap()
+            showSuccessMessage({ message: 'Successfully created new admin!' })
             navigateAdminList()
          } catch (e) {
             showErrorMessage({ message: getErrorMessage(e) })
@@ -83,6 +90,7 @@ const AdminRegisterForm = () => {
       } else {
          try {
             await updateAdmin({ data, adminId }).unwrap()
+            showSuccessMessage({ message: 'Successfully updated admin!' })
             navigateAdminList()
          } catch (e) {
             showErrorMessage({ message: getErrorMessage(e) })
@@ -94,9 +102,10 @@ const AdminRegisterForm = () => {
    useEffect(() => {
       if (adminId) getAdminById(adminId)
    }, [])
+
    useEffect(() => {
-      setData({ username: admin?.username, password: admin?.password })
-   }, [adminId])
+      setData({ username: admin?.username })
+   }, [admin])
 
    return (
       <CContainer>
@@ -107,7 +116,7 @@ const AdminRegisterForm = () => {
                      <CButton onClick={navigateAdminList}>Go Back</CButton>
                   </CCardHeader>
                   <CCardBody className={isMobile ? 'p-2' : 'p-4'}>
-                     <CForm onSubmit={handleSubmit(submitHandler)}>
+                     <CForm validated onSubmit={handleSubmit(submitHandler)}>
                         <h1>{adminId ? 'Update' : 'Register'}</h1>
                         <p className="text-medium-emphasis">
                            {adminId
@@ -122,24 +131,32 @@ const AdminRegisterForm = () => {
                            <CFormInput
                               defaultValue={data?.username || ''}
                               placeholder="Username"
-                              disabled={isLoading}
+                              disabled={isRegistering}
                               error={errors?.username}
+                              feedback={errors?.username}
                               {...input.username}
                            />
                         </CInputGroup>
-                        <CInputGroup className="mb-3">
-                           <CInputGroupText>
-                              <CIcon icon={cilLockLocked} />
-                           </CInputGroupText>
-                           <CFormInput
-                              defaultValue={data?.password || ''}
-                              type="password"
-                              placeholder="Password"
-                              disabled={isLoading}
-                              error={errors?.password}
-                              {...input.password}
-                           />
-                        </CInputGroup>
+                        {showPassField && adminId ? (
+                           <CInputGroup className="mb-3">
+                              <CInputGroupText>
+                                 <CIcon icon={cilLockLocked} />
+                              </CInputGroupText>
+                              <CFormInput
+                                 defaultValue={data?.password || ''}
+                                 type="password"
+                                 placeholder="Password"
+                                 disabled={isRegistering}
+                                 error={errors?.password}
+                                 {...input.password}
+                              />
+                           </CInputGroup>
+                        ) : (
+                           <CButton onClick={() => SetPassField(true)}>
+                              set new password
+                           </CButton>
+                        )}
+
                         <br />
                         <br />
                         <div className="d-grid">

@@ -29,10 +29,10 @@ export const adminControlsApi = createApi({
 
       // ------------------------------post method
       updateAdmin: build.mutation({
-         query: (formData, adminId) => ({
+         query: ({ data, adminId }) => ({
             url: `api/v1/admin/${adminId}`,
             method: 'PUT',
-            body: formData,
+            body: data,
          }),
          invalidatesTags: ['Admins'],
       }),

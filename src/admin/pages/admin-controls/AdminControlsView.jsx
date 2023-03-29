@@ -22,9 +22,14 @@ import {
    useGetAllAdminsQuery,
    useUpdateAdminMutation,
 } from '../../../store/admin/admin-controls/adminControlApi'
+import { getErrorMessage } from '../../../utils/helpers/general'
 import { ReactComponent as UpdateIcon } from '../../assets/icons/updateIcon.svg'
 import TableList from '../../components/table/TableList'
 import AppPagination from '../../components/UI/AppPagination'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../components/UI/notification/Notification'
 
 const AdminControlsView = () => {
    const navigate = useNavigate()
@@ -48,12 +53,18 @@ const AdminControlsView = () => {
       window.scroll(0, 0)
    }
 
-   const changeStatusHandler = async (e, status) => {
+   const changeStatusHandler = async (e, admin) => {
       e.stopPropagation()
       try {
-         await updateAdmin({ active: !status })
+         await updateAdmin({
+            data: { active: !admin.active },
+            adminId: admin.id,
+         }).unwrap()
+         showSuccessMessage({
+            message: 'Successfully changed status of admin!',
+         })
       } catch (error) {
-         console.error(error)
+         showErrorMessage({ message: getErrorMessage(error) })
       }
    }
 
@@ -99,7 +110,7 @@ const AdminControlsView = () => {
                   checked={item.active}
                   onChange={(event) => {
                      event.stopPropagation()
-                     changeStatusHandler(event, item.active)
+                     changeStatusHandler(event, item)
                   }}
                   disabled={isUpdateing}
                />
@@ -166,7 +177,7 @@ const AdminControlsView = () => {
                      <TableList
                         data={data}
                         columns={columnsConfig}
-                        onNavigetToInnerPage={(e) => onNavigetToInnerPage(e)}
+                        onNavigetToInnerPage={onNavigetToInnerPage}
                         setVisible={setVisible}
                         visible={visible}
                      />
