@@ -49,6 +49,9 @@ const AdminControlInner = React.lazy(() =>
 const AdminRegisterForm = React.lazy(() =>
    import('../../admin/pages/admin-controls/inner-pages/AdminRegisterForm')
 )
+const AdminEditForm = React.lazy(() =>
+   import('../../admin/pages/admin-controls/inner-pages/AdminEditForm')
+)
 
 // Reviews
 
@@ -147,7 +150,7 @@ const routes = [
    {
       path: '/controls/:adminId/edit',
       name: 'Admin Controls Inner',
-      element: AdminRegisterForm,
+      element: AdminEditForm,
       role: ROLES.SUPER_ADMIN,
    },
    {

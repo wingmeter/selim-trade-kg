@@ -39,9 +39,7 @@ const AdminControlsView = () => {
    const [visible, setVisible] = useState(false)
 
    const [updateAdmin, { isLoading: isUpdateing }] = useUpdateAdminMutation()
-   const { data: admins, isFetching } = useGetAllAdminsQuery({
-      pageNo: queryParams.page - 1,
-   })
+   const { data: admins, isFetching } = useGetAllAdminsQuery(queryParams)
 
    const handleChangePage = (newPage) => {
       setQueryParams((prev) => {
@@ -57,7 +55,7 @@ const AdminControlsView = () => {
       e.stopPropagation()
       try {
          await updateAdmin({
-            data: { active: !admin.active },
+            data: { username: admin.username, active: !admin.active },
             adminId: admin.id,
          }).unwrap()
          showSuccessMessage({
@@ -101,7 +99,7 @@ const AdminControlsView = () => {
       {
          key: 'active',
          header: 'Status',
-         width: 80,
+         width: 100,
          cell: (item) => (
             <ActionContainer>
                <CFormSwitch
