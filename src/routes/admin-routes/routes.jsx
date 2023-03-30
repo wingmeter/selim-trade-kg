@@ -1,6 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
 
+const CreateOrderInProgressForm = React.lazy(() =>
+   import('../../admin/pages/order/CreateOrderInProgressForm')
+)
 const WorksView = React.lazy(() => import('../../admin/pages/works/WorksView'))
 const WorksInner = React.lazy(() =>
    import('../../admin/pages/works/inner-pages/WorksInner')
@@ -79,6 +82,16 @@ const routes = [
       path: '/order/:orderId',
       name: 'Order Inner Page',
       element: OrderInnerPage,
+   },
+   {
+      path: '/order/:orderId/create',
+      name: 'Order Create Page',
+      element: CreateOrderInProgressForm,
+   },
+   {
+      path: '/order/:orderId/edit',
+      name: 'Order Update Page',
+      element: CreateOrderInProgressForm,
    },
    { path: '/gates/create', name: 'Create Gate', element: CreateGate },
    {
