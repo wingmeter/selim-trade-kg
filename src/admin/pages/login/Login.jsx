@@ -23,7 +23,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useLoginAdminMutation } from '../../../store/admin/auth/authApi'
 import { authActions } from '../../../store/admin/auth/authSlice'
 import { ROLES } from '../../../utils/constants'
+import { getErrorMessage } from '../../../utils/helpers/general'
 import nasa from '../../assets/images/nasa.jpeg'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../components/UI/notification/Notification'
 
 const Login = () => {
    const navigate = useNavigate()
@@ -55,9 +60,10 @@ const Login = () => {
 
    const submitHandler = async (formData) => {
       try {
-         await loginAdmin(formData)
+         await loginAdmin(formData).unwrap()
+         showSuccessMessage({ message: 'Succesfully loged in!' })
       } catch (err) {
-         console.log(err)
+         showErrorMessage({ message: getErrorMessage(error) })
       }
    }
 

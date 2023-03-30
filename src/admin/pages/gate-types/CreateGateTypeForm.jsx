@@ -24,7 +24,11 @@ import {
    useLazyGetGateTypeByIdQuery,
    useUpdateGateTypeMutation,
 } from '../../../store/admin/gate-types/gateTypesApi'
-import { getImgUrl } from '../../../utils/helpers/general'
+import { getErrorMessage, getImgUrl } from '../../../utils/helpers/general'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../components/UI/notification/Notification'
 
 const CreateGate = () => {
    const navigate = useNavigate()
@@ -66,15 +70,16 @@ const CreateGate = () => {
          try {
             await createGateType(formData).unwrap()
             navigate('/admin/gate-types')
-         } catch (e) {
-            console.error(e)
+            showSuccessMessage({ message: 'Successfully created new type' })
+         } catch (error) {
+            showErrorMessage({ message: getErrorMessage(error) })
          }
       } else {
          try {
             await updateGateType({ formData, typeId }).unwrap()
             navigate('/admin/gate-types')
-         } catch (e) {
-            console.error(e)
+         } catch (error) {
+            showErrorMessage({ message: getErrorMessage(error) })
          }
       }
    }

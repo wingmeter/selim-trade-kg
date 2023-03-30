@@ -19,15 +19,23 @@ import {
    CDropdownMenu,
    CDropdownToggle,
 } from '@coreui/react'
+import { useSelector } from 'react-redux'
 
 import { logOut } from '../../../utils/helpers/general'
-import avatar8 from '../../assets/images/avatars/8.jpg'
 
 const AppHeaderDropdown = () => {
+   const { adminData } = useSelector((state) => state.auth)
    return (
       <CDropdown variant="nav-item">
          <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-            <CAvatar src={avatar8} size="md" />
+            <CAvatar
+               color="secondary"
+               className="me-3"
+               size="md"
+               alt="admin-img"
+            >
+               {adminData?.username?.split('')[0]?.toUpperCase() || 'A'}
+            </CAvatar>
          </CDropdownToggle>
          <CDropdownMenu className="pt-0" placement="bottom-end">
             <CDropdownHeader className="bg-light fw-semibold py-2">

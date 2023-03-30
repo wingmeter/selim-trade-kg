@@ -41,8 +41,6 @@ const WorksInner = () => {
                      <br />
                      <CCardTitle>{work?.title}</CCardTitle>
                      <br />
-                     {/* <CCardTitle>{work?.description}</CCardTitle>
-                     <br /> */}
                      <CCardSubtitle>
                         Created Date: {work?.created_date}
                      </CCardSubtitle>
