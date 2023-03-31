@@ -6,13 +6,6 @@ export const authApi = createApi({
    reducerPath: 'authApi',
    baseQuery: baseQueryWithReauth,
    endpoints: (build) => ({
-      registerAdmin: build.mutation({
-         query: (body) => ({
-            url: 'api/v1/admin/register',
-            method: 'POST',
-            body,
-         }),
-      }),
       refreshToken: build.mutation({
          query: (body) => ({
             url: 'api/v1/auth/refresh-token',
@@ -30,8 +23,4 @@ export const authApi = createApi({
    }),
 })
 
-export const {
-   useRegisterAdminMutation,
-   useLoginAdminMutation,
-   useRefreshTokenMutation,
-} = authApi
+export const { useLoginAdminMutation, useRefreshTokenMutation } = authApi

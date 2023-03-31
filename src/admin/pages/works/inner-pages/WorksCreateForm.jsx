@@ -24,7 +24,11 @@ import {
    useUpdateNewsMutation,
 } from '../../../../store/admin/news/newsApi'
 import { useCreateWorksMutation } from '../../../../store/admin/works/worksApi'
-import { getImgUrl } from '../../../../utils/helpers/general'
+import { getErrorMessage, getImgUrl } from '../../../../utils/helpers/general'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../../components/UI/notification/Notification'
 
 const CreateWorksForm = () => {
    const navigate = useNavigate()
@@ -38,8 +42,9 @@ const CreateWorksForm = () => {
    const [updateNews, { isUpdating }] = useUpdateNewsMutation()
    const [getWorksById, { data: works }] = useLazyGetNewsByIdQuery()
 
-   const navigateToLogin = () => {
+   const navigateBack = () => {
       navigate(-1)
+      showSuccessMessage({ message: 'Successfully published works photo!' })
    }
 
    const onDrop = ({ target }) => {
@@ -65,9 +70,9 @@ const CreateWorksForm = () => {
       if (!worksId && images.file) {
          try {
             await createWorks(formData).unwrap()
-            navigateToLogin()
+            navigateBack()
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       }
    }

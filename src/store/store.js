@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import { adminControlsApi } from './admin/admin-controls/adminControlApi'
 import { authApi } from './admin/auth/authApi'
 import authSlice from './admin/auth/authSlice'
 import { gatesTypeApi } from './admin/gate-types/gateTypesApi'
@@ -21,6 +22,7 @@ const store = configureStore({
       [reviewApi.reducerPath]: reviewApi.reducer,
       [worksApi.reducerPath]: worksApi.reducer,
       [orderApi.reducerPath]: orderApi.reducer,
+      [adminControlsApi.reducerPath]: adminControlsApi.reducer,
    },
    middleware: (getDefaultMiddleWare) =>
       getDefaultMiddleWare().concat(
@@ -29,8 +31,8 @@ const store = configureStore({
          newsApi.middleware,
          reviewApi.middleware,
          worksApi.middleware,
+         adminControlsApi.middleware,
          orderApi.middleware
       ),
 })
-
 export default store

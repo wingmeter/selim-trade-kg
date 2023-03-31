@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 import {
+   CAvatar,
    CButton,
    CCard,
    CCardBody,
@@ -9,6 +10,7 @@ import {
    CCardTitle,
    CCol,
    CContainer,
+   CFormSwitch,
    CRow,
    CSpinner,
 } from '@coreui/react'
@@ -17,25 +19,27 @@ import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
 import {
-   useDeleteWorksMutation,
-   useGetAllWorksQuery,
-} from '../../../store/admin/works/worksApi'
-import { getImgUrl } from '../../../utils/helpers/general'
-import { ReactComponent as DeleteIcon } from '../../assets/icons/deleteIcon.svg'
+   useGetAllAdminsQuery,
+   useUpdateAdminMutation,
+} from '../../../store/admin/admin-controls/adminControlApi'
+import { getErrorMessage } from '../../../utils/helpers/general'
+import { ReactComponent as UpdateIcon } from '../../assets/icons/updateIcon.svg'
 import TableList from '../../components/table/TableList'
 import AppPagination from '../../components/UI/AppPagination'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../components/UI/notification/Notification'
 
-const WorksView = () => {
+const AdminControlsView = () => {
    const navigate = useNavigate()
-   const [deleteWorks, { isLoading: isDeleting }] = useDeleteWorksMutation()
-   const [visible, setVisible] = useState(false)
    const [queryParams, setQueryParams] = useState({
       page: 1,
    })
+   const [visible, setVisible] = useState(false)
 
-   const { data: works, isFetching } = useGetAllWorksQuery({
-      pageNo: queryParams.page - 1,
-   })
+   const [updateAdmin, { isLoading: isUpdateing }] = useUpdateAdminMutation()
+   const { data: admins, isFetching } = useGetAllAdminsQuery(queryParams)
 
    const handleChangePage = (newPage) => {
       setQueryParams((prev) => {
@@ -47,12 +51,18 @@ const WorksView = () => {
       window.scroll(0, 0)
    }
 
-   const deleteGateTypeHandler = async (workId) => {
+   const changeStatusHandler = async (e, admin) => {
+      e.stopPropagation()
       try {
-         await deleteWorks(workId).unwrap()
-         setVisible(false)
+         await updateAdmin({
+            data: { username: admin.username, active: !admin.active },
+            adminId: admin.id,
+         }).unwrap()
+         showSuccessMessage({
+            message: 'Successfully changed status of admin!',
+         })
       } catch (error) {
-         console.error(error || 'something went wrong')
+         showErrorMessage({ message: getErrorMessage(error) })
       }
    }
 
@@ -60,28 +70,51 @@ const WorksView = () => {
       {
          key: 'id',
          header: 'ID',
-         width: 40,
+         width: 30,
       },
       {
-         key: 'photoUrl',
-         header: 'Фото',
-         width: 125,
+         key: 'username',
+         header: 'profile',
+         width: 70,
          cell: (item) => (
-            <TableImage src={getImgUrl(item.photoUrl)} alt={item.photoUrl} />
+            <CAvatar
+               color="secondary"
+               status={item?.active ? 'success' : 'danger'}
+               size="md"
+            >
+               {item?.username?.split('')[0]?.toUpperCase()}
+            </CAvatar>
          ),
       },
       {
-         key: 'created_date',
-         header: 'Время создания',
+         key: 'username',
+         header: 'User Name',
          width: 100,
-         cell: (item) => <span>{item?.created_date?.split(',')[1]}</span>,
       },
       {
-         key: 'created_date',
-         header: 'Дата создания',
-         width: 120,
+         key: 'roles',
+         header: 'Role',
+         width: 100,
       },
-
+      {
+         key: 'active',
+         header: 'Status',
+         width: 100,
+         cell: (item) => (
+            <ActionContainer>
+               <CFormSwitch
+                  size="md"
+                  label={item.active ? 'Enable' : 'Disable'}
+                  checked={item.active}
+                  onChange={(event) => {
+                     event.stopPropagation()
+                     changeStatusHandler(event, item)
+                  }}
+                  disabled={isUpdateing}
+               />
+            </ActionContainer>
+         ),
+      },
       {
          key: 'actions',
          header: 'Действия',
@@ -93,10 +126,10 @@ const WorksView = () => {
                   <IconButton
                      onClick={(e) => {
                         e.stopPropagation()
-                        setVisible(item.id)
+                        navigate(`${item.id}/edit`)
                      }}
                   >
-                     <DeleteIcon />
+                     <UpdateIcon />
                   </IconButton>
                </ActionContainer>
             )
@@ -104,11 +137,13 @@ const WorksView = () => {
       },
    ]
 
-   const onNavigetToInnerPage = (_, id) => {
-      navigate(`${id}`)
+   const onNavigetToInnerPage = (e, id) => {
+      if (e.target.tagName.toLowerCase() !== 'input') {
+         navigate(`${id}`)
+      }
    }
 
-   const data = works?.content
+   const data = admins?.content
 
    return (
       <CContainer className="mb-5">
@@ -116,14 +151,14 @@ const WorksView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Published Works Photos</CCardTitle>
+                     <CCardTitle>Admins</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>
                         <CButton
                            className="Loat-right"
                            color="success"
-                           onClick={() => navigate('/admin/works/create')}
+                           onClick={() => navigate('/admin/controls/register')}
                         >
                            Создать
                         </CButton>
@@ -134,21 +169,19 @@ const WorksView = () => {
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <CSpinner color="primary" />
+                  <CSpinner />
                ) : (
                   <TableListContainer>
                      <TableList
                         data={data}
                         columns={columnsConfig}
                         onNavigetToInnerPage={onNavigetToInnerPage}
-                        deleteById={deleteGateTypeHandler}
                         setVisible={setVisible}
                         visible={visible}
-                        isFetching={isDeleting}
                      />
                      <AppPagination
-                        totalPage={works.totalPages}
-                        page={queryParams.page}
+                        totalPage={admins?.totalPages}
+                        page={queryParams?.page}
                         onChange={handleChangePage}
                      />
                   </TableListContainer>
@@ -159,13 +192,8 @@ const WorksView = () => {
    )
 }
 
-export default WorksView
+export default AdminControlsView
 
-const TableImage = styled.img`
-   width: 100px;
-   height: 100px;
-   object-fit: contain;
-`
 const TableListContainer = styled.div`
    max-width: 1000px;
    margin: 0 auto;
@@ -174,6 +202,9 @@ const ActionContainer = styled.div`
    display: flex;
    gap: 12px;
    svg {
+      cursor: pointer;
+   }
+   input {
       cursor: pointer;
    }
 `

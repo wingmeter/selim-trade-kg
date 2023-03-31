@@ -3,9 +3,11 @@
 import React from 'react'
 
 import { CBadge } from '@coreui/react'
+import { useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 
 export const AppSidebarNav = ({ items }) => {
+   const { role } = useSelector((state) => state.auth)
    const location = useLocation()
    const navLink = (name, icon, badge) => {
       return (
@@ -24,6 +26,23 @@ export const AppSidebarNav = ({ items }) => {
    const navItem = (item, index) => {
       const { component, name, badge, icon, ...rest } = item
       const Component = component
+
+      if (item.role) {
+         if (item.role === role) {
+            ;<Component
+               {...(rest.to &&
+                  !rest.items && {
+                     component: NavLink,
+                  })}
+               key={index}
+               {...rest}
+            >
+               {navLink(name, icon, badge)}
+            </Component>
+         } else {
+            return null
+         }
+      }
       return (
          <Component
             {...(rest.to &&
