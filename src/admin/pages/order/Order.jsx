@@ -1,7 +1,41 @@
-import React from 'react'
+/* eslint-disable react/no-unstable-nested-components */
+import {
+   CCard,
+   CCardHeader,
+   CCardTitle,
+   CCol,
+   CContainer,
+   CRow,
+} from '@coreui/react'
 
-const Order = () => {
-   return <div>Order</div>
+import OrderInProgressTable from './tables/OrderInProgressTable'
+import OrderTable from './tables/OrderTable'
+
+const OrderView = () => {
+   return (
+      <CContainer className="mb-5">
+         <CCard className="pb-5">
+            <CCardHeader>
+               <CRow>
+                  <CCol>
+                     <CCardTitle>Orders</CCardTitle>
+                  </CCol>
+               </CRow>
+            </CCardHeader>
+            <OrderTable />
+         </CCard>
+         <CCard className="pb-5 mt-5">
+            <CCardHeader>
+               <CRow>
+                  <CCol>
+                     <CCardTitle>Orders In Progress</CCardTitle>
+                  </CCol>
+               </CRow>
+            </CCardHeader>
+            <OrderInProgressTable />
+         </CCard>
+      </CContainer>
+   )
 }
 
-export default Order
+export default OrderView

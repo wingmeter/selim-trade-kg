@@ -3,9 +3,19 @@ import React from 'react'
 
 import { ROLES } from '../../utils/constants'
 
+const CreateOrderInProgressForm = React.lazy(() =>
+   import('../../admin/pages/order/CreateOrderInProgressForm')
+)
+
 const WorksView = React.lazy(() => import('../../admin/pages/works/WorksView'))
 const WorksInner = React.lazy(() =>
    import('../../admin/pages/works/inner-pages/WorksInner')
+)
+
+const OrderView = React.lazy(() => import('../../admin/pages/order/Order'))
+
+const OrderInnerPage = React.lazy(() =>
+   import('../../admin/pages/order/OrderInnerPage')
 )
 
 const CreateGate = React.lazy(() =>
@@ -75,6 +85,26 @@ const GateInnerView = React.lazy(() =>
 const routes = [
    { path: '/', exact: true, name: 'Home' },
    { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+   {
+      path: '/order',
+      name: 'Orders',
+      element: OrderView,
+   },
+   {
+      path: '/order/:orderId',
+      name: 'Order Inner Page',
+      element: OrderInnerPage,
+   },
+   {
+      path: '/order/:orderId/create',
+      name: 'Order Create Page',
+      element: CreateOrderInProgressForm,
+   },
+   {
+      path: '/order/:orderId/edit',
+      name: 'Order Update Page',
+      element: CreateOrderInProgressForm,
+   },
    { path: '/gates/create', name: 'Create Gate', element: CreateGate },
    {
       path: 'gate-types/:typeId/gate/edit/:gateId',

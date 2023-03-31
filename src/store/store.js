@@ -5,6 +5,7 @@ import { authApi } from './admin/auth/authApi'
 import authSlice from './admin/auth/authSlice'
 import { gatesTypeApi } from './admin/gate-types/gateTypesApi'
 import { newsApi } from './admin/news/newsApi'
+import { orderApi } from './admin/order/orderApi'
 import { reviewApi } from './admin/reviews/reviewApi'
 import sidebarSlice from './admin/sidebar/sidebarSlice'
 import { worksApi } from './admin/works/worksApi'
@@ -20,6 +21,7 @@ const store = configureStore({
 
       [reviewApi.reducerPath]: reviewApi.reducer,
       [worksApi.reducerPath]: worksApi.reducer,
+      [orderApi.reducerPath]: orderApi.reducer,
       [adminControlsApi.reducerPath]: adminControlsApi.reducer,
    },
    middleware: (getDefaultMiddleWare) =>
@@ -27,10 +29,10 @@ const store = configureStore({
          authApi.middleware,
          gatesTypeApi.middleware,
          newsApi.middleware,
+         reviewApi.middleware,
          worksApi.middleware,
          adminControlsApi.middleware,
-         reviewApi.middleware
+         orderApi.middleware
       ),
 })
-
 export default store

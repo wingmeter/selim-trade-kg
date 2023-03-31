@@ -105,7 +105,6 @@ const WorksView = () => {
    ]
 
    const onNavigetToInnerPage = (_, id) => {
-      console.log(id)
       navigate(`${id}`)
    }
 
