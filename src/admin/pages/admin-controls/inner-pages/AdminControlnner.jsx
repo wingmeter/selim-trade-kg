@@ -1,5 +1,5 @@
-import { useState } from 'react'
-
+import { cilUser } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
    CAvatar,
    CButton,
@@ -7,7 +7,6 @@ import {
    CCardBody,
    CCardHeader,
    CCardSubtitle,
-   CCardText,
    CCardTitle,
    CContainer,
    CSpinner,
@@ -16,35 +15,47 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
-import { useLazyMakeSuperAdminQuery } from '../../../../store/admin/admin-controls/adminControlApi'
-import { useGetWorksByIdQuery } from '../../../../store/admin/works/worksApi'
+import {
+   useGetAdminByIdQuery,
+   useLazyMakeSuperAdminQuery,
+} from '../../../../store/admin/admin-controls/adminControlApi'
 import { ROLES } from '../../../../utils/constants'
+import { getErrorMessage } from '../../../../utils/helpers/general'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../../components/UI/notification/Notification'
 
-const WorksInner = () => {
+const AdminInnerPage = () => {
    const navigate = useNavigate()
    const { adminId } = useParams()
    const { adminData } = useSelector((state) => state.auth)
-   const { data, setData } = useState({})
 
-   const { data: dataAdmin, isFetching } = useGetWorksByIdQuery(adminId)
-   const [makeSuperAdmin, { data: adminResponse, isMakingSuperAdmin }] =
+   const { data: singleAdminData, isFetching } = useGetAdminByIdQuery(adminId)
+   const [makeSuperAdmin, { data: superAdminData, isMakingSuperAdmin }] =
       useLazyMakeSuperAdminQuery()
 
    const makeSuperAdminHandler = async (adminsId) => {
       try {
-         const result = await makeSuperAdmin(adminsId).unwrap()
-         setData(result.data)
+         await makeSuperAdmin(adminsId).unwrap()
+         showSuccessMessage(
+            `${superAdminData?.username} successfully became a super-admin!`
+         )
+         navigate(-1)
       } catch (error) {
-         console.error(error)
+         showErrorMessage(getErrorMessage(error))
       }
    }
 
    return (
       <CContainer>
-         <CCard>
+         <CCard textColor="dark" className="mb-3 border-top-dark border-top-3">
             <CCardHeader className="d-flex align-items-center justify-content-between">
+               <Flex align="center" gap="10px">
+                  <CIcon icon={cilUser} />
+                  <CCardTitle>{singleAdminData?.username}</CCardTitle>
+               </Flex>
                <CButton onClick={() => navigate(-1)}>Go Back</CButton>
-               <CCardTitle>dynamic-admin name</CCardTitle>
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
@@ -55,7 +66,7 @@ const WorksInner = () => {
                         size="xl"
                         color="secondary"
                         className="me-3"
-                        // status={item?.active ? 'success' : 'danger'}
+                        status={singleAdminData?.active ? 'success' : 'danger'}
                      >
                         {'admin'.split('')[0]?.toUpperCase()}
                      </CAvatar>
@@ -66,27 +77,24 @@ const WorksInner = () => {
                            gap: 10,
                         }}
                      >
-                        <CCardSubtitle>
-                           Name: {dataAdmin?.title || 'Admin'}
+                        <CCardSubtitle className="mb-2 ">
+                           ID: {singleAdminData?.id || 'no-id'}
                         </CCardSubtitle>
-                        <CCardSubtitle>
-                           Role: {dataAdmin?.created_date || 'Super_admin'}
+                        <CCardSubtitle className="mb-2 ">
+                           Name: {singleAdminData?.username || 'Admin'}
                         </CCardSubtitle>
-                        <CCardSubtitle>
-                           Updated Date:
-                           {dataAdmin?.createdBy?.username || '11.03.23'}
+                        <CCardSubtitle className="mb-2 ">
+                           Role: {singleAdminData?.roles || 'admin'}
                         </CCardSubtitle>
-                        <CCardText>
-                           Status:
-                           {dataAdmin?.createdBy?.active
-                              ? 'Active'
-                              : 'Inactive' || 'Active'}
-                        </CCardText>
+                        <CCardSubtitle className="mb-2 ">
+                           Status:{' '}
+                           {singleAdminData?.active ? 'Active' : 'InActive'}
+                        </CCardSubtitle>
                      </div>
                   </div>
                )}
-               {adminData?.role !== ROLES.SUPER_ADMIN &&
-                  dataAdmin?.role === ROLES.SUPER_ADMIN && (
+               {singleAdminData?.roles.join('') !== ROLES.SUPER_ADMIN &&
+                  adminData?.roles.join('') === ROLES.SUPER_ADMIN && (
                      <Flex direction="column" margin="40px 0px 0px">
                         <CCardSubtitle>
                            Give the role of super administrator to other
@@ -108,4 +116,4 @@ const WorksInner = () => {
    )
 }
 
-export default WorksInner
+export default AdminInnerPage

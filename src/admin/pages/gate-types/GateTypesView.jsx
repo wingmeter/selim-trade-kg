@@ -9,7 +9,6 @@ import {
    CCardTitle,
    CCol,
    CContainer,
-   CFormSwitch,
    CRow,
    CSpinner,
 } from '@coreui/react'
@@ -24,6 +23,9 @@ import {
 import { getImgUrl } from '../../../utils/helpers/general'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/deleteIcon.svg'
 import { ReactComponent as UpdateIcon } from '../../assets/icons/updateIcon.svg'
+import LastUpdateList, {
+   getLastValue,
+} from '../../components/last-update/LastUpdateList'
 import TableList from '../../components/table/TableList'
 import AppPagination from '../../components/UI/AppPagination'
 
@@ -56,14 +58,6 @@ const GateTypesView = () => {
          console.error(error || 'something went wrong')
       }
    }
-   const changeStatusHandler = async (e, status) => {
-      e.stopPropagation()
-      try {
-         // await updateAdmin({ active: !status })
-      } catch (error) {
-         console.error(error)
-      }
-   }
 
    // config table col
    const columnsConfig = [
@@ -93,28 +87,14 @@ const GateTypesView = () => {
       {
          key: 'createdBy',
          header: 'Created By',
-         width: 120,
-
+         width: 100,
          cell: (item) => <span>{item.createdBy.username}</span>,
       },
       {
          key: 'active',
-         header: 'Status',
-         width: 100,
-         cell: (item) => (
-            <ActionContainer>
-               <CFormSwitch
-                  size="md"
-                  label={item.createdBy.active ? 'Enable' : 'Disable'}
-                  checked={item.createdBy.active}
-                  onChange={(event) => {
-                     event.stopPropagation()
-                     changeStatusHandler(event, item.active)
-                  }}
-                  // disabled={isUpdateing}
-               />
-            </ActionContainer>
-         ),
+         header: 'Last Update',
+         width: 120,
+         cell: (item) => <span>{getLastValue(item?.updatedByList)}</span>,
       },
       {
          key: 'actions',

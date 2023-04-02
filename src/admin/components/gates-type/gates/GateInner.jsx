@@ -14,6 +14,7 @@ import { useNavigate, useParams } from 'react-router'
 
 import { useGetSingleGateByIdQuery } from '../../../../store/admin/gate-types/gateTypesApi'
 import { getImgUrl } from '../../../../utils/helpers/general'
+import LastUpdateList from '../../last-update/LastUpdateList'
 
 function getLastValue(array) {
    const name = array[array.length - 1]?.username
@@ -55,19 +56,7 @@ const GateInnerView = () => {
                         Created By: {gate?.createdBy?.username}
                      </CCardSubtitle>
                      <br />
-                     <CCardText>
-                        Status:
-                        {gate?.createdBy?.active ? 'Active' : 'Inactive'}
-                     </CCardText>
-                     <br />
-                     {gate?.updatedByList?.length !== 0 && (
-                        <CCardSubtitle className="mb-2 text-medium-emphasis">
-                           Last updated by:{' '}
-                           <span style={{ color: 'green' }}>
-                              {getLastValue(gate?.updatedByList)}
-                           </span>
-                        </CCardSubtitle>
-                     )}
+                     <LastUpdateList updateByList={gate?.updatedByList} />
 
                      <br />
                   </CCard>

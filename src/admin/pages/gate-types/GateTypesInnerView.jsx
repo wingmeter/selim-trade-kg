@@ -14,15 +14,9 @@ import { useNavigate, useParams } from 'react-router'
 
 import { useGetGateTypeByIdQuery } from '../../../store/admin/gate-types/gateTypesApi'
 import { BASE_URL } from '../../../utils/constants'
+import LastUpdateList from '../../components/last-update/LastUpdateList'
 
 import GatesView from './gates/Gates'
-
-function getLastValue(array) {
-   const name = array[array.length - 1]?.username
-   const date = array[array.length - 1]?.date
-
-   return `${name}, in ${date}`
-}
 
 const GateTypesInnerView = () => {
    const navigate = useNavigate()
@@ -57,19 +51,7 @@ const GateTypesInnerView = () => {
                         Created By: {gateType?.createdBy?.username}
                      </CCardSubtitle>
                      <br />
-                     <CCardText>
-                        Status:
-                        {gateType?.createdBy?.active ? 'Active' : 'Inactive'}
-                     </CCardText>
-                     <br />
-                     {gateType?.updatedByList.length !== 0 && (
-                        <CCardSubtitle className="mb-2 text-medium-emphasis">
-                           Last updated by:{' '}
-                           <span style={{ color: 'green' }}>
-                              {getLastValue(gateType?.updatedByList)}
-                           </span>
-                        </CCardSubtitle>
-                     )}
+                     <LastUpdateList updateByList={gateType?.updatedByList} />
 
                      <br />
                   </CCard>

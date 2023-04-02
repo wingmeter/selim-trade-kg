@@ -63,7 +63,7 @@ const Login = () => {
          await loginAdmin(formData).unwrap()
          showSuccessMessage({ message: 'Succesfully loged in!' })
       } catch (err) {
-         showErrorMessage({ message: getErrorMessage(error) })
+         showErrorMessage({ message: getErrorMessage(err) })
       }
    }
 

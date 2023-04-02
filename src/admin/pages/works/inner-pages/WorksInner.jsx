@@ -8,6 +8,7 @@ import {
    CCardText,
    CCardTitle,
    CContainer,
+   CSpinner,
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
 
@@ -29,7 +30,7 @@ const WorksInner = () => {
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <span>Loading...</span>
+                  <CSpinner color="primary" />
                ) : (
                   <CCard style={{ padding: '0.5rem 1rem' }}>
                      <CCardImage
@@ -46,13 +47,8 @@ const WorksInner = () => {
                      </CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created By: {work?.createdBy?.username}
+                        Created By: {work?.createdBy?.username || 'admin'}
                      </CCardSubtitle>
-                     <br />
-                     <CCardText>
-                        Status:
-                        {work?.createdBy?.active ? 'Active' : 'Inactive'}
-                     </CCardText>
                      <br />
                   </CCard>
                )}

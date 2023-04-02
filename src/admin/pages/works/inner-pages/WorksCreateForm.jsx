@@ -19,10 +19,7 @@ import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
-import {
-   useLazyGetNewsByIdQuery,
-   useUpdateNewsMutation,
-} from '../../../../store/admin/news/newsApi'
+import { useLazyGetNewsByIdQuery } from '../../../../store/admin/news/newsApi'
 import { useCreateWorksMutation } from '../../../../store/admin/works/worksApi'
 import { getErrorMessage, getImgUrl } from '../../../../utils/helpers/general'
 import {
@@ -39,7 +36,6 @@ const CreateWorksForm = () => {
    const [validated, setValidated] = useState(false)
 
    const [createWorks, { isLoading }] = useCreateWorksMutation()
-   const [updateNews, { isUpdating }] = useUpdateNewsMutation()
    const [getWorksById, { data: works }] = useLazyGetNewsByIdQuery()
 
    const navigateBack = () => {

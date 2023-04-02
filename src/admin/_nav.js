@@ -63,13 +63,6 @@ const nav = [
    },
    {
       component: CNavItem,
-      name: 'Something else',
-      to: '/admin/dashboard',
-      icon: <CIcon icon={cilMobileLandscape} customClassName="nav-icon" />,
-   },
-
-   {
-      component: CNavItem,
       name: 'Admin Controls',
       to: '/admin/controls',
       role: ROLES.SUPER_ADMIN,

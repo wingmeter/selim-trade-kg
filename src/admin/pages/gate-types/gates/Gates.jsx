@@ -27,6 +27,7 @@ import {
 import { getImgUrl } from '../../../../utils/helpers/general'
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/deleteIcon.svg'
 import { ReactComponent as UpdateIcon } from '../../../assets/icons/updateIcon.svg'
+import { getLastValue } from '../../../components/last-update/LastUpdateList'
 import TableList from '../../../components/table/TableList'
 import AppPagination from '../../../components/UI/AppPagination'
 
@@ -89,6 +90,12 @@ const GatesView = ({ gates, isFetching }) => {
          width: 120,
 
          cell: (item) => <span>{item.createdBy.username}</span>,
+      },
+      {
+         key: 'active',
+         header: 'Last Update',
+         width: 120,
+         cell: (item) => <span>{getLastValue(item?.updatedByList)}</span>,
       },
       {
          key: 'actions',
