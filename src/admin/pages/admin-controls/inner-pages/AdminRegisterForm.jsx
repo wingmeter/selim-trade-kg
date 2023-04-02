@@ -1,6 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react'
-
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import {
@@ -42,7 +40,6 @@ const AdminRegisterForm = () => {
       register,
       formState: { errors },
       handleSubmit,
-      watch,
       reset,
    } = useForm({ mode: 'onChange' })
 
@@ -69,7 +66,7 @@ const AdminRegisterForm = () => {
    }
 
    const submitHandler = async (formData) => {
-      if (formData && errors.password) {
+      if (formData) {
          try {
             await registerAdmin(formData).unwrap()
             showSuccessMessage({ message: 'Successfully created new admin!' })
@@ -109,7 +106,6 @@ const AdminRegisterForm = () => {
                               {...input.username}
                            />
                         </CInputGroup>
-
                         <CInputGroup className="mb-3">
                            <CInputGroupText>
                               <CIcon icon={cilLockLocked} />
@@ -124,10 +120,10 @@ const AdminRegisterForm = () => {
                               {...input.password}
                            />
                            <br />
-                           <CFormText style={{ color: 'tomato' }}>
-                              {errors?.password?.message || ''}
-                           </CFormText>
                         </CInputGroup>
+                        <CFormText style={{ color: 'tomato' }}>
+                           {errors?.password?.message || ''}
+                        </CFormText>
                         <br />
                         <div className="d-grid">
                            <CButton type="submit" color="success">

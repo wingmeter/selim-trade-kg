@@ -55,25 +55,17 @@ const AppHeaderDropdown = () => {
                   42
                </CBadge>
             </CDropdownItem>
-            <CDropdownItem href="#">
+            {/* <CDropdownItem href="#">
                <CIcon icon={cilCommentSquare} className="me-2" />
                Feadbacks
                <CBadge color="warning" className="ms-2">
                   42
                </CBadge>
-            </CDropdownItem>
-            <CDropdownHeader className="bg-light fw-semibold py-2">
-               Settings
-            </CDropdownHeader>
+            </CDropdownItem> */}
             <CDropdownItem href="#">
                <CIcon icon={cilUser} className="me-2" />
                Profile
             </CDropdownItem>
-            <CDropdownItem href="#">
-               <CIcon icon={cilSettings} className="me-2" />
-               Settings
-            </CDropdownItem>
-
             <CDropdownDivider />
             <CDropdownItem onClick={() => logOut()}>
                <CIcon icon={cilAccountLogout} className="me-2" />
