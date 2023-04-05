@@ -3,14 +3,22 @@ import React from 'react'
 
 import { Card, CardContent, Skeleton, Typography } from '@mui/material'
 
-const CardsSkeleton = () => {
+const CardsSkeleton = ({ quantity, height }) => {
    return (
       <>
-         {[...Array(12)].map((_, index) => (
-            <Skeleton key={index}>
-               <Card
-                  sx={{ maxHeight: '100%', height: '100%' }}
-                  className={`item${index + 1}`}
+         {[...Array(quantity ?? 12)].map((_, index) => (
+            <Card
+               sx={{
+                  boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.13)',
+                  minHeight: height ?? 200,
+               }}
+               className={`item${index + 1}`}
+            >
+               <Skeleton
+                  variant="rectangular"
+                  animation="wave"
+                  height="100%"
+                  width="100%"
                >
                   <CardContent>
                      <Typography variant="h5" gutterBottom>
@@ -20,8 +28,8 @@ const CardsSkeleton = () => {
                         Description of the Card
                      </Typography>
                   </CardContent>
-               </Card>
-            </Skeleton>
+               </Skeleton>
+            </Card>
          ))}
       </>
    )

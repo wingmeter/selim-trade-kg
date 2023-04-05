@@ -1,13 +1,19 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-irregular-whitespace */
 import { useMediaQuery } from 'react-responsive'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import styled from 'styled-components'
 
+import {
+   useGetAllGateTypesQuery,
+   useGetGateTypeByIdQuery,
+} from '../../../../store/admin/gate-types/gateTypesApi'
 import { DeviceSize } from '../../../../utils/constants'
+import { getImgUrl } from '../../../../utils/helpers/general'
 import img from '../../../assets/images/img.png'
 import Advantages from '../../../components/our-services/Advantages'
 import Card from '../../../components/UI/cards/Card'
+import CardsSkeleton from '../../../components/UI/scleton/CardsSkeleton'
 import { Flex } from '../../../styles/style-for-positions/style'
 import { Text, Title } from '../../../styles/typography/style'
 import { cardData } from '../OurServicesPage'
@@ -15,12 +21,22 @@ import { cardData } from '../OurServicesPage'
 const ServicesInnerPage = ({ title, image, description }) => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    const navigate = useNavigate()
+   const { id } = useParams()
+   const {
+      data: serviceData,
+      isFetching,
+      isLoading,
+   } = useGetGateTypeByIdQuery(id)
+
+   console.log(serviceData)
 
    const showInnerPage = () => navigate(`/`)
    return (
       <Container>
-         <ServiceBackground>
-            <HeaderBanner banner={image || img}>
+         <ServiceBackground
+            banner={getImgUrl(serviceData?.backgroundUrl) || img}
+         >
+            <HeaderBanner>
                <Title white size={isMobile ? '16px' : '70px'} uppercase>
                   {title || 'Промышленные секционные ворота'}
                </Title>
@@ -42,10 +58,13 @@ const ServicesInnerPage = ({ title, image, description }) => {
                типы ворот
             </Title>
             <CardContainer>
-               {cardData.map((card) => (
+               {isFetching && (
+                  <CardsSkeleton quantity={5} height={isMobile ? 172 : 342} />
+               )}
+               {serviceData?.gateList?.map((card) => (
                   <StyledCard
                      key={card.id}
-                     img={card?.img}
+                     img={getImgUrl(card?.photoUrl)}
                      onClck={() => showInnerPage(card.id)}
                   >
                      <CardSubTitle>
@@ -65,9 +84,10 @@ export default ServicesInnerPage
 const ServiceBackground = styled(Flex)`
    width: 100%;
    max-width: 100%;
-   background-image: url(${img});
+   background-image: url(${({ banner }) => banner});
    background-repeat: no-repeat;
    background-size: cover;
+   background-color: #c8c8c8;
    justify-content: center;
    align-items: center;
    border-bottom-right-radius: 180px;

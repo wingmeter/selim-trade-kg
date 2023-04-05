@@ -5,12 +5,14 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
+import { useGetAllGateTypesQuery } from '../../../store/admin/gate-types/gateTypesApi'
 import { DeviceSize } from '../../../utils/constants'
+import { getImgUrl } from '../../../utils/helpers/general'
 import backgroundImage from '../../assets/images/backgroundImage.png'
 import img from '../../assets/images/img.png'
 import leafs from '../../assets/images/leafs.png'
 import Card from '../../components/UI/cards/Card'
-import SkeletonCard from '../../components/UI/scleton/SkeletonCard'
+import Skeletons from '../../components/UI/scleton/Skeletons'
 import { Flex, Grid } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
 
@@ -55,6 +57,16 @@ export const cardData = [
 const OurServices = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    const navigate = useNavigate()
+   const { servicesData, isFetching, isLoading } = useGetAllGateTypesQuery(
+      { pageNo: 1 },
+      {
+         selectFromResult: ({ data, isFetching, isLoading }) => ({
+            servicesData: data ? data.content : [],
+            isFetching,
+            isLoading,
+         }),
+      }
+   )
 
    const showInnerPage = (id) => navigate(`${id}`)
    return (
@@ -81,21 +93,18 @@ const OurServices = () => {
             </ServiceDescription>
             <CardsBackground>
                <StyledGrid columns={isMobile ? '1fr' : '1fr 1fr'}>
-                  {cardData.map((card) =>
-                     card ? (
-                        <StyledCard
-                           key={card.id}
-                           img={card?.img}
-                           onClick={() => showInnerPage(card.id)}
-                        >
-                           <CardSubTitle>
-                              <Title white>{card?.title}</Title>
-                           </CardSubTitle>
-                        </StyledCard>
-                     ) : (
-                        <SkeletonCard key={card.id} />
-                     )
-                  )}
+                  {(isFetching || isLoading) && <Skeletons />}
+                  {servicesData?.map((service) => (
+                     <StyledCard
+                        key={service.id}
+                        img={getImgUrl(service?.backgroundUrl)}
+                        onClick={() => showInnerPage(service.id)}
+                     >
+                        <CardSubTitle>
+                           <Title white>{service?.name}</Title>
+                        </CardSubTitle>
+                     </StyledCard>
+                  ))}
                </StyledGrid>
             </CardsBackground>
          </InnerContainer>
