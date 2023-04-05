@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable react/no-array-index-key */
 import { useState } from 'react'
 
 import {
@@ -17,26 +16,25 @@ import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
 import styled from 'styled-components'
 
-import { Flex } from '../../../../client/styles/style-for-positions/style'
 import {
-   useDeleteGateMutation,
+   useDeleteAdvantageMutation,
    useLazyGetGateTypeByIdQuery,
 } from '../../../../store/admin/gate-types/gateTypesApi'
-import { getImgUrl } from '../../../../utils/helpers/general'
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/deleteIcon.svg'
 import { ReactComponent as UpdateIcon } from '../../../assets/icons/updateIcon.svg'
 import { getLastValue } from '../../../components/last-update/LastUpdateList'
 import TableList from '../../../components/table/TableList'
 import AppPagination from '../../../components/UI/AppPagination'
 
-const GatesView = ({ gates, isFetching }) => {
+const AdvantageView = ({ advantage, isFetching }) => {
    const navigate = useNavigate()
    const [visible, setVisible] = useState(false)
    const { gateTypeId } = useParams()
    const [queryParams, setQueryParams] = useState({
       page: 1,
    })
-   const [deleteGate, { isLoading: isDeleting }] = useDeleteGateMutation()
+   const [deleteAdvantage, { isLoading: isDeleting }] =
+      useDeleteAdvantageMutation()
    const { getGateTypeById } = useLazyGetGateTypeByIdQuery()
    const handleChangePage = (newPage) => {
       setQueryParams((prev) => {
@@ -47,13 +45,9 @@ const GatesView = ({ gates, isFetching }) => {
       })
    }
 
-   // const { data: gates, isFetching } = useGetAllGatesQuery({
-   //    page: 1,
-   // })
-
-   const deleteGateHandler = async (gateId) => {
+   const deleteGateHandler = async (advantageId) => {
       try {
-         await deleteGate(gateId).unwrap()
+         await deleteAdvantage(advantageId).unwrap()
          setVisible(false)
          getGateTypeById(gateTypeId)
       } catch (error) {
@@ -65,18 +59,10 @@ const GatesView = ({ gates, isFetching }) => {
       {
          key: 'id',
          header: 'ID',
-         width: 40,
+         width: 30,
       },
-      {
-         key: 'photoUrl',
-         header: 'Фото',
-         width: 80,
-
-         cell: (item) => (
-            <TableImage src={getImgUrl(item.photoUrl)} alt={item.photoUrl} />
-         ),
-      },
-      { key: 'name', header: 'Title', width: 150 },
+      { key: 'title', header: 'Title', width: 150 },
+      { key: 'description', header: 'Description', width: 150 },
       {
          key: 'created_date',
          header: 'Дата создания',
@@ -93,20 +79,25 @@ const GatesView = ({ gates, isFetching }) => {
          key: 'active',
          header: 'Last Update',
          width: 120,
-         cell: (item) => <span>{getLastValue(item?.updatedByList)}</span>,
+         cell: (item) => (
+            <span>
+               {item?.updatedByList?.length !== 0
+                  ? getLastValue(item?.updatedByList)
+                  : 'No last updates'}
+            </span>
+         ),
       },
       {
          key: 'actions',
          header: 'Действия',
          width: 100,
-
          cell: (item) => {
             return (
                <ActionContainer>
                   <IconButton
                      onClick={(e) => {
                         e.stopPropagation()
-                        navigate(`gate/edit/${item.id}`)
+                        navigate(`advantage/edit/${item.id}`)
                      }}
                   >
                      <UpdateIcon />
@@ -126,25 +117,25 @@ const GatesView = ({ gates, isFetching }) => {
    ]
    const onNavigetToInnerPage = (e, id) => {
       if (e.target.tagName.toLowerCase() !== 'input') {
-         navigate(`gate/${id}`)
+         navigate(`advantage/${id}`)
       }
    }
 
-   const data = gates
+   const data = advantage
    return (
       <CContainer>
          <CCard>
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Created Gates</CCardTitle>
+                     <CCardTitle>Created Advantages</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>
                         <CButton
                            className="Loat-right"
                            color="success"
-                           onClick={() => navigate(`gate/create`)}
+                           onClick={() => navigate(`advantage/create`)}
                         >
                            Создать
                         </CButton>
@@ -168,7 +159,7 @@ const GatesView = ({ gates, isFetching }) => {
                         isFetching={isDeleting}
                      />
                      <AppPagination
-                        totalPage={gates.totalPages}
+                        totalPage={advantage.totalPages}
                         page={queryParams.page}
                         onChange={handleChangePage}
                      />
@@ -180,7 +171,7 @@ const GatesView = ({ gates, isFetching }) => {
    )
 }
 
-export default GatesView
+export default AdvantageView
 
 const TableImage = styled.img`
    width: 70px;

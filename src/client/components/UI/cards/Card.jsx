@@ -22,7 +22,8 @@ const CardStyled = styled.div`
    max-width: ${({ maxW }) => maxW || '1300px'};
    width: ${({ width }) => width || '100% !important'};
    height: ${({ height }) => height || ''};
-   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.13);
+   box-shadow: 0 0.125rem 0.5rem #1e4a7e26;
+   transition: transform 0.15s ease-in-out;
    position: relative;
    @media (max-width: 720px) {
       width: 100%;

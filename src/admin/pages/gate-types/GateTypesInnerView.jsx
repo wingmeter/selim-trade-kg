@@ -16,6 +16,7 @@ import { useGetGateTypeByIdQuery } from '../../../store/admin/gate-types/gateTyp
 import { BASE_URL } from '../../../utils/constants'
 import LastUpdateList from '../../components/last-update/LastUpdateList'
 
+import AdvantageView from './advantages/AdvantageView'
 import GatesView from './gates/Gates'
 
 const GateTypesInnerView = () => {
@@ -60,6 +61,11 @@ const GateTypesInnerView = () => {
          </CCard>
          <br />
          <GatesView gates={gateType?.gateList} isFetching={isFetching} />
+         <br />
+         <AdvantageView
+            advantage={gateType?.advantageList}
+            isFetching={isFetching}
+         />
       </CContainer>
    )
 }

@@ -22,6 +22,10 @@ const CreateGate = React.lazy(() =>
    import('../../admin/pages/gate-types/gates/CreateGateForm')
 )
 
+const CreateAdvantage = React.lazy(() =>
+   import('../../admin/pages/gate-types/advantages/CreateAdvantageForm')
+)
+
 const Dashboard = React.lazy(() =>
    import('../../admin/pages/dashboard/Dashboard')
 )
@@ -79,6 +83,9 @@ const ReviewsView = React.lazy(() =>
 const GateInnerView = React.lazy(() =>
    import('../../admin/components/gates-type/gates/GateInner')
 )
+const AdvantageInnerView = React.lazy(() =>
+   import('../../admin/pages/gate-types/advantages/AdvantageInner')
+)
 
 // Base
 
@@ -105,6 +112,8 @@ const routes = [
       name: 'Order Update Page',
       element: CreateOrderInProgressForm,
    },
+
+   // gate and gate types
    { path: '/gates/create', name: 'Create Gate', element: CreateGate },
    {
       path: 'gate-types/:typeId/gate/edit/:gateId',
@@ -137,6 +146,23 @@ const routes = [
       name: 'Gate Types Inner Page',
       element: CreateGate,
    },
+   // advantage
+   {
+      path: '/gate-types/:typeId/advantage/create',
+      name: 'Advantage Form',
+      element: CreateAdvantage,
+   },
+   {
+      path: 'gate-types/:typeId/advantage/edit/:advantageId',
+      name: 'Advantage Edit',
+      element: CreateAdvantage,
+   },
+   {
+      path: 'gate-types/:typeId/advantage/:advantageId',
+      name: 'Advantage Inner View',
+      element: AdvantageInnerView,
+   },
+
    // News
    { path: '/news', name: 'News', element: News },
    {
@@ -157,11 +183,6 @@ const routes = [
       name: 'Works Inner Page',
       element: WorksInner,
    },
-   // {
-   //    path: '/works/:worksId/edit',
-   //    name: 'Update Works',
-   //    element: WorksCreateFrom,
-   // },
    { path: '/works/create', name: 'Create Works', element: WorksCreateFrom },
 
    // admin controls
