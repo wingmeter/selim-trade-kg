@@ -1,67 +1,34 @@
 /* eslint-disable no-irregular-whitespace */
+import { useState } from 'react'
+
 import { useMediaQuery } from 'react-responsive'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { useGetAllNewsQuery } from '../../../store/admin/news/newsApi'
 import { DeviceSize } from '../../../utils/constants'
-import img from '../../assets/images/newsBG.png'
+import { getImgUrl } from '../../../utils/helpers/general'
 import { ButtonOutlined } from '../../components/UI/buttons/ButtonOutlined'
 import Card from '../../components/UI/cards/Card'
 import { Flex } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
 
-const cardData = [
-   {
-      id: 1,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img,
-   },
-   {
-      id: 2,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-
-      img,
-   },
-   {
-      id: 3,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-
-      img,
-   },
-   {
-      id: 4,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img,
-   },
-   {
-      id: 5,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img,
-   },
-   {
-      id: 6,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img,
-   },
-   {
-      id: 7,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img,
-   },
-   {
-      id: 8,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img,
-   },
-   {
-      id: 9,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img,
-   },
-]
-
 const NewsPage = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
+   const [queryParams, setQueryParams] = useState({
+      pageSize: 9,
+   })
+
+   const { data: news, isFetching } = useGetAllNewsQuery({
+      pageSize: queryParams.pageSize,
+   })
+
+   const loadMore = (type) => {
+      const newSize = { ...queryParams }
+      newSize[type] += 3
+      setQueryParams(newSize)
+   }
 
    return (
       <Container>
@@ -81,18 +48,33 @@ const NewsPage = () => {
                   новости нашей компании
                </Text>
             </NewsDescription>
-            <div>
-               <CardContainer>
-                  {cardData.map((data) => (
-                     <Link to={`${data.id}`}>
-                        <StyledCard img={data.img}>
-                           <StyledTitle>{data.title}</StyledTitle>
-                        </StyledCard>
-                     </Link>
-                  ))}
-               </CardContainer>
-               <StyledButtonOutlined>загрузить ещё</StyledButtonOutlined>
-            </div>
+            {isFetching ? (
+               <div className="d-flex justify-content-center mx-auto my-4">
+                  <div className="spinner-border" role="status">
+                     <span className="visually-hidden">Loading...</span>
+                  </div>
+               </div>
+            ) : (
+               <div>
+                  <CardContainer>
+                     {news?.content?.map((data) => (
+                        <Link key={data.id} to={`${data.id}`}>
+                           <StyledCard
+                              key={data.id}
+                              img={getImgUrl(data.photoUrl)}
+                           >
+                              <StyledTitle>{data.title}</StyledTitle>
+                           </StyledCard>
+                        </Link>
+                     ))}
+                  </CardContainer>
+                  {news?.totalElements > queryParams.pageSize && (
+                     <StyledButtonOutlined onClick={() => loadMore('pageSize')}>
+                        загрузить ещё
+                     </StyledButtonOutlined>
+                  )}
+               </div>
+            )}
          </InnerContainer>
       </Container>
    )
@@ -157,6 +139,7 @@ const StyledCard = styled(Card)`
    text-align: center;
    padding: 90px 28px;
    cursor: pointer;
+   height: 100%;
 
    @media screen and (max-width: 769px) {
       display: flex;
