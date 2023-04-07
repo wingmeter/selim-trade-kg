@@ -19,7 +19,14 @@ const FirstSection = () => {
             <SubTitle>
                Найдите идеальный вариант сами <br /> или предоставьте это нам
             </SubTitle>
-            <Button startIcon={<VorotaIcon />}>заказать ворота</Button>
+            <Button
+               onClick={() => {
+                  window.scrollTo(0, document.body.scrollHeight)
+               }}
+               startIcon={<VorotaIcon />}
+            >
+               заказать ворота
+            </Button>
             {!isMobile && (
                <BottomCircle>
                   <CircleText text="CКРОЛЛ • CКРОЛЛ • CКРОЛЛ • CКРОЛЛ • CКРОЛЛ • CКРОЛЛ •" />
@@ -41,7 +48,7 @@ const FirstSSection = styled.section`
    height: 770px;
 
    @media screen and (max-width: 769px) {
-      height: 390px;
+      height: 420px;
    }
 
    .MuiContainer-root {

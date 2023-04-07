@@ -79,8 +79,7 @@ const Footer = () => {
                         <div className="gmap_canvas">
                            <iframe
                               id="gmap_canvas"
-                              src="https://maps.google.com/maps?q=ayni 22
-                              &t=&z=17&ie=UTF8&iwloc=&output=embed"
+                              src="https://maps.google.com/maps?q=bishkek,%20ayni%2022+(My%20Business%20Name)&amp;t=&amp;z=18&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                            />
                         </div>
                      </div>
@@ -109,7 +108,7 @@ const Footer = () => {
                            <div className="gmap_canvas">
                               <iframe
                                  id="gmap_canvas"
-                                 src="https://maps.google.com/maps?q=ayni22&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                                 src="https://maps.google.com/maps?q=bishkek,%20ayni%2022+(My%20Business%20Name)&amp;t=&amp;z=18&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                               />
                            </div>
                         </div>
@@ -126,24 +125,52 @@ const Footer = () => {
                      <SecondBlockMobile>
                         <ul>
                            <li>
-                              <Link to="/">Главная</Link>
+                              <Link
+                                 to="/"
+                                 onClick={() => {
+                                    window.scrollTo(0, 0)
+                                 }}
+                              >
+                                 Главная
+                              </Link>
                            </li>
                            <li>
                               <Link to="/"> О Нас</Link>
                            </li>
                            <li>
-                              <Link to="/"> Услуги</Link>
+                              <Link
+                                 to="/services"
+                                 onClick={() => {
+                                    window.scrollTo(0, 0)
+                                 }}
+                              >
+                                 Услуги
+                              </Link>
                            </li>
                         </ul>
                         <ul>
                            <li>
-                              <Link to="/"> Работы</Link>
+                              <Link
+                                 to="/works"
+                                 onClick={() => {
+                                    window.scrollTo(0, 0)
+                                 }}
+                              >
+                                 Работы
+                              </Link>
                            </li>
                            <li>
                               <Link to="/"> Отзывы</Link>
                            </li>
                            <li>
-                              <Link to="/"> Новости</Link>
+                              <Link
+                                 to="/news"
+                                 onClick={() => {
+                                    window.scrollTo(0, 0)
+                                 }}
+                              >
+                                 Новости
+                              </Link>
                            </li>
                         </ul>
                      </SecondBlockMobile>
@@ -227,10 +254,27 @@ const SecondBlockMobile = styled.div`
    display: flex;
    gap: 10px;
    font-size: 12px;
+
+   @media screen and (max-width: 769px) {
+      gap: 50px;
+   }
+
+   @media screen and (max-width: 450px) {
+      gap: 10px;
+   }
 `
 const MobileContainerBottom = styled.div`
    display: flex;
    gap: 30px;
+
+   @media screen and (max-width: 769px) {
+      gap: 120px;
+   }
+
+   @media screen and (max-width: 450px) {
+      display: flex;
+      gap: 30px;
+   }
 `
 
 const MobileContainerTop = styled.div`
@@ -259,7 +303,13 @@ const ThirdBlock = styled.div`
    flex-direction: column;
    margin-top: 10px;
    gap: 30px;
+
    @media screen and (max-width: 769px) {
+      margin-top: 0;
+      gap: 30px;
+      flex-direction: row;
+   }
+   @media screen and (max-width: 450px) {
       margin-top: 0;
       gap: 10px;
    }
@@ -268,6 +318,10 @@ const FourthBlock = styled.div`
    width: 580px;
    height: 270px;
    @media screen and (max-width: 769px) {
+      width: 250px;
+      height: 140px;
+   }
+   @media screen and (max-width: 450px) {
       width: 120px;
       height: 120px;
    }
@@ -294,7 +348,7 @@ const LogoImg = styled.img`
    width: 100px;
    height: 52px;
 
-   @media screen and (max-width: 769px) {
+   @media screen and (max-width: 450px) {
       width: 45px;
       height: 24px;
    }

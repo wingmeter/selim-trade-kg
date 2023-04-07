@@ -123,7 +123,7 @@ const OrderInProgressTable = () => {
             <span>Loading...</span>
          ) : (
             <TableListContainer>
-               {!dataOrderInProgress ? (
+               {!dataOrderInProgress.length ? (
                   <Message>Пока заявок нет</Message>
                ) : (
                   <>

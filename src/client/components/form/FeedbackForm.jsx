@@ -21,9 +21,9 @@ const FeedbackForm = () => {
    const validate = () => {
       // eslint-disable-next-line prefer-const
       let temp = {}
-      temp.name = values.name ? '' : 'Это поле объязательное'
-      temp.phone = values.phone ? '' : 'Это поле объязательное'
-      temp.message = values.message ? '' : 'Это поле объязательное'
+      temp.name = values.name ? '' : 'Это поле обязательное'
+      temp.phone = values.phone ? '' : 'Это поле обязательное'
+      temp.message = values.message ? '' : 'Это поле обязательное'
 
       setErrors({
          ...temp,
