@@ -8,11 +8,11 @@ export const gatesTypeApi = createApi({
    tagTypes: ['GateTypes', 'SingleGateType'],
    endpoints: (build) => ({
       getAllGateTypes: build.query({
-         query: ({ page, filter, size }) => ({
+         query: ({ pageNo, filter, pageSize }) => ({
             url: 'api/v1/gate-types',
             method: 'GET',
             // filter need to fix
-            params: { page, size: size || 8, filter },
+            params: { pageNo, pageSize: pageSize || 8, filter },
          }),
          providesTags: ['GateTypes'],
       }),

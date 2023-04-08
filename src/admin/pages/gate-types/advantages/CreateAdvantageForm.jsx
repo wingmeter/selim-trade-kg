@@ -11,10 +11,9 @@ import {
    CFormLabel,
    CFormTextarea,
    CRow,
+   CSpinner,
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
-// eslint-disable-next-line no-unused-vars
-import { useSearchParams } from 'react-router-dom'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
 import {
@@ -22,6 +21,11 @@ import {
    useLazyGetAdvantageByIdQuery,
    useUpdateAdvantageMutation,
 } from '../../../../store/admin/gate-types/gateTypesApi'
+import { getErrorMessage } from '../../../../utils/helpers/general'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../../components/UI/notification/Notification'
 
 const CreateAdvantageForm = () => {
    const navigate = useNavigate()
@@ -31,12 +35,12 @@ const CreateAdvantageForm = () => {
    const [validated, setValidated] = useState(false)
 
    const [createAdvantage, { isLoading }] = useCreateAdvantageMutation()
-   // eslint-disable-next-line no-unused-vars
    const [updateAdvantage, { isUpdating }] = useUpdateAdvantageMutation()
    const [getAdvantageById, { data: advantage }] =
       useLazyGetAdvantageByIdQuery()
 
-   const navigateToLogin = () => {
+   const goBackHandler = () => {
+      window.scrollTo(0, document.body.scrollHeight)
       navigate(-1)
    }
 
@@ -55,16 +59,22 @@ const CreateAdvantageForm = () => {
       if (!advantageId) {
          try {
             await createAdvantage({ formData, gateTypeId: typeId }).unwrap()
-            navigateToLogin()
+            goBackHandler()
+            showSuccessMessage({
+               message: 'Succesfully published new advantage!',
+            })
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       } else {
          try {
             await updateAdvantage({ formData, advantageId }).unwrap()
-            navigateToLogin()
+            goBackHandler()
+            showSuccessMessage({
+               message: 'Succesfully updated advantage!',
+            })
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       }
    }
@@ -78,6 +88,8 @@ const CreateAdvantageForm = () => {
       setDescription(advantage?.description || '')
       setTitle(advantage?.title || '')
    }, [advantage])
+
+   const buttonName = advantageId ? 'обновить' : 'добавить'
 
    return (
       <CCard>
@@ -121,7 +133,11 @@ const CreateAdvantageForm = () => {
                <br />
                <Flex margin="20px 0px" justify="end">
                   <CButton disabled={isLoading} onClick={submitHandler}>
-                     Добавить
+                     {isUpdating || isLoading ? (
+                        <CSpinner size="20px" />
+                     ) : (
+                        buttonName
+                     )}
                   </CButton>
                </Flex>
             </CForm>

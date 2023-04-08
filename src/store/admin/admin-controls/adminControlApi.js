@@ -9,11 +9,11 @@ export const adminControlsApi = createApi({
    endpoints: (build) => ({
       // ------------------------------get all
       getAllAdmins: build.query({
-         query: ({ page, filter }) => ({
+         query: ({ pageNo, pageSize, filter }) => ({
             url: 'api/v1/admin',
             method: 'GET',
             // filter need to fix
-            params: { page, size: 8, filter },
+            params: { pageNo, pageSize, filter },
          }),
          providesTags: ['Admins'],
       }),

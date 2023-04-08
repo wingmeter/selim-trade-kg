@@ -1,15 +1,14 @@
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
-// import img from '../../assets/images/newsBG.png'
 import { DeviceSize } from '../../../utils/constants'
 import microBG from '../../assets/images/microBG.png'
 import newsInnerBG from '../../assets/images/newsInnerBG.png'
 import Tablet from '../../assets/images/Tablet.png'
 import Card from '../../components/UI/cards/Card'
+import LazyImage from '../../components/UI/lazy-loading/LazyLoading'
 import { Flex } from '../../styles/style-for-positions/style'
 import { SubTitle } from '../main-page/style'
-// import { Text, Title } from '../../styles/typography/style'
 
 const cardData = [
    {
@@ -37,7 +36,7 @@ const NewsInnerPage = () => {
             <ProductDescriptionContainer>
                {!isMobile && (
                   <ProductImage>
-                     <img src={newsInnerBG} alt="newsInnerBG" />
+                     <LazyImage src={newsInnerBG} alt="newsInnerBG" />
                   </ProductImage>
                )}
 
@@ -54,11 +53,11 @@ const NewsInnerPage = () => {
                   </ProductDescriptionTitle>
                   {isMobile && (
                      <ProductImage>
-                        <img src={newsInnerBG} alt="newsInnerBG" />
+                        <LazyImage src={newsInnerBG} alt="newsInnerBG" />
                      </ProductImage>
                   )}
                   <ProductTypes>
-                     <img src={Tablet} alt="Tablet" />
+                     <LazyImage src={Tablet} alt="Tablet" />
                   </ProductTypes>
                </ProductDescription>
             </ProductDescriptionContainer>
@@ -193,6 +192,7 @@ const StyledCard = styled(Card)`
    }
 `
 const StyledTitle = styled.p`
+   position: relative;
    font-family: 'Montserrat';
    font-style: normal;
    font-weight: 800;
@@ -211,26 +211,3 @@ const SimilarContainer = styled.div`
       margin-top: 50px;
    }
 `
-// const StyledCard = styled(Card)`
-//    text-align: center;
-//    padding: 90px 28px;
-//    cursor: pointer;
-
-//    @media screen and (max-width: 769px) {
-//       display: flex;
-//       justify-content: center;
-//       align-items: center;
-//       height: 225px;
-//       padding: 70px 20px;
-//    }
-// `
-// const StyledTitle = styled.p`
-//    font-family: 'Montserrat';
-//    font-style: normal;
-//    font-weight: 800;
-//    font-size: 20px;
-//    color: #f1f6ff;
-//    @media screen and (max-width: 769px) {
-//       font-size: 10px;
-//    }
-// `

@@ -13,9 +13,11 @@ import {
    CSpinner,
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
+import { GiWindsock } from 'react-icons/gi'
 import { useNavigate, useParams } from 'react-router'
 import styled from 'styled-components'
 
+import { Flex } from '../../../../client/styles/style-for-positions/style'
 import {
    useDeleteAdvantageMutation,
    useLazyGetGateTypeByIdQuery,
@@ -144,28 +146,43 @@ const AdvantageView = ({ advantage, isFetching }) => {
                   </CCol>
                </CRow>
             </CCardHeader>
-            <CCardBody>
-               {isFetching ? (
-                  <CSpinner color="primary" />
-               ) : (
-                  <TableListContainer>
-                     <TableList
-                        data={data}
-                        columns={columnsConfig}
-                        onNavigetToInnerPage={onNavigetToInnerPage}
-                        deleteById={deleteGateHandler}
-                        setVisible={setVisible}
-                        visible={visible}
-                        isFetching={isDeleting}
-                     />
-                     <AppPagination
-                        totalPage={advantage.totalPages}
-                        page={queryParams.page}
-                        onChange={handleChangePage}
-                     />
-                  </TableListContainer>
-               )}
-            </CCardBody>
+            {data?.length !== 0 ? (
+               <CCardBody>
+                  {isFetching ? (
+                     <Flex width="100%" justify="center" p="20px">
+                        <CSpinner color="primary" />
+                     </Flex>
+                  ) : (
+                     <TableListContainer>
+                        <TableList
+                           data={data}
+                           columns={columnsConfig}
+                           onNavigetToInnerPage={onNavigetToInnerPage}
+                           deleteById={deleteGateHandler}
+                           setVisible={setVisible}
+                           visible={visible}
+                           isFetching={isDeleting}
+                        />
+                        <AppPagination
+                           totalPage={advantage.totalPages}
+                           page={queryParams.page}
+                           onChange={handleChangePage}
+                        />
+                     </TableListContainer>
+                  )}
+               </CCardBody>
+            ) : (
+               <Flex
+                  width="100%"
+                  justify="center"
+                  align="center"
+                  p="30px 20px"
+                  gap="20px"
+               >
+                  <GiWindsock size={30} />
+                  <CCardTitle>No published advantages</CCardTitle>
+               </Flex>
+            )}
          </CCard>
       </CContainer>
    )
@@ -173,14 +190,8 @@ const AdvantageView = ({ advantage, isFetching }) => {
 
 export default AdvantageView
 
-const TableImage = styled.img`
-   width: 70px;
-   height: 70px;
-   object-fit: contain;
-`
 const TableListContainer = styled.div`
-   max-width: 1000px;
-   margin: 0 auto;
+   max-width: 100%;
 `
 const ActionContainer = styled.div`
    display: flex;

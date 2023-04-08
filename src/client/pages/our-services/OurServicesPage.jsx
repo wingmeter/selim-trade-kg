@@ -9,50 +9,11 @@ import { useGetAllGateTypesQuery } from '../../../store/admin/gate-types/gateTyp
 import { DeviceSize } from '../../../utils/constants'
 import { getImgUrl } from '../../../utils/helpers/general'
 import backgroundImage from '../../assets/images/backgroundImage.png'
-import img from '../../assets/images/img.png'
 import leafs from '../../assets/images/leafs.png'
 import Card from '../../components/UI/cards/Card'
 import Skeletons from '../../components/UI/scleton/Skeletons'
 import { Flex, Grid } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
-
-export const cardData = [
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-]
 
 const OurServices = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
@@ -68,14 +29,23 @@ const OurServices = () => {
       }
    )
 
-   const showInnerPage = (id) => navigate(`${id}`)
+   const showInnerPage = (id) => {
+      navigate(`${id}`)
+      window.scrollTo({
+         top: 0,
+         behavior: 'smooth',
+      })
+   }
    return (
-      <Container sectionImg={leafs}>
-         <img src={leafs} alt="leafs" loading="lazy" />
+      <Container>
+         <img className="leafs" src={leafs} alt="leafs" />
          <InnerContainer>
             <ServiceDescription>
-               <Flex minWidth="50%">
-                  <Title size={isMobile ? '16px' : '70px'} uppercase>
+               <Flex
+                  minWidth={isMobile ? '100%' : '50%'}
+                  justify={isMobile && 'center'}
+               >
+                  <Title size={isMobile ? '16px' : '4rem'} uppercase>
                      Наши услуги
                   </Title>
                </Flex>
@@ -93,7 +63,8 @@ const OurServices = () => {
             </ServiceDescription>
             <CardsBackground>
                <StyledGrid columns={isMobile ? '1fr' : '1fr 1fr'}>
-                  {(isFetching || isLoading) && <Skeletons />}
+                  {(isFetching || isLoading) && <Skeletons height={250} />}
+
                   {servicesData?.map((service) => (
                      <StyledCard
                         key={service.id}
@@ -124,7 +95,7 @@ const StyledGrid = styled(Grid)`
    column-gap: 18px;
    row-gap: 35px;
    @media screen and (max-width: 900px) {
-      padding: 0;
+      padding: 0 20px;
       row-gap: 30px;
    }
    @media screen and (max-width: 768px) {
@@ -184,9 +155,13 @@ const CardSubTitle = styled(Flex)`
 const InnerContainer = styled(Flex)`
    flex-direction: column;
    align-items: flex-start;
-   gap: 200px;
+   gap: 120px;
    width: 100%;
    isolation: isolate;
+   @media screen and (max-width: 1200px) {
+      gap: 11rem;
+   }
+
    @media screen and (max-width: 768px) {
       padding: 0 16px 0;
       gap: 40px;
@@ -204,6 +179,7 @@ const ServiceDescription = styled.div`
    @media screen and (max-width: 768px) {
       flex-direction: column;
       gap: 12px;
+      padding: 10px 24px;
    }
 `
 
@@ -215,7 +191,7 @@ const Container = styled.div`
    overflow: hidden;
    position: relative;
    padding: 200px 0px 100px;
-   img {
+   .leafs {
       position: absolute;
       top: -200px;
       left: -200px;

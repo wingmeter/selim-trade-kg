@@ -18,6 +18,7 @@ import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
+import { Flex } from '../../../client/styles/style-for-positions/style'
 import {
    useGetAllAdminsQuery,
    useUpdateAdminMutation,
@@ -39,7 +40,10 @@ const AdminControlsView = () => {
    const [visible, setVisible] = useState(false)
 
    const [updateAdmin, { isLoading: isUpdateing }] = useUpdateAdminMutation()
-   const { data: admins, isFetching } = useGetAllAdminsQuery(queryParams)
+   const { data: admins, isFetching } = useGetAllAdminsQuery({
+      pageNo: queryParams.page - 1,
+      pageSize: 4,
+   })
 
    const handleChangePage = (newPage) => {
       setQueryParams((prev) => {
@@ -169,7 +173,9 @@ const AdminControlsView = () => {
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <CSpinner />
+                  <Flex width="100%" justify="center" p="20px">
+                     <CSpinner color="primary" />
+                  </Flex>
                ) : (
                   <TableListContainer>
                      <TableList

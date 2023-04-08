@@ -16,6 +16,7 @@ import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
+import { Flex } from '../../../client/styles/style-for-positions/style'
 import {
    useDeleteWorksMutation,
    useGetAllWorksQuery,
@@ -35,6 +36,7 @@ const WorksView = () => {
 
    const { data: works, isFetching } = useGetAllWorksQuery({
       pageNo: queryParams.page - 1,
+      pageSize: 6,
    })
 
    const handleChangePage = (newPage) => {
@@ -134,7 +136,9 @@ const WorksView = () => {
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <CSpinner color="primary" />
+                  <Flex width="100%" justify="center" p="20px">
+                     <CSpinner color="primary" />
+                  </Flex>
                ) : (
                   <TableListContainer>
                      <TableList

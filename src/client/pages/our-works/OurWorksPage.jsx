@@ -1,7 +1,4 @@
 /* eslint-disable no-irregular-whitespace */
-// import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { CSpinner } from '@coreui/react'
-import { Skeleton } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
@@ -9,9 +6,7 @@ import { useGetAllWorksQuery } from '../../../store/admin/works/worksApi'
 import { DeviceSize } from '../../../utils/constants'
 import { getImgUrl } from '../../../utils/helpers/general'
 import backgroundImage from '../../assets/images/backgroundImage.png'
-import img from '../../assets/images/img.png'
 import LazyLoad from '../../components/UI/lazy-loading/LazyLoading'
-// import Card from '../../components/UI/cards/Card'
 import CardsSkeleton from '../../components/UI/scleton/CardsSkeleton'
 import { Flex, Grid } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
@@ -19,8 +14,7 @@ import { Text, Title } from '../../styles/typography/style'
 const OurWorksPage = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
-   const { data: worksData, isFetching } = useGetAllWorksQuery({ pageNo: 1 })
-   console.log(worksData)
+   const { data: worksData, isFetching } = useGetAllWorksQuery({ pageNo: 0 })
 
    return (
       <Container>

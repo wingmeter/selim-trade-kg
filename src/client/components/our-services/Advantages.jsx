@@ -1,40 +1,13 @@
+import { BiBox } from 'react-icons/bi'
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
 import { DeviceSize } from '../../../utils/constants'
-import img from '../../assets/images/img.png'
 import { Flex } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
+import CardsSkeleton from '../UI/scleton/CardsSkeleton'
 
-const cardData = [
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      title: 'Промышленные секционные ворота',
-      id: Math.random().toString(),
-      img,
-   },
-]
-
-const Advantages = () => {
+const Advantages = ({ advantageList, isFetching }) => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
    return (
@@ -43,7 +16,10 @@ const Advantages = () => {
             Основные преимущества
          </Title>
          <ContainerCards>
-            {cardData?.map((el, index) => (
+            {isFetching && (
+               <CardsSkeleton quantity={5} height={isMobile ? 172 : 250} />
+            )}
+            {advantageList?.map((el, index) => (
                <AdvantagesCard>
                   <Title
                      size={isMobile ? '20px' : '27px'}
@@ -54,14 +30,23 @@ const Advantages = () => {
                   >
                      {el.title}
                   </Title>
-                  <Text size={isMobile ? '14px' : '20px'} weight="300">
-                     Данная серия ворот спроектирована специально для перекрытия
-                     больших проёмов на промышленных объектах.
+                  <Text
+                     size={isMobile ? '14px' : '20px'}
+                     weight="300"
+                     align={isMobile ? 'center' : 'left'}
+                  >
+                     {el.description}
                   </Text>
                   <BigNumber>{index + 1}</BigNumber>
                </AdvantagesCard>
             ))}
          </ContainerCards>
+         {advantageList?.length === 0 && (
+            <Flex justify="center" align="center" gap="20px" width="100%">
+               <BiBox size={40} />
+               <Text size="16px">Нет преимущества</Text>
+            </Flex>
+         )}
       </Container>
    )
 }
@@ -71,7 +56,7 @@ export default Advantages
 const BigNumber = styled.h1`
    position: absolute;
    left: 30%;
-   top: -50%;
+   top: -35%;
    z-index: -1;
    font-family: var(--base-font);
    font-weight: 900;
@@ -119,7 +104,7 @@ const ContainerCards = styled(Flex)`
    }
    @media screen and (max-width: 768px) {
       grid-template-columns: 1fr;
-      row-gap: 40px;
+      row-gap: 20px;
    }
 `
 
@@ -127,7 +112,7 @@ const Container = styled(Flex)`
    width: 100%;
    max-width: 1440px;
    margin: 0 auto;
-   gap: 60px;
+   gap: 70px;
    align-items: flex-start;
    flex-direction: column;
    padding: 80px 22px 40px;

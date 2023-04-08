@@ -9,11 +9,11 @@ export const worksApi = createApi({
    endpoints: (build) => ({
       // ------------------------------get all
       getAllWorks: build.query({
-         query: ({ page, filter }) => ({
+         query: ({ pageNo, pageSize, filter }) => ({
             url: 'api/v1/work',
             method: 'GET',
             // filter need to fix
-            params: { page, size: 8, filter },
+            params: { pageNo, pageSize, filter },
          }),
          providesTags: ['AllWorks'],
       }),

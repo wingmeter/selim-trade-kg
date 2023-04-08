@@ -1,13 +1,11 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react'
-
 import SkeletonCard from './SkeletonCard'
 
-const Skeleletons = () => {
+const Skeleletons = ({ height }) => {
    return (
       <>
          {[...Array(10)].map((_, index) => (
-            <SkeletonCard />
+            <SkeletonCard key={index} height={height} />
          ))}
       </>
    )
