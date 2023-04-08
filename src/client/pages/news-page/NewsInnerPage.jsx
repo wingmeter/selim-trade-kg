@@ -1,8 +1,15 @@
 import { useMediaQuery } from 'react-responsive'
+import { useNavigate, useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 // import img from '../../assets/images/newsBG.png'
+import {
+   useGetAllNewsQuery,
+   useGetNewsByIdQuery,
+} from '../../../store/admin/news/newsApi'
 import { DeviceSize } from '../../../utils/constants'
+import { getImgUrl } from '../../../utils/helpers/general'
 import microBG from '../../assets/images/microBG.png'
 import newsInnerBG from '../../assets/images/newsInnerBG.png'
 import Tablet from '../../assets/images/Tablet.png'
@@ -11,50 +18,56 @@ import { Flex } from '../../styles/style-for-positions/style'
 import { SubTitle } from '../main-page/style'
 // import { Text, Title } from '../../styles/typography/style'
 
-const cardData = [
-   {
-      id: 1,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img: microBG,
-   },
-   {
-      id: 2,
-      title: 'РАСШИРЕНИЕ ДИЗАЙНА ВОРОТ СТАДНАРТНОЙ СЕРИИ RSD01SC BIW',
-      img: microBG,
-   },
-   {
-      id: 3,
-      title: 'СНИЖЕНИЕ ЦЕН НА ОСНОВНУЮ ЛИНЕЙКУ АВТОМАТИКИ DOORHAN',
-      img: microBG,
-   },
-]
-
 const NewsInnerPage = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+   const { id } = useParams()
+   const navigate = useNavigate()
+
+   const { data: newsById, isFetchingNews } = useGetNewsByIdQuery(id)
+
+   const { data: news, isFetching } = useGetAllNewsQuery({
+      pageSize: 3,
+   })
+
+   const onNavigateToInnerPage = (id) => {
+      navigate(`/news/${id}`)
+      window.scrollTo(0, 0)
+   }
+
+   if (isFetching) {
+      return (
+         <div className="d-flex justify-content-center mx-auto my-4">
+            <div className="spinner-border" role="status">
+               <span className="visually-hidden">Loading...</span>
+            </div>
+         </div>
+      )
+   }
+
    return (
       <Container>
          <InnerContainer>
             <ProductDescriptionContainer>
                {!isMobile && (
                   <ProductImage>
-                     <img src={newsInnerBG} alt="newsInnerBG" />
+                     <img
+                        src={getImgUrl(newsById?.photoUrl)}
+                        alt="newsInnerBG"
+                     />
                   </ProductImage>
                )}
 
                <ProductDescription>
-                  <ProductTitle>
-                     Расширение дизайна ворот стандартной серии RSD01SC BIW
-                  </ProductTitle>
+                  <ProductTitle>{newsById?.title}</ProductTitle>
                   <ProductDescriptionTitle>
-                     Компания «SelimTrade» сообщает вам о расширении вариантов
-                     дизайна гаражных секционных ворот стандартной серии RSD01SC
-                     BIW. С 10 марта 2016 года для заказа стали доступны ворота
-                     с дизайном панели «доска» в трёх цветовых решениях (RAL
-                     9003, RAL 8014 и «золотой дуб»).
+                     {newsById?.description}
                   </ProductDescriptionTitle>
                   {isMobile && (
                      <ProductImage>
-                        <img src={newsInnerBG} alt="newsInnerBG" />
+                        <img
+                           src={getImgUrl(newsById?.photoUrl)}
+                           alt="newsInnerBG"
+                        />
                      </ProductImage>
                   )}
                   <ProductTypes>
@@ -65,8 +78,13 @@ const NewsInnerPage = () => {
             <SimilarContainer>
                <StyledSubTitle>Последние новости</StyledSubTitle>
                <CardContainer>
-                  {cardData.map((data) => (
-                     <StyledCard img={data.img}>
+                  {news?.content?.map((data) => (
+                     <StyledCard
+                        className="news-card"
+                        key={data?.id}
+                        img={getImgUrl(data?.photoUrl)}
+                        onClick={() => onNavigateToInnerPage(data?.id)}
+                     >
                         <StyledTitle>{data.title}</StyledTitle>
                      </StyledCard>
                   ))}
@@ -174,6 +192,10 @@ const StyledSubTitle = styled(SubTitle)`
 const CardContainer = styled.div`
    display: flex;
    gap: 20px;
+
+   .news-card {
+      cursor: pointer;
+   }
 
    @media screen and (max-width: 769px) {
       overflow: hidden;
