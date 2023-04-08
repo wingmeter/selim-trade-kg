@@ -1,28 +1,36 @@
+import { useRef, useState } from 'react'
+
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
 import useForm from '../../../hooks/useForm'
+import { useCreateOrderMutation } from '../../../store/admin/order/orderApi'
 import { DeviceSize } from '../../../utils/constants'
 import { Button } from '../UI/buttons/Button'
 import { Input } from '../UI/inputs/Input'
 import { Textarea } from '../UI/inputs/Textarea'
+import SuccesModal from '../UI/modals/SuccesModal'
 
 const FeedbackForm = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+   const [open, setOpen] = useState(false)
+   const formRef = useRef()
+
+   const [createOrder, { isLoading }] = useCreateOrderMutation()
 
    const initialValue = {
       name: '',
-      phone: '',
+      phoneNumber: '',
       message: '',
    }
-   const { values, handleInputChange, errors, setErrors } =
+   const { values, handleInputChange, clearFields, errors, setErrors } =
       useForm(initialValue)
 
    const validate = () => {
       // eslint-disable-next-line prefer-const
       let temp = {}
       temp.name = values.name ? '' : 'Это поле обязательное'
-      temp.phone = values.phone ? '' : 'Это поле обязательное'
+      temp.phoneNumber = values.phoneNumber ? '' : 'Это поле обязательное'
       temp.message = values.message ? '' : 'Это поле обязательное'
 
       setErrors({
@@ -31,18 +39,29 @@ const FeedbackForm = () => {
 
       return Object.values(temp).every((x) => x === '')
    }
+
    const handleSubmit = (e) => {
       e.preventDefault()
 
       if (validate()) {
-         console.log(values)
+         createOrder(values)
+            .unwrap()
+            .then(() => {
+               setOpen(true)
+               setTimeout(() => {
+                  setOpen(false)
+               }, 3000)
+               clearFields()
+               formRef.current.reset()
+            })
       }
    }
 
    return (
       <Container>
+         <SuccesModal open={open} onClose={() => setOpen(false)} />
          <h1>Остались вопросы?</h1>
-         <Form onSubmit={handleSubmit}>
+         <Form onSubmit={handleSubmit} ref={formRef}>
             <FormContainer>
                <Input
                   placeholder="имя"
@@ -53,10 +72,10 @@ const FeedbackForm = () => {
                />
                <Input
                   placeholder="телефон"
-                  name="phone"
+                  name="phoneNumber"
                   type="number"
-                  error={errors.phone}
-                  helperText={errors.phone}
+                  error={errors.phoneNumber}
+                  helperText={errors.phoneNumber}
                   onChange={(e) => handleInputChange(e)}
                />
                {!isMobile && (

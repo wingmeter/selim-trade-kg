@@ -41,7 +41,6 @@ const StyledInput = styled(TextField)`
       font-weight: 500;
       font-size: 20px;
       letter-spacing: 0.5px;
-      text-transform: lowercase;
       color: #414141;
    }
    & .MuiOutlinedInput-root {
@@ -49,6 +48,9 @@ const StyledInput = styled(TextField)`
          border-color: #002cefc3;
          border: 1px solid;
       }
+   }
+   & .MuiOutlinedInput-notchedOutline {
+      top: 0 !important;
    }
    & .MuiInputBase-root {
       font-size: ${({ size }) => (size === 'small' ? '0.875rem' : '1rem')};
