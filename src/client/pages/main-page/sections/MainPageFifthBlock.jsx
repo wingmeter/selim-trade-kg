@@ -1,44 +1,43 @@
+import { useState } from 'react'
+
 import { Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { useGetAllNewsQuery } from '../../../../store/admin/news/newsApi'
+import { getImgUrl } from '../../../../utils/helpers/general'
 import leaf from '../../../assets/images/leaf.png'
 import microBG from '../../../assets/images/microBG.png'
 import { ButtonOutlined } from '../../../components/UI/buttons/ButtonOutlined'
 import Card from '../../../components/UI/cards/Card'
 import { SubTitle } from '../style'
 
-const cardData = [
-   {
-      id: 1,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img: microBG,
-   },
-   {
-      id: 2,
-      title: 'РАСШИРЕНИЕ ДИЗАЙНА ВОРОТ СТАДНАРТНОЙ СЕРИИ RSD01SC BIW',
-      img: microBG,
-   },
-   {
-      id: 3,
-      title: 'СНИЖЕНИЕ ЦЕН НА ОСНОВНУЮ ЛИНЕЙКУ АВТОМАТИКИ DOORHAN',
-      img: microBG,
-   },
-]
-
 const FifthSection = () => {
    const navigate = useNavigate()
+
+   const { data: news, isFetching } = useGetAllNewsQuery({
+      pageSize: 3,
+   })
+
    return (
       <StyledSection>
          <Container>
             <StyledSubTitle>Последние новости</StyledSubTitle>
-            <CardContainer>
-               {cardData.map((data) => (
-                  <StyledCard img={data.img} key={data.id}>
-                     <StyledTitle>{data.title}</StyledTitle>
-                  </StyledCard>
-               ))}
-            </CardContainer>
+            {isFetching ? (
+               <div className="d-flex justify-content-center mx-auto my-4">
+                  <div className="spinner-border" role="status">
+                     <span className="visually-hidden">Loading...</span>
+                  </div>
+               </div>
+            ) : (
+               <CardContainer>
+                  {news?.content?.map((data) => (
+                     <StyledCard img={getImgUrl(data.photoUrl)} key={data.id}>
+                        <StyledTitle>{data.title}</StyledTitle>
+                     </StyledCard>
+                  ))}
+               </CardContainer>
+            )}
             <StyledButtonOutlined
                onClick={() => {
                   navigate('/news')
