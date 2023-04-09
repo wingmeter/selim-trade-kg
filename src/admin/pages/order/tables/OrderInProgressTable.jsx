@@ -40,7 +40,6 @@ const OrderInProgressTable = () => {
    }
 
    const deleteOrderInProgressHandler = async (workId) => {
-      console.log(workId)
       try {
          await deleteOrderInProgress(workId).unwrap()
          setVisible(false)
@@ -99,7 +98,6 @@ const OrderInProgressTable = () => {
                   <IconButton
                      onClick={(e) => {
                         e.stopPropagation()
-                        console.log(item.id)
                         setVisible(item.id)
                      }}
                   >

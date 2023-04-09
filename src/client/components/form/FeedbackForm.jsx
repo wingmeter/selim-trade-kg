@@ -79,7 +79,7 @@ const FeedbackForm = () => {
                   onChange={(e) => handleInputChange(e)}
                />
                {!isMobile && (
-                  <Button width="500px" type="submit">
+                  <Button disabled={isLoading} width="500px" type="submit">
                      Оставить отзыв
                   </Button>
                )}
@@ -91,7 +91,7 @@ const FeedbackForm = () => {
                onChange={(e) => handleInputChange(e)}
             />
             {isMobile && (
-               <Button width="500px" type="submit">
+               <Button disabled={isLoading} width="500px" type="submit">
                   Оставить отзыв
                </Button>
             )}

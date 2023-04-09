@@ -30,7 +30,7 @@ const NewsInnerPage = () => {
       window.scrollTo(0, 0)
    }
 
-   if (isFetching) {
+   if (isFetching || isFetchingNews) {
       return (
          <div className="d-flex justify-content-center mx-auto my-4">
             <div className="spinner-border" role="status">

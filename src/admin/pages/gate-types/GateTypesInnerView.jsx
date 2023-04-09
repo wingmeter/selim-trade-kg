@@ -5,7 +5,6 @@ import {
    CCardHeader,
    CCardImage,
    CCardSubtitle,
-   CCardText,
    CCardTitle,
    CContainer,
    CSpinner,

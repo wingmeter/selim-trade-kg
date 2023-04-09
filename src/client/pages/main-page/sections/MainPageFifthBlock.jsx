@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -7,7 +5,6 @@ import styled from 'styled-components'
 import { useGetAllNewsQuery } from '../../../../store/admin/news/newsApi'
 import { getImgUrl } from '../../../../utils/helpers/general'
 import leaf from '../../../assets/images/leaf.png'
-import microBG from '../../../assets/images/microBG.png'
 import { ButtonOutlined } from '../../../components/UI/buttons/ButtonOutlined'
 import Card from '../../../components/UI/cards/Card'
 import { SubTitle } from '../style'
