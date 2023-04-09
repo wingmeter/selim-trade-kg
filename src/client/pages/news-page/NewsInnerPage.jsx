@@ -1,59 +1,69 @@
 import { useMediaQuery } from 'react-responsive'
+import { useNavigate, useParams } from 'react-router'
 import styled from 'styled-components'
 
+import {
+   useGetAllNewsQuery,
+   useGetNewsByIdQuery,
+} from '../../../store/admin/news/newsApi'
 import { DeviceSize } from '../../../utils/constants'
-import microBG from '../../assets/images/microBG.png'
-import newsInnerBG from '../../assets/images/newsInnerBG.png'
+import { getImgUrl } from '../../../utils/helpers/general'
 import Tablet from '../../assets/images/Tablet.png'
 import Card from '../../components/UI/cards/Card'
 import LazyImage from '../../components/UI/lazy-loading/LazyLoading'
 import { Flex } from '../../styles/style-for-positions/style'
 import { SubTitle } from '../main-page/style'
 
-const cardData = [
-   {
-      id: 1,
-      title: 'РЕАЛИЗОВАНА ВОЗМОЖНОСТЬ ПОДКЛЮЧЕНИЯ СИГНАЛЬНОЙ ЛАМПЫ К БЛОКАМ УПРАВЛЕНИЯ PCB-SH',
-      img: microBG,
-   },
-   {
-      id: 2,
-      title: 'РАСШИРЕНИЕ ДИЗАЙНА ВОРОТ СТАДНАРТНОЙ СЕРИИ RSD01SC BIW',
-      img: microBG,
-   },
-   {
-      id: 3,
-      title: 'СНИЖЕНИЕ ЦЕН НА ОСНОВНУЮ ЛИНЕЙКУ АВТОМАТИКИ DOORHAN',
-      img: microBG,
-   },
-]
-
 const NewsInnerPage = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+   const { id } = useParams()
+   const navigate = useNavigate()
+
+   const { data: newsById, isFetchingNews } = useGetNewsByIdQuery(id)
+
+   const { data: news, isFetching } = useGetAllNewsQuery({
+      pageSize: 3,
+   })
+
+   const onNavigateToInnerPage = (id) => {
+      navigate(`/news/${id}`)
+      window.scrollTo(0, 0)
+   }
+
+   if (isFetching) {
+      return (
+         <div className="d-flex justify-content-center mx-auto my-4">
+            <div className="spinner-border" role="status">
+               <span className="visually-hidden">Loading...</span>
+            </div>
+         </div>
+      )
+   }
+
    return (
       <Container>
          <InnerContainer>
             <ProductDescriptionContainer>
                {!isMobile && (
                   <ProductImage>
-                     <LazyImage src={newsInnerBG} alt="newsInnerBG" />
+                     <LazyImage
+                        src={getImgUrl(newsById?.photoUrl)}
+                        alt="newsInnerBG"
+                     />
                   </ProductImage>
                )}
 
                <ProductDescription>
-                  <ProductTitle>
-                     Расширение дизайна ворот стандартной серии RSD01SC BIW
-                  </ProductTitle>
+                  <ProductTitle>{newsById?.title}</ProductTitle>
                   <ProductDescriptionTitle>
-                     Компания «SelimTrade» сообщает вам о расширении вариантов
-                     дизайна гаражных секционных ворот стандартной серии RSD01SC
-                     BIW. С 10 марта 2016 года для заказа стали доступны ворота
-                     с дизайном панели «доска» в трёх цветовых решениях (RAL
-                     9003, RAL 8014 и «золотой дуб»).
+                     {newsById?.description}
                   </ProductDescriptionTitle>
                   {isMobile && (
                      <ProductImage>
-                        <LazyImage src={newsInnerBG} alt="newsInnerBG" />
+                        <LazyImage
+                           src={getImgUrl(newsById?.photoUrl)}
+                           alt="newsInnerBG"
+                        />
                      </ProductImage>
                   )}
                   <ProductTypes>
@@ -64,8 +74,13 @@ const NewsInnerPage = () => {
             <SimilarContainer>
                <StyledSubTitle>Последние новости</StyledSubTitle>
                <CardContainer>
-                  {cardData.map((data) => (
-                     <StyledCard img={data.img}>
+                  {news?.content?.map((data) => (
+                     <StyledCard
+                        className="news-card"
+                        key={data?.id}
+                        img={getImgUrl(data?.photoUrl)}
+                        onClick={() => onNavigateToInnerPage(data?.id)}
+                     >
                         <StyledTitle>{data.title}</StyledTitle>
                      </StyledCard>
                   ))}
@@ -92,7 +107,6 @@ const InnerContainer = styled(Flex)`
 const ProductDescriptionContainer = styled.div`
    display: flex;
    gap: 50px;
-
    @media screen and (max-width: 769px) {
       flex-direction: column;
       align-items: center;
@@ -108,7 +122,6 @@ const ProductDescriptionTitle = styled.p`
    line-height: 140%;
    text-align: justify;
    color: #414141;
-
    @media screen and (max-width: 769px) {
       font-size: 14px;
    }
@@ -161,7 +174,6 @@ const Container = styled.div`
    padding: 180px 0px 0px;
    max-width: 1500px;
    margin: 0 auto;
-
    @media screen and (max-width: 769px) {
       padding: 80px 0px 40px;
    }
@@ -173,7 +185,9 @@ const StyledSubTitle = styled(SubTitle)`
 const CardContainer = styled.div`
    display: flex;
    gap: 20px;
-
+   .news-card {
+      cursor: pointer;
+   }
    @media screen and (max-width: 769px) {
       overflow: hidden;
       overflow-x: scroll;
@@ -182,7 +196,6 @@ const CardContainer = styled.div`
 const StyledCard = styled(Card)`
    text-align: center;
    padding: 90px 28px;
-
    @media screen and (max-width: 769px) {
       display: flex;
       justify-content: center;
@@ -192,7 +205,6 @@ const StyledCard = styled(Card)`
    }
 `
 const StyledTitle = styled.p`
-   position: relative;
    font-family: 'Montserrat';
    font-style: normal;
    font-weight: 800;
@@ -211,3 +223,26 @@ const SimilarContainer = styled.div`
       margin-top: 50px;
    }
 `
+// const StyledCard = styled(Card)`
+//    text-align: center;
+//    padding: 90px 28px;
+//    cursor: pointer;
+
+//    @media screen and (max-width: 769px) {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       height: 225px;
+//       padding: 70px 20px;
+//    }
+// `
+// const StyledTitle = styled.p`
+//    font-family: 'Montserrat';
+//    font-style: normal;
+//    font-weight: 800;
+//    font-size: 20px;
+//    color: #f1f6ff;
+//    @media screen and (max-width: 769px) {
+//       font-size: 10px;
+//    }
+// `

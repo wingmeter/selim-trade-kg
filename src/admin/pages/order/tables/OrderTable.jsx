@@ -99,10 +99,14 @@ const OrderTable = () => {
    return (
       <CCardBody>
          {isFetching ? (
-            <span>Loading...</span>
+            <div className="d-flex justify-content-center">
+               <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+               </div>
+            </div>
          ) : (
             <TableListContainer>
-               {!data.length ? (
+               {!data?.length ? (
                   <Message>Пока заявок нет</Message>
                ) : (
                   <>

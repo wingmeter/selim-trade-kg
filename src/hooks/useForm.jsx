@@ -15,11 +15,16 @@ const useForm = (initialValues) => {
       })
    }
 
+   const clearFields = () => {
+      setValues(initialValues)
+   }
+
    return {
       values,
       setValues,
       errors,
       setErrors,
+      clearFields,
       handleInputChange,
    }
 }

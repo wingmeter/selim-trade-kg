@@ -58,7 +58,13 @@ const NewsPage = () => {
                <div>
                   <CardContainer>
                      {news?.content?.map((data) => (
-                        <Link key={data.id} to={`${data.id}`}>
+                        <Link
+                           key={data.id}
+                           to={`${data.id}`}
+                           onClick={() => {
+                              window.scrollTo(0, 0)
+                           }}
+                        >
                            <StyledCard
                               key={data.id}
                               img={getImgUrl(data.photoUrl)}

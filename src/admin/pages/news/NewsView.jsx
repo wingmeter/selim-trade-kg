@@ -150,20 +150,26 @@ const News = () => {
                   </div>
                ) : (
                   <TableListContainer>
-                     <TableList
-                        data={data}
-                        columns={columns}
-                        onNavigetToInnerPage={onNavigetToInnerPage}
-                        deleteById={deleteGateTypeHandler}
-                        setVisible={setVisible}
-                        visible={visible}
-                        isFetching={isDeleting}
-                     />
-                     <AppPagination
-                        totalPage={news.totalPages}
-                        page={queryParams.page}
-                        onChange={handleChangePage}
-                     />
+                     {!data?.length ? (
+                        <Message>Пока заявок нет</Message>
+                     ) : (
+                        <>
+                           <TableList
+                              data={data}
+                              columns={columns}
+                              onNavigetToInnerPage={onNavigetToInnerPage}
+                              deleteById={deleteGateTypeHandler}
+                              setVisible={setVisible}
+                              visible={visible}
+                              isFetching={isDeleting}
+                           />
+                           <AppPagination
+                              totalPage={news.totalPages}
+                              page={queryParams.page}
+                              onChange={handleChangePage}
+                           />
+                        </>
+                     )}
                   </TableListContainer>
                )}
             </CCardBody>
@@ -189,4 +195,9 @@ const ActionContainer = styled.div`
    svg {
       cursor: pointer;
    }
+`
+const Message = styled.p`
+   text-align: center;
+   margin-top: 30px;
+   font-size: 16px;
 `
