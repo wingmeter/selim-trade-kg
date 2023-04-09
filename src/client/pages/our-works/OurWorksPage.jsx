@@ -1,73 +1,20 @@
 /* eslint-disable no-irregular-whitespace */
-// import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
+import { useGetAllWorksQuery } from '../../../store/admin/works/worksApi'
 import { DeviceSize } from '../../../utils/constants'
+import { getImgUrl } from '../../../utils/helpers/general'
 import backgroundImage from '../../assets/images/backgroundImage.png'
-import img from '../../assets/images/img.png'
 import LazyLoad from '../../components/UI/lazy-loading/LazyLoading'
-// import Card from '../../components/UI/cards/Card'
+import CardsSkeleton from '../../components/UI/scleton/CardsSkeleton'
 import { Flex, Grid } from '../../styles/style-for-positions/style'
 import { Text, Title } from '../../styles/typography/style'
 
-const cardData = [
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-   {
-      id: Math.random().toString(),
-      img,
-   },
-]
-
 const OurWorksPage = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
+   const { data: worksData, isFetching } = useGetAllWorksQuery({ pageNo: 0 })
 
    return (
       <Container>
@@ -88,20 +35,26 @@ const OurWorksPage = () => {
                   проект по душе и нраву, который захотите воплотить в жизнь.
                </Text>
             </OurWorksDescription>
+
             <CardContainer>
-               {cardData.map((card, index) => {
-                  if (index <= 9) {
-                     return (
-                        <StyledCard
-                           key={card.id}
-                           src={card?.img}
-                           alt={`Image Alt-${index}`}
-                           className={`item${index + 1}`}
-                        />
-                     )
-                  }
-                  return ''
-               })}
+               {isFetching && <CardsSkeleton />}
+               {worksData?.content?.length === 0 ? (
+                  <Title>No Works loaded</Title>
+               ) : (
+                  worksData?.content?.map((work, index) => {
+                     if (index <= 9) {
+                        return (
+                           <StyledCard
+                              key={work.id}
+                              src={getImgUrl(work?.photoUrl)}
+                              alt={`Image Alt-${index}`}
+                              className={`item${index + 1}`}
+                           />
+                        )
+                     }
+                     return ''
+                  })
+               )}
             </CardContainer>
          </InnerContainer>
       </Container>

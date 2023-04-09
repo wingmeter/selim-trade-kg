@@ -1,22 +1,18 @@
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate, useParams } from 'react-router'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-// import img from '../../assets/images/newsBG.png'
 import {
    useGetAllNewsQuery,
    useGetNewsByIdQuery,
 } from '../../../store/admin/news/newsApi'
 import { DeviceSize } from '../../../utils/constants'
 import { getImgUrl } from '../../../utils/helpers/general'
-import microBG from '../../assets/images/microBG.png'
-import newsInnerBG from '../../assets/images/newsInnerBG.png'
 import Tablet from '../../assets/images/Tablet.png'
 import Card from '../../components/UI/cards/Card'
+import LazyImage from '../../components/UI/lazy-loading/LazyLoading'
 import { Flex } from '../../styles/style-for-positions/style'
 import { SubTitle } from '../main-page/style'
-// import { Text, Title } from '../../styles/typography/style'
 
 const NewsInnerPage = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
@@ -34,7 +30,7 @@ const NewsInnerPage = () => {
       window.scrollTo(0, 0)
    }
 
-   if (isFetching) {
+   if (isFetching || isFetchingNews) {
       return (
          <div className="d-flex justify-content-center mx-auto my-4">
             <div className="spinner-border" role="status">
@@ -50,7 +46,7 @@ const NewsInnerPage = () => {
             <ProductDescriptionContainer>
                {!isMobile && (
                   <ProductImage>
-                     <img
+                     <LazyImage
                         src={getImgUrl(newsById?.photoUrl)}
                         alt="newsInnerBG"
                      />
@@ -64,14 +60,14 @@ const NewsInnerPage = () => {
                   </ProductDescriptionTitle>
                   {isMobile && (
                      <ProductImage>
-                        <img
+                        <LazyImage
                            src={getImgUrl(newsById?.photoUrl)}
                            alt="newsInnerBG"
                         />
                      </ProductImage>
                   )}
                   <ProductTypes>
-                     <img src={Tablet} alt="Tablet" />
+                     <LazyImage src={Tablet} alt="Tablet" />
                   </ProductTypes>
                </ProductDescription>
             </ProductDescriptionContainer>
@@ -111,7 +107,6 @@ const InnerContainer = styled(Flex)`
 const ProductDescriptionContainer = styled.div`
    display: flex;
    gap: 50px;
-
    @media screen and (max-width: 769px) {
       flex-direction: column;
       align-items: center;
@@ -127,7 +122,6 @@ const ProductDescriptionTitle = styled.p`
    line-height: 140%;
    text-align: justify;
    color: #414141;
-
    @media screen and (max-width: 769px) {
       font-size: 14px;
    }
@@ -180,7 +174,6 @@ const Container = styled.div`
    padding: 180px 0px 0px;
    max-width: 1500px;
    margin: 0 auto;
-
    @media screen and (max-width: 769px) {
       padding: 80px 0px 40px;
    }
@@ -192,11 +185,9 @@ const StyledSubTitle = styled(SubTitle)`
 const CardContainer = styled.div`
    display: flex;
    gap: 20px;
-
    .news-card {
       cursor: pointer;
    }
-
    @media screen and (max-width: 769px) {
       overflow: hidden;
       overflow-x: scroll;
@@ -205,7 +196,6 @@ const CardContainer = styled.div`
 const StyledCard = styled(Card)`
    text-align: center;
    padding: 90px 28px;
-
    @media screen and (max-width: 769px) {
       display: flex;
       justify-content: center;

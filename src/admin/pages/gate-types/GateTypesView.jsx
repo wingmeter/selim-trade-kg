@@ -16,18 +16,21 @@ import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
+import { Flex } from '../../../client/styles/style-for-positions/style'
 import {
    useDeleteGateTypeMutation,
    useGetAllGateTypesQuery,
 } from '../../../store/admin/gate-types/gateTypesApi'
-import { getImgUrl } from '../../../utils/helpers/general'
+import { getErrorMessage, getImgUrl } from '../../../utils/helpers/general'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/deleteIcon.svg'
 import { ReactComponent as UpdateIcon } from '../../assets/icons/updateIcon.svg'
-import LastUpdateList, {
-   getLastValue,
-} from '../../components/last-update/LastUpdateList'
+import { getLastValue } from '../../components/last-update/LastUpdateList'
 import TableList from '../../components/table/TableList'
 import AppPagination from '../../components/UI/AppPagination'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../components/UI/notification/Notification'
 
 const GateTypesView = () => {
    const navigate = useNavigate()
@@ -36,7 +39,10 @@ const GateTypesView = () => {
       page: 1,
    })
 
-   const { data: gateTypes, isFetching } = useGetAllGateTypesQuery(queryParams)
+   const { data: gateTypes, isFetching } = useGetAllGateTypesQuery({
+      pageNo: queryParams.page - 1,
+      pageSize: 6,
+   })
    const [deleteGateType, { isLoading: isDeleting }] =
       useDeleteGateTypeMutation()
 
@@ -54,8 +60,9 @@ const GateTypesView = () => {
       try {
          await deleteGateType(gateTypeId).unwrap()
          setVisible(false)
+         showSuccessMessage({ message: 'Successfully deleted gate type' })
       } catch (error) {
-         console.error(error || 'something went wrong')
+         showErrorMessage(getErrorMessage(error))
       }
    }
 
@@ -94,7 +101,13 @@ const GateTypesView = () => {
          key: 'active',
          header: 'Last Update',
          width: 120,
-         cell: (item) => <span>{getLastValue(item?.updatedByList)}</span>,
+         cell: (item) => (
+            <span>
+               {item?.updatedByList?.length !== 0
+                  ? getLastValue(item?.updatedByList)
+                  : 'No updates'}
+            </span>
+         ),
       },
       {
          key: 'actions',
@@ -157,7 +170,9 @@ const GateTypesView = () => {
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <CSpinner color="primary" />
+                  <Flex width="100%" justify="center" p="50px">
+                     <CSpinner color="primary" />
+                  </Flex>
                ) : (
                   <TableListContainer>
                      <TableList

@@ -13,11 +13,10 @@ import {
    CFormLabel,
    CImage,
    CRow,
+   CSpinner,
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
-// eslint-disable-next-line no-unused-vars
-import { useSearchParams } from 'react-router-dom'
 
 import { Flex } from '../../../../client/styles/style-for-positions/style'
 import {
@@ -25,7 +24,11 @@ import {
    useLazyGetSingleGateByIdQuery,
    useUpdateGateMutation,
 } from '../../../../store/admin/gate-types/gateTypesApi'
-import { getImgUrl } from '../../../../utils/helpers/general'
+import { getErrorMessage, getImgUrl } from '../../../../utils/helpers/general'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../../components/UI/notification/Notification'
 
 const CreateGate = () => {
    const navigate = useNavigate()
@@ -36,11 +39,11 @@ const CreateGate = () => {
    const [validated, setValidated] = useState(false)
 
    const [createGate, { isLoading }] = useCreateGateMutation()
-   // eslint-disable-next-line no-unused-vars
    const [updateGate, { isUpdating }] = useUpdateGateMutation()
    const [getSingleGateById, { data: gate }] = useLazyGetSingleGateByIdQuery()
 
    const navigateToLogin = () => {
+      window.scrollTo(0, document.body.scrollHeight)
       navigate(-1)
    }
 
@@ -68,21 +71,26 @@ const CreateGate = () => {
       if (!images.file) {
          formData.delete('image')
       }
-      console.log(formData)
 
       if (!gateId) {
          try {
             await createGate({ formData, gateTypeId: typeId }).unwrap()
             navigateToLogin()
+            showSuccessMessage({
+               message: 'Succesfully added new gate!',
+            })
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       } else {
          try {
             await updateGate({ formData, gateId }).unwrap()
             navigateToLogin()
+            showSuccessMessage({
+               message: 'Succesfully updated gate!',
+            })
          } catch (e) {
-            console.error(e)
+            showErrorMessage({ message: getErrorMessage(e) })
          }
       }
    }
@@ -107,6 +115,8 @@ const CreateGate = () => {
          clearTimeout(errorPhotoTime)
       }
    }, [errorPhoto])
+
+   const buttonName = gateId ? 'обновить' : 'добавить'
 
    return (
       <CCard>
@@ -169,8 +179,15 @@ const CreateGate = () => {
                )}
                <br />
                <Flex margin="20px 0px" justify="end">
-                  <CButton disabled={isLoading} onClick={submitHandler}>
-                     Добавить
+                  <CButton
+                     disabled={isLoading || isUpdating}
+                     onClick={submitHandler}
+                  >
+                     {isUpdating || isLoading ? (
+                        <CSpinner size="20px" />
+                     ) : (
+                        buttonName
+                     )}
                   </CButton>
                </Flex>
             </CForm>

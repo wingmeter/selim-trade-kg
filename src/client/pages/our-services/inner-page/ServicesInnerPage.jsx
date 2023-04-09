@@ -1,28 +1,49 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-irregular-whitespace */
+import { BiBox } from 'react-icons/bi'
 import { useMediaQuery } from 'react-responsive'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import styled from 'styled-components'
 
+import {
+   useGetAllGateTypesQuery,
+   useGetGateTypeByIdQuery,
+} from '../../../../store/admin/gate-types/gateTypesApi'
 import { DeviceSize } from '../../../../utils/constants'
-import img from '../../../assets/images/img.png'
+import { getImgUrl } from '../../../../utils/helpers/general'
 import Advantages from '../../../components/our-services/Advantages'
 import Card from '../../../components/UI/cards/Card'
+import LazyImage from '../../../components/UI/lazy-loading/LazyLoading'
+import CardsSkeleton from '../../../components/UI/scleton/CardsSkeleton'
 import { Flex } from '../../../styles/style-for-positions/style'
 import { Text, Title } from '../../../styles/typography/style'
-import { cardData } from '../OurServicesPage'
 
-const ServicesInnerPage = ({ title, image, description }) => {
+const ServicesInnerPage = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    const navigate = useNavigate()
+   const { id } = useParams()
+   const {
+      data: serviceData,
+      isFetching,
+      isLoading,
+   } = useGetGateTypeByIdQuery(id)
 
-   const showInnerPage = () => navigate(`/`)
+   const showInnerPage = () => {
+      navigate(`/`)
+   }
    return (
       <Container>
          <ServiceBackground>
-            <HeaderBanner banner={image || img}>
+            {serviceData?.backgroundUrl && (
+               <ServiceBackgroundImage
+                  src={getImgUrl(serviceData?.backgroundUrl)}
+                  alt="background_img"
+               />
+            )}
+
+            <HeaderBanner>
                <Title white size={isMobile ? '16px' : '70px'} uppercase>
-                  {title || 'Промышленные секционные ворота'}
+                  {serviceData?.name || 'Ворота'}
                </Title>
             </HeaderBanner>
          </ServiceBackground>
@@ -33,8 +54,11 @@ const ServicesInnerPage = ({ title, image, description }) => {
                weight="300"
                align={isMobile && 'center'}
             >
-               {description ||
-                  'Наши сотрудники прошли сертифицированные тренинги в Учебных центрах ГК DoorHan в г. Москва, г. Алматы, г. Астаны  а так же успешно сдали экзамены и являются обладателями сертификатов по направлениям Воротные системы, ролл ставни, ролл  ворота, автоматические системы, Монтаж автоматики'}
+               Наши сотрудники прошли сертифицированные тренинги в Учебных
+               центрах ГК DoorHan в г. Москва, г. Алматы, г. Астаны а так же
+               успешно сдали экзамены и являются обладателями сертификатов по
+               направлениям Воротные системы, ролл ставни, ролл ворота,
+               автоматические системы, Монтаж автоматики
             </Text>
          </ServiceDescription>
          <TypeOfItems>
@@ -42,10 +66,13 @@ const ServicesInnerPage = ({ title, image, description }) => {
                типы ворот
             </Title>
             <CardContainer>
-               {cardData.map((card) => (
+               {isFetching && (
+                  <CardsSkeleton quantity={5} height={isMobile ? 172 : 250} />
+               )}
+               {serviceData?.gateList?.map((card) => (
                   <StyledCard
                      key={card.id}
-                     img={card?.img}
+                     img={getImgUrl(card?.photoUrl)}
                      onClck={() => showInnerPage(card.id)}
                   >
                      <CardSubTitle>
@@ -54,20 +81,38 @@ const ServicesInnerPage = ({ title, image, description }) => {
                   </StyledCard>
                ))}
             </CardContainer>
+            {serviceData?.gateList?.length === 0 && (
+               <Flex justify="center" align="center" gap="20px" width="100%">
+                  <BiBox size={40} />
+                  <Text size="16px">Нет ворот</Text>
+               </Flex>
+            )}
          </TypeOfItems>
-         <Advantages />
+         <Advantages
+            advantageList={serviceData?.advantageList}
+            isFetching={isFetching}
+         />
+         <br />
       </Container>
    )
 }
 
 export default ServicesInnerPage
 
+const ServiceBackgroundImage = styled(LazyImage)`
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   position: absolute;
+   top: 0;
+   left: 0;
+`
+
 const ServiceBackground = styled(Flex)`
+   position: relative;
+   overflow: hidden;
    width: 100%;
    max-width: 100%;
-   background-image: url(${img});
-   background-repeat: no-repeat;
-   background-size: cover;
    justify-content: center;
    align-items: center;
    border-bottom-right-radius: 180px;

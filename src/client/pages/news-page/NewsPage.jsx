@@ -156,6 +156,7 @@ const StyledCard = styled(Card)`
    }
 `
 const StyledTitle = styled.p`
+   position: relative;
    font-family: 'Montserrat';
    font-style: normal;
    font-weight: 800;

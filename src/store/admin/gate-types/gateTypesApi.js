@@ -8,11 +8,11 @@ export const gatesTypeApi = createApi({
    tagTypes: ['GateTypes', 'SingleGateType'],
    endpoints: (build) => ({
       getAllGateTypes: build.query({
-         query: ({ page, filter, size }) => ({
+         query: ({ pageNo, filter, pageSize }) => ({
             url: 'api/v1/gate-types',
             method: 'GET',
             // filter need to fix
-            params: { page, size: size || 8, filter },
+            params: { pageNo, pageSize: pageSize || 8, filter },
          }),
          providesTags: ['GateTypes'],
       }),
@@ -92,6 +92,49 @@ export const gatesTypeApi = createApi({
          }),
          invalidatesTags: ['SingleGateType'],
       }),
+
+      // -----gates methods ------------
+      getAllAdvantages: build.query({
+         query: ({ page, filter, size }) => ({
+            url: 'api/v1/advantage',
+            method: 'GET',
+            // filter need to fix
+            params: { page, size: size || 8, filter },
+         }),
+      }),
+      getAdvantageById: build.query({
+         query: (advantageId) => ({
+            url: `api/v1/advantage/${advantageId}`,
+            method: 'GET',
+         }),
+      }),
+      // post method
+      createAdvantage: build.mutation({
+         query: ({ gateTypeId, formData }) => ({
+            url: `api/v1/advantage/${gateTypeId}`,
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+         }),
+         invalidatesTags: ['SingleGateType'],
+      }),
+      // put method
+      updateAdvantage: build.mutation({
+         query: ({ advantageId, formData }) => ({
+            url: `api/v1/advantage/${advantageId}`,
+            method: 'PUT',
+            body: formData,
+         }),
+         invalidatesTags: ['SingleGateType'],
+      }),
+      // delete method
+      deleteAdvantage: build.mutation({
+         query: (advantageId) => ({
+            url: `api/v1/advantage/${advantageId}`,
+            method: 'DELETE',
+         }),
+         invalidatesTags: ['SingleGateType'],
+      }),
    }),
 })
 
@@ -109,4 +152,11 @@ export const {
    useCreateGateMutation,
    useDeleteGateMutation,
    useUpdateGateMutation,
+   // advantage hooks
+   useGetAllAdvantagesQuery,
+   useGetAdvantageByIdQuery,
+   useLazyGetAdvantageByIdQuery,
+   useCreateAdvantageMutation,
+   useDeleteAdvantageMutation,
+   useUpdateAdvantageMutation,
 } = gatesTypeApi

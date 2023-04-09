@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 
 import styled from 'styled-components'
 
-const LazyImage = styled.img`
+const StyledLazyImage = styled.img`
    opacity: ${({ loaded }) => (loaded ? 1 : 0)};
    transition: opacity 0.3s ease, filter 0.3s ease;
 
@@ -12,7 +12,7 @@ const LazyImage = styled.img`
    }
 `
 
-const LazyLoad = ({ src, alt, blur, ...rest }) => {
+const LazyImage = ({ src, alt, blur, ...props }) => {
    const imgRef = useRef(null)
    const [loaded, setLoaded] = useState(false)
 
@@ -39,19 +39,19 @@ const LazyLoad = ({ src, alt, blur, ...rest }) => {
    }, [])
 
    return (
-      <LazyImage
+      <StyledLazyImage
          ref={imgRef}
          alt={alt}
          data-src={src}
          loaded={loaded}
          style={{ filter: loaded ? 'blur(0)' : `blur(${blur}px)` }}
-         {...rest}
+         {...props}
       />
    )
 }
 
-LazyLoad.defaultProps = {
+LazyImage.defaultProps = {
    blur: 10,
 }
 
-export default LazyLoad
+export default LazyImage

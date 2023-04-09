@@ -7,6 +7,7 @@ import serviceWork2 from '../../../assets/images/serviceWork2.png'
 import serviceWork3 from '../../../assets/images/serviceWork3.png'
 import serviceWork5 from '../../../assets/images/serviceWork5.png'
 import Card from '../../../components/UI/cards/Card'
+import LazyImage from '../../../components/UI/lazy-loading/LazyLoading'
 import { SubTitle } from '../style'
 
 const cardData = [
@@ -45,7 +46,7 @@ const FourthSection = () => {
             <CardContainer>
                {cardData.map((data) => (
                   <StyledCard key={data.id}>
-                     <img src={data.img} alt={data.title} />
+                     <LazyImage src={data.img} alt={data.title} />
                      <p>{data.title}</p>
                   </StyledCard>
                ))}

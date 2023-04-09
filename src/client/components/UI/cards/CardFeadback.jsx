@@ -6,6 +6,7 @@ import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
 import { DeviceSize } from '../../../../utils/constants'
+import LazyImage from '../lazy-loading/LazyLoading'
 
 import Card from './Card'
 
@@ -18,7 +19,7 @@ const CardFeadback = ({ feedback, img, name, type }) => {
          bRadius="6px"
       >
          <Circle>
-            {img ? <img src={img} alt={name} /> : <Avatar rounded />}
+            {img ? <LazyImage src={img} alt={name} /> : <Avatar rounded />}
          </Circle>
          <TextWrapper>
             <h4>{name}</h4>

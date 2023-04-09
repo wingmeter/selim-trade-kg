@@ -70,9 +70,10 @@ function TableList({
                            alignment="center"
                            visible={visible}
                            onClose={() => setVisible(false)}
+                           backdrop={false}
                         >
                            <CModalHeader>
-                              <CModalTitle>Delete Works Photo</CModalTitle>
+                              <CModalTitle>Delete</CModalTitle>
                            </CModalHeader>
                            <CModalBody>
                               Are you really want to delete ? All informations
