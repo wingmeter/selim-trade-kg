@@ -44,7 +44,7 @@ const NewsInnerView = () => {
                      <CCardTitle>{news?.description}</CCardTitle>
                      <br />
                      <CCardSubtitle>
-                        Created Date: {news?.createdDate}
+                        Created Date: {news?.created_date}
                      </CCardSubtitle>
                      <br />
                      <CCardSubtitle>

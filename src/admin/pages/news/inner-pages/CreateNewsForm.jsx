@@ -21,6 +21,7 @@ import {
    useLazyGetNewsByIdQuery,
    useUpdateNewsMutation,
    useCreateNewsMutation,
+   useCreateNewsContentMutation,
 } from '../../../../store/admin/news/newsApi'
 import { getErrorMessage, getImgUrl } from '../../../../utils/helpers/general'
 import {
@@ -35,10 +36,15 @@ const CreateNewsForm = () => {
    const [title, setTitle] = useState('')
    const [description, setDescription] = useState('')
    const [images, setImage] = useState({ image: null, file: null })
+   const [content, setContent] = useState({ image: null, file: null })
    const [errorPhoto, setErrorPhoto] = useState(false)
+   const [errorContent, setErrorContent] = useState(false)
+
    const [validated, setValidated] = useState(false)
 
    const [createNews, { isLoading }] = useCreateNewsMutation()
+   const [createNewsContent, { isLoadingContent }] =
+      useCreateNewsContentMutation()
    // eslint-disable-next-line no-unused-vars
    const [updateNews, { isUpdating }] = useUpdateNewsMutation()
    const [getNewsById, { data: news }] = useLazyGetNewsByIdQuery()
@@ -59,10 +65,25 @@ const CreateNewsForm = () => {
       }
    }
 
+   const onDropContent = ({ target }) => {
+      const fileData = target.files
+      if (fileData[0].size / 1000 < 5000) {
+         const img = URL.createObjectURL(fileData[0])
+         setContent({ image: img, file: fileData[0] })
+         setErrorContent(false)
+      } else {
+         setErrorContent(true)
+      }
+   }
+
    const submitHandler = async () => {
       if (!images.file && !title && !description) {
          setValidated(true)
       }
+
+      const formDataContent = new FormData()
+
+      formDataContent.append('photo', content.file)
 
       const formData = new FormData()
       formData.append('title', title)
@@ -71,7 +92,12 @@ const CreateNewsForm = () => {
 
       if (!newsId) {
          try {
-            await createNews(formData).unwrap()
+            await createNews(formData)
+               .unwrap()
+               .then(async (data) => {
+                  const { id } = data
+                  await createNewsContent({ formDataContent, newsId: id })
+               })
             navigateBack()
          } catch (e) {
             showErrorMessage({ message: getErrorMessage(e) })
@@ -93,6 +119,7 @@ const CreateNewsForm = () => {
 
    useEffect(() => {
       setImage({ image: getImgUrl(news?.photoUrl) || null })
+      setContent({ image: getImgUrl(news?.photos[0]?.photoUrl) || null })
       setTitle(news?.title || '')
       setDescription(news?.description || '')
    }, [news])
@@ -105,6 +132,14 @@ const CreateNewsForm = () => {
          clearTimeout(errorPhotoTime)
       }
    }, [errorPhoto])
+   useEffect(() => {
+      const errorPhotoTime = setTimeout(() => {
+         setErrorContent(false)
+      }, 2000)
+      return () => {
+         clearTimeout(errorPhotoTime)
+      }
+   }, [errorContent])
 
    return (
       <CCard>
@@ -154,16 +189,38 @@ const CreateNewsForm = () => {
                         required
                      />
                   </CRow>
+                  <br />
+                  <CRow>
+                     <CFormLabel>Content</CFormLabel>
+                     <CFormInput
+                        type="file"
+                        onChange={onDropContent}
+                        id="validationTextarea"
+                        feedbackInvalid="Image is not selected"
+                        aria-label="file example"
+                        required
+                     />
+                  </CRow>
                </Flex>
 
-               {images?.image && (
-                  <CImage
-                     src={images?.image}
-                     alt="uploaded image"
-                     width={300}
-                     rounded
-                  />
-               )}
+               <Flex>
+                  {images?.image && (
+                     <CImage
+                        src={images?.image}
+                        alt="uploaded image"
+                        width={300}
+                        rounded
+                     />
+                  )}
+                  {content?.image && (
+                     <CImage
+                        src={content?.image}
+                        alt="uploaded image"
+                        width={300}
+                        rounded
+                     />
+                  )}
+               </Flex>
                <br />
                <Flex margin="20px 0px" justify="end">
                   <CButton disabled={isLoading} onClick={submitHandler}>
