@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router'
 import styled from 'styled-components'
 
 import {
-   useGetAllNewsQuery,
-   useGetNewsByIdQuery,
+   useGetAllNewsShortQuery,
+   useGetNewsByIdShortQuery,
 } from '../../../store/admin/news/newsApi'
 import { DeviceSize } from '../../../utils/constants'
 import { getImgUrl } from '../../../utils/helpers/general'
@@ -19,9 +19,9 @@ const NewsInnerPage = () => {
    const { id } = useParams()
    const navigate = useNavigate()
 
-   const { data: newsById, isFetchingNews } = useGetNewsByIdQuery(id)
+   const { data: newsById, isFetchingNews } = useGetNewsByIdShortQuery(id)
 
-   const { data: news, isFetching } = useGetAllNewsQuery({
+   const { data: news, isFetching } = useGetAllNewsShortQuery({
       pageSize: 3,
    })
 

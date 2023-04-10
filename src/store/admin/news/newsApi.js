@@ -23,6 +23,22 @@ export const newsApi = createApi({
          }),
          providesTags: ['SingleNews'],
       }),
+      getAllNewsShort: build.query({
+         query: ({ pageNo, filter, pageSize }) => ({
+            url: 'api/v1/news/short',
+            method: 'GET',
+            // filter need to fix
+            params: { pageNo, pageSize: pageSize || 8, filter },
+         }),
+         providesTags: ['News'],
+      }),
+      getNewsByIdShort: build.query({
+         query: (typeId) => ({
+            url: `api/v1/news/short/${typeId}`,
+            method: 'GET',
+         }),
+         providesTags: ['SingleNews'],
+      }),
       // post method
       createNews: build.mutation({
          query: (body) => ({
@@ -54,6 +70,8 @@ export const newsApi = createApi({
 
 export const {
    useGetAllNewsQuery,
+   useGetAllNewsShortQuery,
+   useGetNewsByIdShortQuery,
    useCreateNewsMutation,
    useDeleteNewsMutation,
    useGetNewsByIdQuery,

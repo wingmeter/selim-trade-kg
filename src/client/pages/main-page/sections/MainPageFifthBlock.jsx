@@ -2,7 +2,7 @@ import { Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { useGetAllNewsQuery } from '../../../../store/admin/news/newsApi'
+import { useGetAllNewsShortQuery } from '../../../../store/admin/news/newsApi'
 import { getImgUrl } from '../../../../utils/helpers/general'
 import leaf from '../../../assets/images/leaf.png'
 import { ButtonOutlined } from '../../../components/UI/buttons/ButtonOutlined'
@@ -12,7 +12,7 @@ import { SubTitle } from '../style'
 const FifthSection = () => {
    const navigate = useNavigate()
 
-   const { data: news, isFetching } = useGetAllNewsQuery({
+   const { data: news, isFetching } = useGetAllNewsShortQuery({
       pageSize: 3,
    })
 

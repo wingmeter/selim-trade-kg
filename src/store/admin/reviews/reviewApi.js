@@ -16,6 +16,15 @@ export const reviewApi = createApi({
          }),
          providesTags: ['Reviews'],
       }),
+      getAllReviewsShort: build.query({
+         query: ({ pageNo, filter }) => ({
+            url: 'api/v1/review/short',
+            method: 'GET',
+            // filter need to fix
+            params: { pageNo, pageSize: 16, filter },
+         }),
+         providesTags: ['Reviews'],
+      }),
       getReviewsById: build.query({
          query: (reviewId) => ({
             url: `api/v1/review/${reviewId}`,
@@ -54,6 +63,7 @@ export const reviewApi = createApi({
 
 export const {
    useGetAllReviewsQuery,
+   useGetAllReviewsShortQuery,
    useCreateReviewsMutation,
    useDeleteReviewsMutation,
    useGetReviewsByIdQuery,
