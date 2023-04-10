@@ -74,14 +74,9 @@ const News = () => {
       },
       { key: 'title', header: 'Title', width: 100 },
       {
-         key: 'createdDate',
+         key: 'created_date',
          header: 'Дата создания',
          width: 120,
-      },
-      {
-         key: 'description',
-         header: 'Description',
-         width: 150,
       },
       {
          key: 'actions',
