@@ -12,8 +12,10 @@ import {
    CForm,
    CFormInput,
    CFormLabel,
+   CFormTextarea,
    CImage,
    CRow,
+   CSpinner,
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
@@ -33,6 +35,7 @@ import {
 const CreateGate = () => {
    const navigate = useNavigate()
    const [name, setName] = useState('')
+   const [description, setDescription] = useState('')
    const [images, setImage] = useState({ image: null, file: null })
    const [errorPhoto, setErrorPhoto] = useState(false)
    const [validated, setValidated] = useState(false)
@@ -56,7 +59,7 @@ const CreateGate = () => {
    }
    // create gate type
    const submitHandler = async () => {
-      if (!images.file && !name) {
+      if (!images.file && !name && !description) {
          setValidated(true)
          return
       }
@@ -64,6 +67,7 @@ const CreateGate = () => {
 
       const formData = new FormData()
       formData.append('name', name)
+      formData.append('description', description)
       formData.append('image', images.file)
 
       if (!typeId) {
@@ -94,6 +98,7 @@ const CreateGate = () => {
          file: null,
       })
       setName(gateType?.name || '')
+      setDescription(gateType?.description || '')
    }, [gateType])
 
    useEffect(() => {
@@ -104,7 +109,7 @@ const CreateGate = () => {
          clearTimeout(errorPhotoTime)
       }
    }, [errorPhoto])
-
+   const buttonName = typeId ? 'обновить' : 'добавить'
    return (
       <CContainer>
          <CCard>
@@ -120,11 +125,27 @@ const CreateGate = () => {
                         <CFormInput
                            placeholder="Gate Name"
                            type="string"
-                           value={name}
+                           value={name || ''}
                            required
                            onChange={(e) => setName(e.target.value)}
                            id="validationTextarea"
-                           feedbackInvalid="name is empty"
+                           feedbackInvalid="Name is empty"
+                           aria-label="file example"
+                        />
+                     </CRow>
+                     <br />
+                     <CRow>
+                        <CFormLabel>Description</CFormLabel>
+                        <CFormTextarea
+                           placeholder="Description"
+                           rows={4}
+                           text="Must be 8-20 words long."
+                           type="string"
+                           value={description || ''}
+                           required
+                           onChange={(e) => setDescription(e.target.value)}
+                           id="validationTextarea"
+                           feedbackInvalid="Description is empty"
                            aria-label="file example"
                         />
                      </CRow>
@@ -144,10 +165,10 @@ const CreateGate = () => {
                      )}
                   </Flex>
 
-                  {images.image && (
+                  {images?.image && (
                      <Flex direction="column">
                         <CImage
-                           src={images.image}
+                           src={images?.image}
                            alt="uploaded image"
                            width={300}
                            rounded
@@ -167,8 +188,15 @@ const CreateGate = () => {
                   )}
                   <br />
                   <Flex margin="20px 0px" justify="end">
-                     <CButton disabled={isLoading} onClick={submitHandler}>
-                        {typeId ? 'Edit Gate Type' : 'Create Gate Type'}
+                     <CButton
+                        disabled={isUpdating || isLoading}
+                        onClick={submitHandler}
+                     >
+                        {isUpdating || isLoading ? (
+                           <CSpinner size="20px" />
+                        ) : (
+                           buttonName
+                        )}
                      </CButton>
                   </Flex>
                </CForm>

@@ -80,8 +80,8 @@ const GateTypesView = () => {
 
          cell: (item) => (
             <TableImage
-               src={getImgUrl(item.backgroundUrl)}
-               alt={item.backgroundUrl}
+               src={getImgUrl(item?.backgroundUrl)}
+               alt={item?.backgroundUrl}
             />
          ),
       },
@@ -95,7 +95,7 @@ const GateTypesView = () => {
          key: 'createdBy',
          header: 'Created By',
          width: 100,
-         cell: (item) => <span>{item.createdBy.username}</span>,
+         cell: (item) => <span>{item?.createdBy?.username}</span>,
       },
       {
          key: 'active',
@@ -185,8 +185,8 @@ const GateTypesView = () => {
                         isFetching={isDeleting}
                      />
                      <AppPagination
-                        totalPage={gateTypes.totalPages}
-                        page={queryParams.page}
+                        totalPage={gateTypes?.totalPages}
+                        page={queryParams?.page}
                         onChange={handleChangePage}
                      />
                   </TableListContainer>
