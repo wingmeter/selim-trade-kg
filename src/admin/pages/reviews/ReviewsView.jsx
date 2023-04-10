@@ -48,14 +48,15 @@ const ReviewsView = () => {
       window.scroll(0, 0)
    }
 
-   const deleteReviewsHandler = async (id) => {
+   const deleteReviewsHandler = async () => {
       try {
-         await deleteReviewById(id).unwrap()
+         await deleteReviewById(visible).unwrap()
          setVisible(false)
       } catch (error) {
          console.error(error || 'something went wrong')
       }
    }
+
    const columns = [
       {
          key: 'id',

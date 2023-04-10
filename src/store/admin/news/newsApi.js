@@ -65,6 +65,23 @@ export const newsApi = createApi({
          }),
          invalidatesTags: ['News'],
       }),
+      // post method
+      createNewsContent: build.mutation({
+         query: ({ formDataContent, newsId }) => ({
+            url: `/${newsId}`,
+            method: 'POST',
+            body: formDataContent,
+         }),
+         invalidatesTags: ['News'],
+      }),
+      // delete method
+      deleteNewsContent: build.mutation({
+         query: (newsPhotoId) => ({
+            url: `/${newsPhotoId}`,
+            method: 'DELETE',
+         }),
+         invalidatesTags: ['News'],
+      }),
    }),
 })
 
@@ -77,4 +94,6 @@ export const {
    useGetNewsByIdQuery,
    useLazyGetNewsByIdQuery,
    useUpdateNewsMutation,
+   useCreateNewsContentMutation,
+   useDeleteNewsContentMutation,
 } = newsApi

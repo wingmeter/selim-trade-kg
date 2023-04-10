@@ -67,11 +67,13 @@ const CreateReviewForm = () => {
       formData.append('image', images.file)
 
       if (!reviewsId) {
-         try {
-            await createReviews(formData).unwrap()
-            navigateToLogin()
-         } catch (e) {
-            console.error(e)
+         if (name && text && gate) {
+            try {
+               await createReviews(formData).unwrap()
+               navigateToLogin()
+            } catch (e) {
+               console.error(e)
+            }
          }
       } else {
          try {

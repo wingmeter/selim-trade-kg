@@ -67,7 +67,10 @@ const NewsInnerPage = () => {
                      </ProductImage>
                   )}
                   <ProductTypes>
-                     <LazyImage src={Tablet} alt="Tablet" />
+                     <LazyImage
+                        src={getImgUrl(newsById?.photos[0]?.photoUrl)}
+                        alt="Tablet"
+                     />
                   </ProductTypes>
                </ProductDescription>
             </ProductDescriptionContainer>

@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { useGetAllNewsQuery } from '../../../store/admin/news/newsApi'
+import { useGetAllNewsShortQuery } from '../../../store/admin/news/newsApi'
 import { DeviceSize } from '../../../utils/constants'
 import { getImgUrl } from '../../../utils/helpers/general'
 import { ButtonOutlined } from '../../components/UI/buttons/ButtonOutlined'
@@ -20,7 +20,7 @@ const NewsPage = () => {
       pageSize: 9,
    })
 
-   const { data: news, isFetching } = useGetAllNewsQuery({
+   const { data: news, isFetching } = useGetAllNewsShortQuery({
       pageSize: queryParams.pageSize,
    })
 
