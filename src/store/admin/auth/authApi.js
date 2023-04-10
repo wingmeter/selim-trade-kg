@@ -20,7 +20,17 @@ export const authApi = createApi({
             body,
          }),
       }),
+      logOutAdmin: build.query({
+         query: () => ({
+            url: 'api/v1/auth/logout',
+            method: 'GET',
+         }),
+      }),
    }),
 })
 
-export const { useLoginAdminMutation, useRefreshTokenMutation } = authApi
+export const {
+   useLoginAdminMutation,
+   useRefreshTokenMutation,
+   useLazyLogOutAdminQuery,
+} = authApi

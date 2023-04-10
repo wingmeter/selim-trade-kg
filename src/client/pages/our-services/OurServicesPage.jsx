@@ -1,11 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-irregular-whitespace */
 
+import { BiBox } from 'react-icons/bi'
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
-import { useGetAllGateTypesQuery } from '../../../store/admin/gate-types/gateTypesApi'
+import { useGetAllServicesQuery } from '../../../store/client/gateTypesApi'
 import { DeviceSize } from '../../../utils/constants'
 import { getImgUrl } from '../../../utils/helpers/general'
 import backgroundImage from '../../assets/images/backgroundImage.png'
@@ -18,7 +19,7 @@ import { Text, Title } from '../../styles/typography/style'
 const OurServices = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    const navigate = useNavigate()
-   const { servicesData, isFetching, isLoading } = useGetAllGateTypesQuery(
+   const { servicesData, isFetching, isLoading } = useGetAllServicesQuery(
       { pageNo: 1 },
       {
          selectFromResult: ({ data, isFetching, isLoading }) => ({
@@ -77,6 +78,12 @@ const OurServices = () => {
                      </StyledCard>
                   ))}
                </StyledGrid>
+               {servicesData?.length === 0 && (
+                  <Flex justify="center" align="center" gap="20px" width="100%">
+                     <BiBox size={40} />
+                     <Text size="16px">Нет ворот</Text>
+                  </Flex>
+               )}
             </CardsBackground>
          </InnerContainer>
       </Container>
@@ -108,6 +115,8 @@ const CardsBackground = styled(Flex)`
    background-image: url(${backgroundImage});
    background-repeat: no-repeat;
    background-size: cover;
+   display: flex;
+   flex-direction: column;
    width: 100%;
    max-width: 100%;
    @media screen and (max-width: 768px) {

@@ -5,10 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate, useParams } from 'react-router'
 import styled from 'styled-components'
 
-import {
-   useGetAllGateTypesQuery,
-   useGetGateTypeByIdQuery,
-} from '../../../../store/admin/gate-types/gateTypesApi'
+import { useGetServiceByIdQuery } from '../../../../store/client/gateTypesApi'
 import { DeviceSize } from '../../../../utils/constants'
 import { getImgUrl } from '../../../../utils/helpers/general'
 import Advantages from '../../../components/our-services/Advantages'
@@ -26,7 +23,7 @@ const ServicesInnerPage = () => {
       data: serviceData,
       isFetching,
       isLoading,
-   } = useGetGateTypeByIdQuery(id)
+   } = useGetServiceByIdQuery(id)
 
    const showInnerPage = () => {
       navigate(`/`)
