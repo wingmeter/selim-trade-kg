@@ -21,10 +21,27 @@ import {
 } from '@coreui/react'
 import { useSelector } from 'react-redux'
 
-import { logOut } from '../../../utils/helpers/general'
+import { useLazyLogOutAdminQuery } from '../../../store/admin/auth/authApi'
+import { getErrorMessage, logOut } from '../../../utils/helpers/general'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../UI/notification/Notification'
 
 const AppHeaderDropdown = () => {
    const { adminData } = useSelector((state) => state.auth)
+   const [logOutAdmin, { isLoading }] = useLazyLogOutAdminQuery()
+
+   const logoutHandler = async () => {
+      try {
+         await logOutAdmin().unwrap()
+         logOut()
+         showSuccessMessage({ message: 'Successfully loged out!' })
+      } catch (error) {
+         showErrorMessage({ message: getErrorMessage(error) })
+      }
+   }
+
    return (
       <CDropdown variant="nav-item">
          <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -55,19 +72,16 @@ const AppHeaderDropdown = () => {
                   42
                </CBadge>
             </CDropdownItem>
-            {/* <CDropdownItem href="#">
-               <CIcon icon={cilCommentSquare} className="me-2" />
-               Feadbacks
-               <CBadge color="warning" className="ms-2">
-                  42
-               </CBadge>
-            </CDropdownItem> */}
             <CDropdownItem href="#">
                <CIcon icon={cilUser} className="me-2" />
                Profile
             </CDropdownItem>
             <CDropdownDivider />
-            <CDropdownItem onClick={() => logOut()}>
+            <CDropdownItem
+               style={{ cursor: 'pointer' }}
+               onClick={logoutHandler}
+               disabled={isLoading}
+            >
                <CIcon icon={cilAccountLogout} className="me-2" />
                Log Out
             </CDropdownItem>

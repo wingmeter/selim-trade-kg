@@ -14,6 +14,7 @@ import {
    CFormLabel,
    CImage,
    CRow,
+   CSpinner,
 } from '@coreui/react'
 import { IconButton } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
@@ -87,6 +88,7 @@ const CreateWorksForm = () => {
       }
    }, [errorPhoto])
 
+   const buttonName = worksId ? 'Oбновить' : 'Добавить'
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
@@ -137,7 +139,7 @@ const CreateWorksForm = () => {
                <br />
                <Flex margin="20px 0px" justify="end">
                   <CButton disabled={isLoading} onClick={submitHandler}>
-                     Добавить
+                     {isLoading ? <CSpinner size="20px" /> : buttonName}
                   </CButton>
                </Flex>
             </CForm>

@@ -5,10 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate, useParams } from 'react-router'
 import styled from 'styled-components'
 
-import {
-   useGetAllGateTypesQuery,
-   useGetGateTypeByIdQuery,
-} from '../../../../store/admin/gate-types/gateTypesApi'
+import { useGetServiceByIdQuery } from '../../../../store/client/gateTypesApi'
 import { DeviceSize } from '../../../../utils/constants'
 import { getImgUrl } from '../../../../utils/helpers/general'
 import Advantages from '../../../components/our-services/Advantages'
@@ -26,7 +23,7 @@ const ServicesInnerPage = () => {
       data: serviceData,
       isFetching,
       isLoading,
-   } = useGetGateTypeByIdQuery(id)
+   } = useGetServiceByIdQuery(id)
 
    const showInnerPage = () => {
       navigate(`/`)
@@ -54,11 +51,7 @@ const ServicesInnerPage = () => {
                weight="300"
                align={isMobile && 'center'}
             >
-               Наши сотрудники прошли сертифицированные тренинги в Учебных
-               центрах ГК DoorHan в г. Москва, г. Алматы, г. Астаны а так же
-               успешно сдали экзамены и являются обладателями сертификатов по
-               направлениям Воротные системы, ролл ставни, ролл ворота,
-               автоматические системы, Монтаж автоматики
+               {serviceData?.description || ''}
             </Text>
          </ServiceDescription>
          <TypeOfItems>

@@ -9,6 +9,7 @@ import { orderApi } from './admin/order/orderApi'
 import { reviewApi } from './admin/reviews/reviewApi'
 import sidebarSlice from './admin/sidebar/sidebarSlice'
 import { worksApi } from './admin/works/worksApi'
+import { servicesApi } from './client/gateTypesApi'
 
 const store = configureStore({
    reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
       [worksApi.reducerPath]: worksApi.reducer,
       [orderApi.reducerPath]: orderApi.reducer,
       [adminControlsApi.reducerPath]: adminControlsApi.reducer,
+      [servicesApi.reducerPath]: servicesApi.reducer,
    },
    middleware: (getDefaultMiddleWare) =>
       getDefaultMiddleWare().concat(
@@ -32,7 +34,8 @@ const store = configureStore({
          reviewApi.middleware,
          worksApi.middleware,
          adminControlsApi.middleware,
-         orderApi.middleware
+         orderApi.middleware,
+         servicesApi.middleware
       ),
 })
 export default store

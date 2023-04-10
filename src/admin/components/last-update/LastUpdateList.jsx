@@ -3,16 +3,17 @@ import styled from 'styled-components'
 
 import { Flex } from '../../../client/styles/style-for-positions/style'
 
-export function getLastValue(array) {
+export function getLastValue(array = []) {
+   if (array?.length === 0) return 'No last updates'
    const name = array[array.length - 1]?.username
    const date = array[array.length - 1]?.date
 
    return `${name}, in ${date}`
 }
 
-const LastUpdateList = ({ updateByList }) => {
+const LastUpdateList = ({ updateByList = [] }) => {
    return (
-      updateByList.length !== 0 && (
+      updateByList?.length !== 0 && (
          <Flex gap="20px">
             <CCardSubtitle className=" text-medium-emphasis">
                Last updates:{' '}
