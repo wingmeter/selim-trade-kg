@@ -4,6 +4,7 @@ import {
    CCardBody,
    CCardHeader,
    CCardSubtitle,
+   CCardText,
    CCardTitle,
    CContainer,
    CSpinner,
@@ -34,9 +35,8 @@ const AdvantageInnerView = () => {
                   <CCard style={{ padding: '0.5rem 1rem' }}>
                      <CCardTitle>{advantageData?.title}</CCardTitle>
                      <br />
-                     <CCardSubtitle>
-                        Description: {advantageData?.description}
-                     </CCardSubtitle>
+                     <CCardSubtitle>Description:</CCardSubtitle>
+                     <CCardText>{advantageData?.description}</CCardText>
                      <br />
                      <CCardSubtitle>
                         Created Date: {advantageData?.created_date}

@@ -20,7 +20,7 @@ const OurServices = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
    const navigate = useNavigate()
    const { servicesData, isFetching, isLoading } = useGetAllServicesQuery(
-      { pageNo: 0 },
+      { pageNo: 0, pageSize: 10 },
       {
          selectFromResult: ({ data, isFetching, isLoading }) => ({
             servicesData: data ? data.content : [],

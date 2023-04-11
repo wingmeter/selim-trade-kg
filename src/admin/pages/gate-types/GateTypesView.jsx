@@ -98,18 +98,6 @@ const GateTypesView = () => {
          cell: (item) => <span>{item?.createdBy?.username}</span>,
       },
       {
-         key: 'active',
-         header: 'Last Update',
-         width: 120,
-         cell: (item) => (
-            <span>
-               {item?.updatedByList?.length !== 0
-                  ? getLastValue(item?.updatedByList)
-                  : 'No updates'}
-            </span>
-         ),
-      },
-      {
          key: 'actions',
          header: 'Действия',
          width: 100,

@@ -22,11 +22,16 @@ import {
    useDeleteAdvantageMutation,
    useLazyGetGateTypeByIdQuery,
 } from '../../../../store/admin/gate-types/gateTypesApi'
+import { getErrorMessage } from '../../../../utils/helpers/general'
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/deleteIcon.svg'
 import { ReactComponent as UpdateIcon } from '../../../assets/icons/updateIcon.svg'
 import { getLastValue } from '../../../components/last-update/LastUpdateList'
 import TableList from '../../../components/table/TableList'
 import AppPagination from '../../../components/UI/AppPagination'
+import {
+   showErrorMessage,
+   showSuccessMessage,
+} from '../../../components/UI/notification/Notification'
 
 const AdvantageView = ({ advantage, isFetching }) => {
    const navigate = useNavigate()
@@ -47,13 +52,14 @@ const AdvantageView = ({ advantage, isFetching }) => {
       })
    }
 
-   const deleteGateHandler = async (advantageId) => {
+   const deleteAdvantageHandler = async (advantageId) => {
       try {
          await deleteAdvantage(advantageId).unwrap()
          setVisible(false)
+         showSuccessMessage({ message: 'Successfully removed advantage!' })
          getGateTypeById(gateTypeId)
       } catch (error) {
-         console.error(error || 'something went wrong')
+         showErrorMessage({ message: getErrorMessage(error) })
       }
    }
    // config table col
@@ -64,12 +70,6 @@ const AdvantageView = ({ advantage, isFetching }) => {
          width: 30,
       },
       { key: 'title', header: 'Title', width: 150 },
-      { key: 'description', header: 'Description', width: 150 },
-      {
-         key: 'created_date',
-         header: 'Дата создания',
-         width: 120,
-      },
       {
          key: 'createdBy',
          header: 'Created By',
@@ -77,6 +77,12 @@ const AdvantageView = ({ advantage, isFetching }) => {
 
          cell: (item) => <span>{item.createdBy.username}</span>,
       },
+      {
+         key: 'created_date',
+         header: 'Дата создания',
+         width: 120,
+      },
+
       {
          key: 'active',
          header: 'Last Update',
@@ -158,7 +164,7 @@ const AdvantageView = ({ advantage, isFetching }) => {
                            data={data}
                            columns={columnsConfig}
                            onNavigetToInnerPage={onNavigetToInnerPage}
-                           deleteById={deleteGateHandler}
+                           deleteById={deleteAdvantageHandler}
                            setVisible={setVisible}
                            visible={visible}
                            isFetching={isDeleting}

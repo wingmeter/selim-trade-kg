@@ -20,7 +20,7 @@ const OurWorksPage = () => {
       <Container>
          <InnerContainer>
             <OurWorksDescription>
-               <Flex minWidth="40%" align="center">
+               <Flex minWidth="40%" align="center" margin="10px 0px 10px">
                   <Title size={isMobile ? '25px' : '50px'} uppercase>
                      Наши работы
                   </Title>
@@ -48,7 +48,9 @@ const OurWorksPage = () => {
                               key={work.id}
                               src={getImgUrl(work?.photoUrl)}
                               alt={`Image Alt-${index}`}
-                              className={`item${index + 1}`}
+                              className={
+                                 isMobile ? 'mobile_card' : `item${index + 1}`
+                              }
                            />
                         )
                      }
@@ -125,13 +127,17 @@ const CardContainer = styled(Grid)`
       position: relative;
       bottom: 150px;
    }
+   .mobile_card {
+      grid-area: auto !important;
+   }
+
    @media (max-width: 900px) {
       grid-template-columns: 1fr 1fr 1fr;
       grid-template-rows: auto;
       padding: 0px 0px 20px;
       img {
          position: static !important;
-         height: 280px !important;
+         height: 250px;
          width: 100%;
          grid-area: auto !important;
          margin: 0 !important;
@@ -159,7 +165,7 @@ const StyledCard = styled(LazyLoad)`
       border-radius: 12px;
    }
    @media screen and (max-width: 768px) {
-      height: 280px;
+      height: 200px !important;
 
       max-width: 100% !important;
    }

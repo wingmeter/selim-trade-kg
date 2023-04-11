@@ -15,39 +15,19 @@ import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
 
+import { useGetAllWorksQuery } from '../../../../store/admin/works/worksApi'
 import { DeviceSize } from '../../../../utils/constants'
+import { getImgUrl } from '../../../../utils/helpers/general'
 import { ReactComponent as LeftArrow } from '../../../assets/icons/Left1.svg'
 import { ReactComponent as RightArrow } from '../../../assets/icons/Right.svg'
-import work1 from '../../../assets/images/work1.png'
 import { SubTitle } from '../style'
 
 SwiperCore.use([Navigation, Pagination, Controller, Thumbs, EffectCoverflow])
 
-const cardData = [
-   {
-      id: 1,
-      img: work1,
-   },
-   {
-      id: 2,
-      img: work1,
-   },
-   {
-      id: 3,
-      img: work1,
-   },
-   {
-      id: 4,
-      img: work1,
-   },
-   {
-      id: 5,
-      img: work1,
-   },
-]
-
 const SixthSection = () => {
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+   const { data: worksData, isFetching } = useGetAllWorksQuery({ pageNo: 0 })
+
    return (
       <StyledSection>
          <Container>
@@ -119,9 +99,16 @@ const SixthSection = () => {
                   }}
                   modules={[Navigation, EffectCoverflow]}
                >
-                  {cardData.map((card) => (
+                  {isFetching && (
+                     <div className="d-flex justify-content-center mx-auto my-4">
+                        <div className="spinner-border" role="status">
+                           <span className="visually-hidden">Loading...</span>
+                        </div>
+                     </div>
+                  )}
+                  {worksData?.content?.map((card) => (
                      <SwiperSlide key={`thumb-${card.id}`}>
-                        <StyledImage src={card.img} />
+                        <StyledImage src={getImgUrl(card.photoUrl)} />
                      </SwiperSlide>
                   ))}
                </Swiper>
@@ -180,7 +167,10 @@ const SwiperButton = styled.div`
 `
 const StyledImage = styled.img`
    border-radius: 20px;
-   max-height: 420px;
+   max-height: 432px;
+   @media screen and (max-height: 768px) {
+      height: 200px;
+   }
 `
 const StyledSubTitle = styled(SubTitle)`
    text-align: center;

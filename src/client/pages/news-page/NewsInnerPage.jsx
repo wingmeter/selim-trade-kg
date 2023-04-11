@@ -46,10 +46,12 @@ const NewsInnerPage = () => {
             <ProductDescriptionContainer>
                {!isMobile && (
                   <ProductImage>
-                     <LazyImage
-                        src={getImgUrl(newsById?.photoUrl)}
-                        alt="newsInnerBG"
-                     />
+                     {newsById?.photoUrl && (
+                        <LazyImage
+                           src={getImgUrl(newsById?.photoUrl)}
+                           alt="newsInnerBG"
+                        />
+                     )}
                   </ProductImage>
                )}
 
@@ -60,17 +62,21 @@ const NewsInnerPage = () => {
                   </ProductDescriptionTitle>
                   {isMobile && (
                      <ProductImage>
-                        <LazyImage
-                           src={getImgUrl(newsById?.photoUrl)}
-                           alt="newsInnerBG"
-                        />
+                        {newsById?.photoUrl && (
+                           <LazyImage
+                              src={getImgUrl(newsById?.photoUrl)}
+                              alt="newsInnerBG"
+                           />
+                        )}
                      </ProductImage>
                   )}
                   <ProductTypes>
-                     <LazyImage
-                        src={getImgUrl(newsById?.photos[0]?.photoUrl)}
-                        alt="Tablet"
-                     />
+                     {newsById?.photoUrl && (
+                        <LazyImage
+                           src={getImgUrl(newsById?.photos[0]?.photoUrl)}
+                           alt="Tablet"
+                        />
+                     )}
                   </ProductTypes>
                </ProductDescription>
             </ProductDescriptionContainer>

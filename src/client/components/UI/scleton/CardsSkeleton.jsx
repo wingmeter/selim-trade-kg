@@ -2,8 +2,13 @@
 import React from 'react'
 
 import { Card, CardContent, Skeleton, Typography } from '@mui/material'
+import { useMediaQuery } from 'react-responsive'
+
+import { DeviceSize } from '../../../../utils/constants'
 
 const CardsSkeleton = ({ quantity, height }) => {
+   const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
    return (
       <>
          {[...Array(quantity ?? 12)].map((_, index) => (
@@ -12,7 +17,7 @@ const CardsSkeleton = ({ quantity, height }) => {
                   boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.13)',
                   minHeight: height ?? 200,
                }}
-               className={`item${index + 1}`}
+               className={isMobile ? 'mobile_card' : `item${index + 1}`}
             >
                <Skeleton
                   variant="rectangular"
