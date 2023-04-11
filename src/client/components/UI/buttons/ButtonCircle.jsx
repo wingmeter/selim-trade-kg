@@ -1,9 +1,28 @@
+import { useEffect, useState } from 'react'
+
 import MuiButton from '@mui/material/Button'
 import styled from 'styled-components'
 
 import { ReactComponent as ArrowUp } from '../../../assets/icons/arrowUp.svg'
 
 export const ButtonCircle = ({ fullWidth, isMobile, ...props }) => {
+   const [visible, setVisible] = useState(false)
+
+   useEffect(() => {
+      function handleScroll() {
+         if (window.pageYOffset > 100) {
+            setVisible(true)
+         } else {
+            setVisible(false)
+         }
+      }
+
+      window.addEventListener('scroll', handleScroll)
+      return () => {
+         window.removeEventListener('scroll', handleScroll)
+      }
+   }, [])
+
    const scrollTopHandler = () => {
       window.scrollTo({
          top: 0,
@@ -13,6 +32,7 @@ export const ButtonCircle = ({ fullWidth, isMobile, ...props }) => {
    return (
       <ButtonWrapper>
          <StyledButton
+            className={`scroll-up-button ${visible ? 'visible' : ''}`}
             size={isMobile ? 'small' : 'medium'}
             fullWidth={fullWidth}
             onClick={scrollTopHandler}
@@ -25,36 +45,26 @@ export const ButtonCircle = ({ fullWidth, isMobile, ...props }) => {
 }
 
 const ButtonWrapper = styled.div`
-   padding: 1rem;
-   background: transparent;
-   border-radius: 50%;
-   position: absolute;
-   right: 0;
-   bottom: -45px;
-   transition: transform 0.2s ease-out;
-   transform: scale(1);
-   &:hover {
-      opacity: 0.8;
-      transition: transform 0.2s ease-out;
-      transform: scale(1.2);
-      animation-name: ANIM;
-      animation-duration: 1s;
-      animation-iteration-count: infinite;
+   .scroll-up-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: none;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 99;
    }
 
-   @keyframes ANIM {
-      0% {
-         transform: translateY(-0rem);
-      }
-      30% {
-         transform: translateY(-1.5rem);
-      }
-      50% {
-         transform: translateY(-1rem);
-      }
-      100% {
-         transform: translateY(0rem);
-      }
+   .scroll-up-button.visible {
+      display: block;
+   }
+   &:hover {
+      transition: transform 0.2s ease-out;
+      transition: all 2s ease-in-out;
    }
 `
 const StyledButton = styled(MuiButton)`

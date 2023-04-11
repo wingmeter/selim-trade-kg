@@ -13,7 +13,6 @@ import { ReactComponent as WhatsAppIcon } from '../../assets/icons/WhatsApp.svg'
 import backgroundImage from '../../assets/images/backgroundImage.png'
 import FooterLogo from '../../assets/images/footerLogo.png'
 import FeedbackForm from '../../components/form/FeedbackForm'
-import { ButtonCircle } from '../../components/UI/buttons/ButtonCircle'
 import { Flex } from '../../styles/style-for-positions/style'
 
 const Footer = () => {
@@ -23,11 +22,6 @@ const Footer = () => {
          <FooterWrapper bgImg={backgroundImage}>
             <FeedbackForm />
          </FooterWrapper>
-         {!isMobile && (
-            <ScrollButtonWrapper>
-               <ButtonCircle />
-            </ScrollButtonWrapper>
-         )}
          <FooterContainer>
             {!isMobile && (
                <Container>
@@ -49,16 +43,16 @@ const Footer = () => {
                         <Link to="/"> О Нас</Link>
                      </li>
                      <li>
-                        <Link to="/"> Услуги</Link>
+                        <Link to="/services"> Услуги</Link>
                      </li>
                      <li>
-                        <Link to="/"> Работы</Link>
+                        <Link to="/works"> Работы</Link>
                      </li>
                      <li>
                         <Link to="/"> Отзывы</Link>
                      </li>
                      <li>
-                        <Link to="/"> Новости</Link>
+                        <Link to="/news"> Новости</Link>
                      </li>
                   </SecondBlock>
                   <ThirdBlock>
@@ -89,7 +83,7 @@ const Footer = () => {
             {isMobile && (
                <MobileContainer>
                   <MobileContainerTop>
-                     <LogoImg src={FooterLogo} alt="" />
+                     <LogoImg src={FooterLogo} alt="logo" />
                      <ThirdBlock>
                         <WorkTime>
                            <p>РЕЖИМ РАБОТЫ</p>
@@ -187,14 +181,6 @@ const Footer = () => {
 }
 
 export default Footer
-
-const ScrollButtonWrapper = styled(Flex)`
-   width: 100%;
-   max-width: 1400px;
-   justify-content: end;
-   position: relative;
-   margin: 0 auto;
-`
 
 const FooterWrapper = styled(Flex)`
    background: url(${({ bgImg }) => bgImg});

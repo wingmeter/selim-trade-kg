@@ -5,6 +5,7 @@ import {
    CCardHeader,
    CCardImage,
    CCardSubtitle,
+   CCardText,
    CCardTitle,
    CContainer,
    CSpinner,
@@ -42,6 +43,10 @@ const GateTypesInnerView = () => {
                      />
                      <br />
                      <CCardTitle>{gateType?.name}</CCardTitle>
+                     <br />
+                     <CCardTitle>Description:</CCardTitle>
+                     <CCardText>{gateType?.description}</CCardText>
+
                      <br />
                      <CCardSubtitle>
                         Created Date: {gateType?.created_date}

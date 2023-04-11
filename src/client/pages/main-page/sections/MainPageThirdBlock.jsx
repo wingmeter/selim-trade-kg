@@ -7,7 +7,9 @@ import SwiperCore, { Navigation, Pagination, Controller, Thumbs } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper-bundle.css'
 
+import { useGetAllServicesQuery } from '../../../../store/client/gateTypesApi'
 import { DeviceSize } from '../../../../utils/constants'
+import { getImgUrl } from '../../../../utils/helpers/general'
 import { ReactComponent as LeftArrow } from '../../../assets/icons/Left1.svg'
 import { ReactComponent as RightArrow } from '../../../assets/icons/Right.svg'
 import imageBG1 from '../../../assets/images/imageBG1.png'
@@ -18,6 +20,8 @@ import imageBG5 from '../../../assets/images/imageBG5.png'
 import thirdBG from '../../../assets/images/thirdBG.png'
 import { ButtonOutlined } from '../../../components/UI/buttons/ButtonOutlined'
 import Card from '../../../components/UI/cards/Card'
+import CardsSkeleton from '../../../components/UI/scleton/CardsSkeleton'
+import Skeleletons from '../../../components/UI/scleton/Skeletons'
 import { SubTitle } from '../style'
 
 const cardData = [
@@ -53,6 +57,17 @@ SwiperCore.use([Navigation, Pagination, Controller, Thumbs])
 const ThirdSection = () => {
    const navigate = useNavigate()
    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
+   const { servicesData, isFetching, isLoading } = useGetAllServicesQuery(
+      { pageNo: 0, pageSize: 5 },
+      {
+         selectFromResult: ({ data, isFetching, isLoading }) => ({
+            servicesData: data ? data.content : [],
+            isFetching,
+            isLoading,
+         }),
+      }
+   )
    return (
       <StyledSection>
          <Container>
@@ -60,13 +75,14 @@ const ThirdSection = () => {
 
             {!isMobile && (
                <CardContainer>
-                  {cardData.map((card, index) => (
+                  {(isFetching || isLoading) && <CardsSkeleton quantity={5} />}
+                  {servicesData?.map((card, index) => (
                      <StyledCard
-                        className={`div${index + 1}`}
+                        className={`item${index + 1}`}
                         key={card.id}
-                        img={card?.img}
+                        img={getImgUrl(card?.backgroundUrl)}
                      >
-                        <CardSubTitle>{card?.title}</CardSubTitle>
+                        <CardSubTitle>{card?.name}</CardSubTitle>
                      </StyledCard>
                   ))}
                </CardContainer>
@@ -92,7 +108,8 @@ const ThirdSection = () => {
                      }}
                      modules={[Navigation]}
                   >
-                     {cardData.map((card, index) => (
+                     {(isFetching || isLoading) && <CardsSkeleton />}
+                     {servicesData?.map((card, index) => (
                         <SwiperSlide
                            key={`thumb-${card.id}`}
                            tag="li"
@@ -101,9 +118,9 @@ const ThirdSection = () => {
                            <StyledCard
                               className={`div${index + 1}`}
                               key={card.id}
-                              img={card?.img}
+                              img={getImgUrl(card?.backgroundUrl)}
                            >
-                              <CardSubTitle>{card?.title}</CardSubTitle>
+                              <CardSubTitle>{card?.name}</CardSubTitle>
                            </StyledCard>
                         </SwiperSlide>
                      ))}
@@ -134,19 +151,19 @@ const CardContainer = styled.div`
    grid-row-gap: 25px;
    margin-top: 25px;
 
-   .div1 {
+   .item1 {
       grid-area: 1 / 1 / 2 / 2;
    }
-   .div2 {
+   .item2 {
       grid-area: 1 / 2 / 2 / 3;
    }
-   .div3 {
+   .item3 {
       grid-area: 2 / 1 / 3 / 2;
    }
-   .div4 {
+   .item4 {
       grid-area: 2 / 2 / 3 / 3;
    }
-   .div5 {
+   .item5 {
       grid-area: 1 / 3 / 3 / 4;
       height: 100%;
    }

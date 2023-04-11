@@ -24,65 +24,6 @@ import { SubTitle } from '../style'
 
 SwiperCore.use([Navigation, Pagination, Controller, Thumbs, EffectCoverflow])
 
-const cardData = [
-   {
-      id: 1,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-      img: FeedbackBG,
-   },
-   {
-      id: 2,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-
-      img: FeedbackBG,
-   },
-   {
-      id: 3,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-      img: FeedbackBG,
-   },
-   {
-      id: 4,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-      img: FeedbackBG,
-   },
-   {
-      id: 5,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-
-      img: FeedbackBG,
-   },
-   {
-      id: 6,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-      img: FeedbackBG,
-   },
-   {
-      id: 7,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-      img: FeedbackBG,
-   },
-   {
-      id: 8,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-      img: FeedbackBG,
-   },
-   {
-      id: 9,
-      name: 'Закир Сагындыков',
-      title: 'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-      img: FeedbackBG,
-   },
-]
-
 const EighthSection = () => {
    const { data: reviews, isFetching } = useGetAllReviewsShortQuery({
       pageNo: 0,

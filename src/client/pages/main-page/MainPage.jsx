@@ -1,3 +1,8 @@
+import { useMediaQuery } from 'react-responsive'
+
+import { DeviceSize } from '../../../utils/constants'
+import { ButtonCircle } from '../../components/UI/buttons/ButtonCircle'
+
 import MainPageEighthBlock from './sections/MainPageEighthBlock'
 import MainPageFifthBlock from './sections/MainPageFifthBlock'
 import MainPageFirstBlock from './sections/MainPageFirstBlock'
@@ -8,6 +13,8 @@ import MainPageSixthBlock from './sections/MainPageSixthBlock'
 import MainPageThirdBlock from './sections/MainPageThirdBlock'
 
 const MainPage = () => {
+   const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
    return (
       <>
          <MainPageFirstBlock />
@@ -18,6 +25,7 @@ const MainPage = () => {
          <MainPageSixthBlock />
          <MainPageSeventhBlock />
          <MainPageEighthBlock />
+         {!isMobile && <ButtonCircle />}
       </>
    )
 }
