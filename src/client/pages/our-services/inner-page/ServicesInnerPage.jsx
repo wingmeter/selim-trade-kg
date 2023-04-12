@@ -69,7 +69,7 @@ const ServicesInnerPage = () => {
                      onClck={() => showInnerPage(card.id)}
                   >
                      <CardSubTitle>
-                        <Title white>{card?.title}</Title>
+                        <Title white>{card?.name}</Title>
                      </CardSubTitle>
                   </StyledCard>
                ))}
@@ -192,7 +192,6 @@ const StyledCard = styled(Card)`
    align-items: flex-start;
    justify-content: end;
    padding: 10px;
-
    @media screen and (max-width: 768px) {
       height: 175px;
       padding: 10px;
@@ -204,6 +203,7 @@ const CardSubTitle = styled(Flex)`
    max-width: 221px;
    border-radius: 20px;
    font-size: 18px;
+   position: relative;
    @media screen and (max-width: 768px) {
       h1 {
          font-size: 12px;

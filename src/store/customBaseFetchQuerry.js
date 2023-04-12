@@ -1,8 +1,9 @@
 /* eslint-disable no-alert */
 import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query'
 
+import { showErrorMessage } from '../admin/components/UI/notification/Notification'
 import { BASE_URL } from '../utils/constants'
-import { logOut } from '../utils/helpers/general'
+import { getErrorMessage, logOut } from '../utils/helpers/general'
 
 import { authActions } from './admin/auth/authSlice'
 
@@ -28,24 +29,24 @@ export const baseQueryWithReauth = async (args, api, extraOptions) => {
       }
       const refreshResult = await baseQuery(newArgs, api, extraOptions)
 
-      console.log('token refreshed', refreshResult.data)
-
       if (refreshResult?.data) {
          api.dispatch(authActions.saveData(refreshResult?.data))
          // retry the original query with new access token
          result = await baseQuery(args, api, extraOptions)
       } else {
-         alert(
-            result?.data?.message ||
-               'Your access is expired, please log in again'
-         )
+         showErrorMessage({
+            message:
+               result?.data?.message ||
+               'Your access is expired, please log in again!',
+         })
+
          logOut()
       }
    } else if (
       result?.error?.status === 403 ||
       result?.response?.status === 403
    ) {
-      alert(result?.data?.message || 'Something went wrong')
+      showErrorMessage({ message: getErrorMessage(result) })
    }
    return result
 }
