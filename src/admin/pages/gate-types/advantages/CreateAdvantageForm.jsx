@@ -94,16 +94,18 @@ const CreateAdvantageForm = () => {
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
-            <CCol>{advantageId ? 'Edit Advantage' : 'Create Advantage'}</CCol>
+            <CCol>
+               {advantageId ? 'Изменить данные' : 'Добавление преимущества'}
+            </CCol>
             <CButton onClick={() => navigate(-1)}>Go Back</CButton>
          </CCardHeader>
          <CCardBody>
             <CForm validated={validated}>
                <Flex direction="column" p="1rem 16px">
                   <CRow>
-                     <CFormLabel>Title</CFormLabel>
+                     <CFormLabel>Название</CFormLabel>
                      <CFormInput
-                        placeholder="Title Advantage"
+                        placeholder="Название"
                         type="string"
                         value={title || ''}
                         required
@@ -115,9 +117,9 @@ const CreateAdvantageForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Description</CFormLabel>
+                     <CFormLabel>Описание</CFormLabel>
                      <CFormTextarea
-                        placeholder="Description Advantage"
+                        placeholder="Описание"
                         rows={4}
                         text="Must be 8-20 words long."
                         type="string"

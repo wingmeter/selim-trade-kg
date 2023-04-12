@@ -5,7 +5,6 @@ import {
    CCardHeader,
    CCardImage,
    CCardSubtitle,
-   CCardText,
    CCardTitle,
    CContainer,
 } from '@coreui/react'
@@ -24,12 +23,16 @@ const NewsInnerView = () => {
       <CContainer>
          <CCard>
             <CCardHeader className="d-flex align-items-center gap-4">
-               <CButton onClick={() => navigate(-1)}>Go Back</CButton>
-               <CCardTitle>Gate Inner Page</CCardTitle>
+               <CButton onClick={() => navigate(-1)}>Назад</CButton>
+               <CCardTitle>Страница новости</CCardTitle>
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <span>Loading...</span>
+                  <div className="d-flex justify-content-center">
+                     <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                     </div>
+                  </div>
                ) : (
                   <CCard style={{ padding: '0.5rem 1rem' }}>
                      <CCardImage
@@ -39,22 +42,17 @@ const NewsInnerView = () => {
                         style={{ objectFit: 'contain' }}
                      />
                      <br />
-                     <CCardTitle>{news?.title}</CCardTitle>
+                     <CCardTitle>Заголовок: {news?.title}</CCardTitle>
                      <br />
-                     <CCardTitle>{news?.description}</CCardTitle>
+                     <CCardTitle>Описание: {news?.description}</CCardTitle>
                      <br />
                      <CCardSubtitle>
-                        Created Date: {news?.created_date}
+                        Дата создания: {news?.created_date}
                      </CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created By: {news?.createdBy?.username}
+                        Добавил(-а): {news?.createdBy?.username}
                      </CCardSubtitle>
-                     <br />
-                     <CCardText>
-                        Status:
-                        {news?.createdBy?.active ? 'Active' : 'Inactive'}
-                     </CCardText>
                      <br />
                   </CCard>
                )}

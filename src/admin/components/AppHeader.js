@@ -1,4 +1,4 @@
-import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
+import { cilBell, cilEnvelopeOpen, cilMenu } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import {
    CContainer,
@@ -41,18 +41,15 @@ const AppHeader = () => {
                      Dashboard
                   </CNavLink>
                </CNavItem>
-               <CNavItem>
-                  <CNavLink href="/admin/works">Our Works</CNavLink>
-               </CNavItem>
             </CHeaderNav>
             <CHeaderNav>
                <CNavItem>
-                  <CNavLink href="/admin/order">
+                  <CNavLink href="#">
                      <CIcon icon={cilBell} size="lg" />
                   </CNavLink>
                </CNavItem>
                <CNavItem>
-                  <CNavLink href="/admin/reviews">
+                  <CNavLink href="#">
                      <CIcon icon={cilEnvelopeOpen} size="lg" />
                   </CNavLink>
                </CNavItem>

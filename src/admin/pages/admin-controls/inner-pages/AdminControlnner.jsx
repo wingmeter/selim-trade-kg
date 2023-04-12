@@ -55,7 +55,7 @@ const AdminInnerPage = () => {
                   <CIcon icon={cilUser} />
                   <CCardTitle>{singleAdminData?.username}</CCardTitle>
                </Flex>
-               <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+               <CButton onClick={() => navigate(-1)}>Назад</CButton>
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
@@ -81,13 +81,13 @@ const AdminInnerPage = () => {
                            ID: {singleAdminData?.id || 'no-id'}
                         </CCardSubtitle>
                         <CCardSubtitle className="mb-2 ">
-                           Name: {singleAdminData?.username || 'Admin'}
+                           Username: {singleAdminData?.username || 'Admin'}
                         </CCardSubtitle>
                         <CCardSubtitle className="mb-2 ">
-                           Role: {singleAdminData?.roles || 'admin'}
+                           Роль: {singleAdminData?.roles || 'admin'}
                         </CCardSubtitle>
                         <CCardSubtitle className="mb-2 ">
-                           Status:{' '}
+                           Статус:{' '}
                            {singleAdminData?.active ? 'Active' : 'InActive'}
                         </CCardSubtitle>
                      </div>

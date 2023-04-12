@@ -52,11 +52,9 @@ export const gatesTypeApi = createApi({
 
       // -----gates methods ------------
       getAllGates: build.query({
-         query: ({ page, filter, size }) => ({
-            url: 'api/v1/gate',
+         query: ({ gateTypeId }) => ({
+            url: `api/v1/gate/${gateTypeId}`,
             method: 'GET',
-            // filter need to fix
-            params: { page, size: size || 8, filter },
          }),
       }),
       getSingleGateById: build.query({

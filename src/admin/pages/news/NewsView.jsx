@@ -120,7 +120,7 @@ const News = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Created News</CCardTitle>
+                     <CCardTitle>Новости компании</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>

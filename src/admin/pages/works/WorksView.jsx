@@ -118,7 +118,7 @@ const WorksView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Published Works Photos</CCardTitle>
+                     <CCardTitle>Наши работы</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>

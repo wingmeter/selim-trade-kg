@@ -78,7 +78,7 @@ const AdminControlsView = () => {
       },
       {
          key: 'username',
-         header: 'profile',
+         header: 'Профиль',
          width: 70,
          cell: (item) => (
             <CAvatar
@@ -97,12 +97,12 @@ const AdminControlsView = () => {
       },
       {
          key: 'roles',
-         header: 'Role',
+         header: 'Роль',
          width: 100,
       },
       {
          key: 'active',
-         header: 'Status',
+         header: 'Статус',
          width: 100,
          cell: (item) => (
             <ActionContainer>
@@ -155,7 +155,7 @@ const AdminControlsView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Admins</CCardTitle>
+                     <CCardTitle>Список админов</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>

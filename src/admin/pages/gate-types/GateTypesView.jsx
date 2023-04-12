@@ -24,7 +24,6 @@ import {
 import { getErrorMessage, getImgUrl } from '../../../utils/helpers/general'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/deleteIcon.svg'
 import { ReactComponent as UpdateIcon } from '../../assets/icons/updateIcon.svg'
-import { getLastValue } from '../../components/last-update/LastUpdateList'
 import TableList from '../../components/table/TableList'
 import AppPagination from '../../components/UI/AppPagination'
 import {
@@ -93,7 +92,7 @@ const GateTypesView = () => {
       },
       {
          key: 'createdBy',
-         header: 'Created By',
+         header: 'Добавил(-а)',
          width: 100,
          cell: (item) => <span>{item?.createdBy?.username}</span>,
       },
@@ -140,7 +139,7 @@ const GateTypesView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Created Gates</CCardTitle>
+                     <CCardTitle>Ворота</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>

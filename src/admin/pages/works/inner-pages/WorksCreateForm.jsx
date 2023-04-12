@@ -92,8 +92,8 @@ const CreateWorksForm = () => {
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
-            <CCol>Create Our Works</CCol>
-            <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+            <CCol>Добавление наших работ</CCol>
+            <CButton onClick={() => navigate(-1)}>Назад</CButton>
          </CCardHeader>
          <CCardBody>
             <CForm validated={validated}>
@@ -101,7 +101,7 @@ const CreateWorksForm = () => {
                   {!images.file && !images.image && (
                      <CRow>
                         <CCol>
-                           <CFormLabel>Image</CFormLabel>
+                           <CFormLabel>Фото</CFormLabel>
                            <CFormInput
                               type="file"
                               onChange={onDrop}
@@ -124,7 +124,7 @@ const CreateWorksForm = () => {
                         rounded
                      />
                      <Flex align="center">
-                        Delete Photo
+                        Удалить
                         <IconButton>
                            <CIcon
                               icon={cilTrash}

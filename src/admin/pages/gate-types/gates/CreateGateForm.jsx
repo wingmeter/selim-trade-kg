@@ -121,16 +121,16 @@ const CreateGate = () => {
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
-            <CCol>{gateId ? 'Edit Gate' : 'Create Gate'}</CCol>
-            <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+            <CCol>{gateId ? 'Изменить данные' : 'Добавление ворот'}</CCol>
+            <CButton onClick={() => navigate(-1)}>Назад</CButton>
          </CCardHeader>
          <CCardBody>
             <CForm validated={validated}>
                <Flex direction="column" p="1rem 16px">
                   <CRow>
-                     <CFormLabel>Name</CFormLabel>
+                     <CFormLabel>Название</CFormLabel>
                      <CFormInput
-                        placeholder="Gate Name"
+                        placeholder="Название"
                         type="string"
                         value={name || ''}
                         required
@@ -143,7 +143,7 @@ const CreateGate = () => {
                   <br />
                   {!images.file && !images.image && (
                      <CRow>
-                        <CFormLabel>Image</CFormLabel>
+                        <CFormLabel>Фото</CFormLabel>
                         <CFormInput
                            type="file"
                            onChange={onDrop}
@@ -165,7 +165,7 @@ const CreateGate = () => {
                         rounded
                      />
                      <Flex align="center">
-                        Delete Photo
+                        Удалить
                         <IconButton>
                            <CIcon
                               icon={cilTrash}

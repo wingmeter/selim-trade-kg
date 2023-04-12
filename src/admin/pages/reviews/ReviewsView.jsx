@@ -83,12 +83,12 @@ const ReviewsView = () => {
       },
       {
          key: 'text',
-         header: 'Description',
+         header: 'Текст отзыва',
          width: 150,
       },
       {
          key: 'gate',
-         header: 'Gate',
+         header: 'Ворота',
          width: 150,
       },
       {
@@ -133,7 +133,7 @@ const ReviewsView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Created Reviews</CCardTitle>
+                     <CCardTitle>Отзывы клиентов</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>
@@ -151,7 +151,11 @@ const ReviewsView = () => {
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <span>Loading...</span>
+                  <div className="d-flex justify-content-center">
+                     <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                     </div>
+                  </div>
                ) : !reviews.content ? (
                   <span>Пока данных нету</span>
                ) : (

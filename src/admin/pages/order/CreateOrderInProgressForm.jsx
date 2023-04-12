@@ -19,7 +19,7 @@ import { useSearchParams } from 'react-router-dom'
 import { Flex } from '../../../client/styles/style-for-positions/style'
 import {
    useGetAllGateTypesQuery,
-   useGetAllGatesQuery,
+   useGetGateTypeByIdQuery,
 } from '../../../store/admin/gate-types/gateTypesApi'
 import {
    useCreateOrderInProgressMutation,
@@ -35,22 +35,25 @@ const CreateOrderInProgressForm = () => {
 
    const locationInfo = location.pathname.split('/')[4]
 
-   const { data: gates } = useGetAllGatesQuery({
-      pageNo: 0,
-      size: 20,
-   })
    const { data: gateTypes } = useGetAllGateTypesQuery({
       pageNo: 0,
       size: 20,
    })
 
-   const [name, setName] = useState('')
-   const [phoneNumber, setPhoneNumber] = useState('')
-   const [validated, setValidated] = useState(false)
-   const [gatesSelected, setGatesSelected] = useState(gates?.content[0]?.id)
    const [gateTypesSelected, setGateTypesSelected] = useState(
       gateTypes?.content[0]?.id
    )
+
+   const { data: gates } = useGetGateTypeByIdQuery(gateTypesSelected || 1)
+
+   const [gatesSelected, setGatesSelected] = useState(
+      gates?.gateList[0]?.id || 0
+   )
+
+   const [name, setName] = useState('')
+   const [phoneNumber, setPhoneNumber] = useState('')
+   const [validated, setValidated] = useState(false)
+
    const [status, setStatus] = useState()
 
    const handleGatesChange = (event) => {
@@ -67,14 +70,11 @@ const CreateOrderInProgressForm = () => {
    const [updateOrderInProress, { isUpdating }] =
       useUpdateOrderInProgressMutation()
    const [getOrderById, { data: order }] = useLazyGetOrderByIdQuery()
-   const [getOrderInProgressById, { data: orderInProgress }] =
-      useLazyGetOrderInProgressByIdQuery()
+   const [getOrderInProgressById] = useLazyGetOrderInProgressByIdQuery()
 
    const navigateToLogin = () => {
       navigate(-1)
    }
-
-   console.log(status)
 
    const submitHandler = async () => {
       if (!name && !phoneNumber && !gatesSelected && !gateTypesSelected) {
@@ -113,7 +113,10 @@ const CreateOrderInProgressForm = () => {
    }
 
    const renderList = (option) => {
-      return option?.content?.map((data) => ({
+      if (!option) {
+         return 0
+      }
+      return option?.map((data) => ({
          label: data.name,
          value: data.id,
       }))
@@ -154,9 +157,9 @@ const CreateOrderInProgressForm = () => {
             <CForm validated={validated}>
                <Flex direction="column" p="1rem 16px">
                   <CRow>
-                     <CFormLabel>Name</CFormLabel>
+                     <CFormLabel>Имя покупателя</CFormLabel>
                      <CFormInput
-                        placeholder="Name"
+                        placeholder="Имя"
                         type="string"
                         value={name || ''}
                         required
@@ -168,9 +171,9 @@ const CreateOrderInProgressForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Phone Number</CFormLabel>
+                     <CFormLabel>Номер телефона</CFormLabel>
                      <CFormInput
-                        placeholder="Phone Number"
+                        placeholder="Номер телефона"
                         type="number"
                         value={Number(phoneNumber) || ''}
                         required
@@ -182,22 +185,22 @@ const CreateOrderInProgressForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Gate</CFormLabel>
+                     <CFormLabel>Типы ворот</CFormLabel>
                      <CFormSelect
                         aria-label="Default select example"
-                        options={renderList(gates)}
-                        onChange={handleGatesChange}
-                        value={gatesSelected}
+                        options={renderList(gateTypes?.content)}
+                        onChange={handleGateTypesChange}
+                        value={gateTypesSelected}
                      />
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Gate Type</CFormLabel>
+                     <CFormLabel>Ворота</CFormLabel>
                      <CFormSelect
                         aria-label="Default select example"
-                        options={renderList(gateTypes)}
-                        onChange={handleGateTypesChange}
-                        value={gateTypesSelected}
+                        options={renderList(gates?.gateList)}
+                        onChange={handleGatesChange}
+                        value={gatesSelected}
                      />
                   </CRow>
                   <br />

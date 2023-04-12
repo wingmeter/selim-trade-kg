@@ -29,8 +29,8 @@ const GateTypesInnerView = () => {
       <CContainer>
          <CCard textColor="dark" className="mb-3 border-top-dark border-top-3">
             <CCardHeader className="d-flex justify-content-between mb-5 align-items-center">
-               <CCardTitle>Gate Inner Page</CCardTitle>
-               <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+               <CCardTitle>Страница типа ворот</CCardTitle>
+               <CButton onClick={() => navigate(-1)}>Назад</CButton>
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
@@ -42,18 +42,18 @@ const GateTypesInnerView = () => {
                         alt="bg imgae"
                      />
                      <br />
-                     <CCardTitle>{gateType?.name}</CCardTitle>
+                     <CCardTitle>Название: {gateType?.name}</CCardTitle>
                      <br />
-                     <CCardTitle>Description:</CCardTitle>
+                     <CCardTitle>Описание:</CCardTitle>
                      <CCardText>{gateType?.description}</CCardText>
 
                      <br />
                      <CCardSubtitle>
-                        Created Date: {gateType?.created_date}
+                        Дата создания: {gateType?.created_date}
                      </CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created By: {gateType?.createdBy?.username}
+                        Добавил(-а): {gateType?.createdBy?.username}
                      </CCardSubtitle>
                      <br />
                      <LastUpdateList updateByList={gateType?.updatedByList} />

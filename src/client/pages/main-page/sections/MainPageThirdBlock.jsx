@@ -12,45 +12,11 @@ import { DeviceSize } from '../../../../utils/constants'
 import { getImgUrl } from '../../../../utils/helpers/general'
 import { ReactComponent as LeftArrow } from '../../../assets/icons/Left1.svg'
 import { ReactComponent as RightArrow } from '../../../assets/icons/Right.svg'
-import imageBG1 from '../../../assets/images/imageBG1.png'
-import imagebg2 from '../../../assets/images/imagebg2.png'
-import imageBG3 from '../../../assets/images/imageBG3.png'
-import imageBG4 from '../../../assets/images/imageBG4.png'
-import imageBG5 from '../../../assets/images/imageBG5.png'
 import thirdBG from '../../../assets/images/thirdBG.png'
 import { ButtonOutlined } from '../../../components/UI/buttons/ButtonOutlined'
 import Card from '../../../components/UI/cards/Card'
 import CardsSkeleton from '../../../components/UI/scleton/CardsSkeleton'
-import Skeleletons from '../../../components/UI/scleton/Skeletons'
 import { SubTitle } from '../style'
-
-const cardData = [
-   {
-      title: 'Cеционные',
-      id: Math.random().toString(),
-      img: imageBG1,
-   },
-   {
-      title: 'Автоматика',
-      id: Math.random().toString(),
-      img: imagebg2,
-   },
-   {
-      title: 'Распашные',
-      id: Math.random().toString(),
-      img: imageBG3,
-   },
-   {
-      title: 'Складные',
-      id: Math.random().toString(),
-      img: imageBG4,
-   },
-   {
-      title: 'Роль ворота',
-      id: Math.random().toString(),
-      img: imageBG5,
-   },
-]
 
 SwiperCore.use([Navigation, Pagination, Controller, Thumbs])
 

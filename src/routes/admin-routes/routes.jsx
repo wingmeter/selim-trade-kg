@@ -3,6 +3,9 @@ import React from 'react'
 
 import { ROLES } from '../../utils/constants'
 
+const OrderInnerInProgressPage = React.lazy(() =>
+   import('../../admin/pages/order/OrderInnerInProgressPage')
+)
 const CreateOrderInProgressForm = React.lazy(() =>
    import('../../admin/pages/order/CreateOrderInProgressForm')
 )
@@ -98,9 +101,14 @@ const routes = [
       element: OrderView,
    },
    {
-      path: '/order/:orderId',
+      path: '/order/:orderId/new-order',
       name: 'Order Inner Page',
       element: OrderInnerPage,
+   },
+   {
+      path: '/order/:orderId/order-in-progress',
+      name: 'OrderInProgress Inner Page',
+      element: OrderInnerInProgressPage,
    },
    {
       path: '/order/:orderId/create',

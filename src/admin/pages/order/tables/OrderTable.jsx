@@ -92,7 +92,7 @@ const OrderTable = () => {
    ]
 
    const onNavigetToInnerPage = (e, id) => {
-      navigate(`${id}`)
+      navigate(`${id}/new-order`)
    }
 
    const data = orders?.content

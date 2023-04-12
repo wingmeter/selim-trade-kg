@@ -16,7 +16,7 @@ const LastUpdateList = ({ updateByList = [] }) => {
       updateByList?.length !== 0 && (
          <Flex gap="20px">
             <CCardSubtitle className=" text-medium-emphasis">
-               Last updates:{' '}
+               Последние изменения:{' '}
             </CCardSubtitle>
             <Flex direction="column" gap="10px">
                {updateByList?.map((el) => (

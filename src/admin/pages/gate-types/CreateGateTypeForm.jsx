@@ -114,16 +114,16 @@ const CreateGate = () => {
       <CContainer>
          <CCard>
             <CCardHeader className="d-flex flex-row align-items-center">
-               <CCol>Create Gate Types</CCol>
-               <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+               <CCol>Добавлени типа ворот</CCol>
+               <CButton onClick={() => navigate(-1)}>Назад</CButton>
             </CCardHeader>
             <CCardBody>
                <CForm validated={validated}>
                   <Flex direction="column" p="1rem 16px">
                      <CRow>
-                        <CFormLabel>Name</CFormLabel>
+                        <CFormLabel>Название</CFormLabel>
                         <CFormInput
-                           placeholder="Gate Name"
+                           placeholder="Название"
                            type="string"
                            value={name || ''}
                            required
@@ -135,9 +135,9 @@ const CreateGate = () => {
                      </CRow>
                      <br />
                      <CRow>
-                        <CFormLabel>Description</CFormLabel>
+                        <CFormLabel>Описание</CFormLabel>
                         <CFormTextarea
-                           placeholder="Description"
+                           placeholder="Описание"
                            rows={4}
                            text="Must be 8-20 words long."
                            type="string"
@@ -152,7 +152,7 @@ const CreateGate = () => {
                      <br />
                      {!images.file && !images.image && (
                         <CRow>
-                           <CFormLabel>Image</CFormLabel>
+                           <CFormLabel>Фото</CFormLabel>
                            <CFormInput
                               type="file"
                               onChange={onDrop}
@@ -174,7 +174,7 @@ const CreateGate = () => {
                            rounded
                         />
                         <Flex align="center">
-                           Delete Photo
+                           Удалить
                            <IconButton>
                               <CIcon
                                  icon={cilTrash}

@@ -18,7 +18,7 @@ const OrderView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Orders</CCardTitle>
+                     <CCardTitle>Новые заявки</CCardTitle>
                   </CCol>
                </CRow>
             </CCardHeader>
@@ -28,7 +28,7 @@ const OrderView = () => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Orders In Progress</CCardTitle>
+                     <CCardTitle>Заявки (в процессе)</CCardTitle>
                   </CCol>
                </CRow>
             </CCardHeader>

@@ -8,7 +8,6 @@ import {
 } from '../../../store/admin/news/newsApi'
 import { DeviceSize } from '../../../utils/constants'
 import { getImgUrl } from '../../../utils/helpers/general'
-import Tablet from '../../assets/images/Tablet.png'
 import Card from '../../components/UI/cards/Card'
 import LazyImage from '../../components/UI/lazy-loading/LazyLoading'
 import { Flex } from '../../styles/style-for-positions/style'

@@ -18,7 +18,6 @@ import { useGetAllReviewsShortQuery } from '../../../../store/admin/reviews/revi
 import { getImgUrl } from '../../../../utils/helpers/general'
 import { ReactComponent as LeftArrow } from '../../../assets/icons/Left1.svg'
 import { ReactComponent as RightArrow } from '../../../assets/icons/Right.svg'
-import FeedbackBG from '../../../assets/images/FeedbackBG.png'
 import CardFeadback from '../../../components/UI/cards/CardFeadback'
 import { SubTitle } from '../style'
 

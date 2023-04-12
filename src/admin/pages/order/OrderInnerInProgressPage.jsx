@@ -10,20 +10,20 @@ import {
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router'
 
-import { useGetOrderByIdQuery } from '../../../store/admin/order/orderApi'
+import { useGetOrderInProgressByIdQuery } from '../../../store/admin/order/orderApi'
 
-const OrderInnerPage = () => {
+const OrderInnerInProgressPage = () => {
    const navigate = useNavigate()
    const { orderId } = useParams()
 
-   const { data: order, isFetching } = useGetOrderByIdQuery(orderId)
+   const { data: order, isFetching } = useGetOrderInProgressByIdQuery(orderId)
 
    return (
       <CContainer>
          <CCard>
             <CCardHeader className="d-flex align-items-center gap-4">
-               <CButton onClick={() => navigate(-1)}>Назад</CButton>
-               <CCardTitle>Страница заявки</CCardTitle>
+               <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+               <CCardTitle>Страница заявки(В процессе)</CCardTitle>
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
@@ -36,7 +36,11 @@ const OrderInnerPage = () => {
                   <CCard style={{ padding: '0.5rem 1rem' }}>
                      <CCardTitle>Имя покупателя: {order?.name}</CCardTitle>
                      <br />
-                     <CCardSubtitle>Сообщение: {order?.message}</CCardSubtitle>
+                     <CCardSubtitle>
+                        Тип ворот: {order?.gateType.name}
+                     </CCardSubtitle>
+                     <br />
+                     <CCardSubtitle>Ворота: {order?.gate.name}</CCardSubtitle>
                      <br />
                      <CCardSubtitle>
                         Номер телефона: {order?.phoneNumber}
@@ -52,4 +56,4 @@ const OrderInnerPage = () => {
    )
 }
 
-export default OrderInnerPage
+export default OrderInnerInProgressPage

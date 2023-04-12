@@ -30,8 +30,20 @@ const Footer = () => {
                      <SocialNetworkContainer>
                         <p>СОЦИАЛЬНЫЕ СЕТИ</p>
                         <SocialNetwork>
-                           <Icons />
-                           <IconsTwo />
+                           <a
+                              href="https://www.instagram.com/"
+                              target="_blank"
+                              rel="noreferrer"
+                           >
+                              <Icons />
+                           </a>
+                           <a
+                              href="https://www.whatsapp.com/?lang=ru"
+                              target="_blank"
+                              rel="noreferrer"
+                           >
+                              <IconsTwo />
+                           </a>
                         </SocialNetwork>
                      </SocialNetworkContainer>
                   </FirstBlock>
@@ -112,8 +124,20 @@ const Footer = () => {
                      <SocialNetworkContainer>
                         <p>СОЦИАЛЬНЫЕ СЕТИ</p>
                         <SocialNetwork>
-                           <Icons />
-                           <IconsTwo />
+                           <a
+                              href="https://www.instagram.com/"
+                              target="_blank"
+                              rel="noreferrer"
+                           >
+                              <Icons />
+                           </a>
+                           <a
+                              href="https://www.whatsapp.com/?lang=ru"
+                              target="_blank"
+                              rel="noreferrer"
+                           >
+                              <IconsTwo />
+                           </a>
                         </SocialNetwork>
                      </SocialNetworkContainer>
                      <SecondBlockMobile>

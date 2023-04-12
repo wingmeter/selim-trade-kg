@@ -109,16 +109,16 @@ const CreateReviewForm = () => {
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
-            <CCol>Create Review</CCol>
-            <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+            <CCol>Добавление отзыва</CCol>
+            <CButton onClick={() => navigate(-1)}>Назад</CButton>
          </CCardHeader>
          <CCardBody>
             <CForm validated={validated}>
                <Flex direction="column" p="1rem 16px">
                   <CRow>
-                     <CFormLabel>Name</CFormLabel>
+                     <CFormLabel>Имя клиента</CFormLabel>
                      <CFormInput
-                        placeholder="Reviews Name"
+                        placeholder="Имя клиента"
                         type="string"
                         value={name || ''}
                         required
@@ -130,9 +130,9 @@ const CreateReviewForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Text</CFormLabel>
+                     <CFormLabel>Текст отзыва</CFormLabel>
                      <CFormInput
-                        placeholder="Reviews Text"
+                        placeholder="Текст отзыва"
                         type="string"
                         value={text || ''}
                         required
@@ -144,9 +144,9 @@ const CreateReviewForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Gate</CFormLabel>
+                     <CFormLabel>Ворота</CFormLabel>
                      <CFormInput
-                        placeholder="Reviews Gate"
+                        placeholder="Ворота"
                         type="string"
                         value={gate || ''}
                         required
@@ -158,7 +158,7 @@ const CreateReviewForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Image</CFormLabel>
+                     <CFormLabel>Фото</CFormLabel>
                      <CFormInput
                         type="file"
                         onChange={onDrop}

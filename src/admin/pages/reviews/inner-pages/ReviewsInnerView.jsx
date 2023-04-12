@@ -5,7 +5,6 @@ import {
    CCardHeader,
    CCardImage,
    CCardSubtitle,
-   CCardText,
    CCardTitle,
    CContainer,
 } from '@coreui/react'
@@ -24,12 +23,16 @@ const ReviewsInnerView = () => {
       <CContainer>
          <CCard>
             <CCardHeader className="d-flex align-items-center gap-4">
-               <CButton onClick={() => navigate(-1)}>Go Back</CButton>
-               <CCardTitle>Gate Inner Page</CCardTitle>
+               <CButton onClick={() => navigate(-1)}>Назад</CButton>
+               <CCardTitle>Страница отзыва</CCardTitle>
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
-                  <span>Loading...</span>
+                  <div className="d-flex justify-content-center">
+                     <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                     </div>
+                  </div>
                ) : (
                   <CCard style={{ padding: '0.5rem 1rem' }}>
                      <CCardImage
@@ -39,24 +42,19 @@ const ReviewsInnerView = () => {
                         style={{ objectFit: 'contain' }}
                      />
                      <br />
-                     <CCardTitle>{review?.name}</CCardTitle>
+                     <CCardTitle>Имя клиента: {review?.name}</CCardTitle>
                      <br />
-                     <CCardTitle>{review?.gate}</CCardTitle>
+                     <CCardTitle>Ворота: {review?.gate}</CCardTitle>
                      <br />
-                     <CCardSubtitle>{review?.text}</CCardSubtitle>
+                     <CCardSubtitle>Текст отзыва{review?.text}</CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created Date: {review?.created_date}
+                        Дата создания: {review?.created_date}
                      </CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created By: {review?.createdBy?.username}
+                        Добавил(-а): {review?.createdBy?.username}
                      </CCardSubtitle>
-                     <br />
-                     <CCardText>
-                        Status:
-                        {review?.createdBy?.active ? 'Active' : 'Inactive'}
-                     </CCardText>
                      <br />
                   </CCard>
                )}

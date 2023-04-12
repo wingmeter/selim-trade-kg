@@ -111,10 +111,8 @@ const Login = () => {
                      <CCard className="p-4">
                         <CCardBody>
                            <CForm onSubmit={handleSubmit(submitHandler)}>
-                              <h1>Login</h1>
-                              <p className="text-medium-emphasis">
-                                 Sign In to your account
-                              </p>
+                              <h1>Войти в кабинет</h1>
+                              <br />
 
                               <p style={{ color: 'red' }}>{errMsg}</p>
 
@@ -150,12 +148,12 @@ const Login = () => {
                                        color="primary"
                                        className="px-4"
                                     >
-                                       Login
+                                       Войти
                                     </CButton>
                                  </CCol>
                                  <CCol xs={6} className="text-right">
                                     <CButton color="link" className="px-0">
-                                       Forgot password?
+                                       Забыли пароль?
                                     </CButton>
                                  </CCol>
                               </CRow>

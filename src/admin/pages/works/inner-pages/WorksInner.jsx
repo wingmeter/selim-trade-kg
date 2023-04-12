@@ -5,7 +5,6 @@ import {
    CCardHeader,
    CCardImage,
    CCardSubtitle,
-   CCardText,
    CCardTitle,
    CContainer,
    CSpinner,
@@ -25,8 +24,8 @@ const WorksInner = () => {
       <CContainer>
          <CCard>
             <CCardHeader className="d-flex align-items-center gap-4">
-               <CButton onClick={() => navigate(-1)}>Go Back</CButton>
-               <CCardTitle>Works Inner Page</CCardTitle>
+               <CButton onClick={() => navigate(-1)}>Назад</CButton>
+               <CCardTitle>Страница работы</CCardTitle>
             </CCardHeader>
             <CCardBody>
                {isFetching ? (
@@ -40,14 +39,12 @@ const WorksInner = () => {
                         style={{ objectFit: 'contain' }}
                      />
                      <br />
-                     <CCardTitle>{work?.title}</CCardTitle>
-                     <br />
                      <CCardSubtitle>
-                        Created Date: {work?.created_date}
+                        Дата создания: {work?.created_date}
                      </CCardSubtitle>
                      <br />
                      <CCardSubtitle>
-                        Created By: {work?.createdBy?.username || 'admin'}
+                        Добавил (-а): {work?.createdBy?.username || 'admin'}
                      </CCardSubtitle>
                      <br />
                   </CCard>

@@ -110,7 +110,7 @@ const OrderInProgressTable = () => {
    ]
 
    const onNavigetToInnerPage = (e, id) => {
-      navigate(`${id}`)
+      navigate(`${id}/order-in-progress`)
    }
 
    const dataOrderInProgress = orderInProgress?.content

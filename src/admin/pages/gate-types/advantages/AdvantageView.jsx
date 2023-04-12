@@ -72,7 +72,7 @@ const AdvantageView = ({ advantage, isFetching }) => {
       { key: 'title', header: 'Title', width: 150 },
       {
          key: 'createdBy',
-         header: 'Created By',
+         header: 'Добавил(-а)',
          width: 120,
 
          cell: (item) => <span>{item.createdBy.username}</span>,
@@ -136,7 +136,7 @@ const AdvantageView = ({ advantage, isFetching }) => {
             <CCardHeader>
                <CRow>
                   <CCol>
-                     <CCardTitle>Created Advantages</CCardTitle>
+                     <CCardTitle>Преимущества типа ворот</CCardTitle>
                   </CCol>
                   <CCol sm="3" className="d-flex flex-row-reverse">
                      <CRow>
@@ -186,7 +186,7 @@ const AdvantageView = ({ advantage, isFetching }) => {
                   gap="20px"
                >
                   <GiWindsock size={30} />
-                  <CCardTitle>No published advantages</CCardTitle>
+                  <CCardTitle>Преимущества ещё не добавлены</CCardTitle>
                </Flex>
             )}
          </CCard>

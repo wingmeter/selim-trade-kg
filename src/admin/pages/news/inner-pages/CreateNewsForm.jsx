@@ -43,8 +43,7 @@ const CreateNewsForm = () => {
    const [validated, setValidated] = useState(false)
 
    const [createNews, { isLoading }] = useCreateNewsMutation()
-   const [createNewsContent, { isLoadingContent }] =
-      useCreateNewsContentMutation()
+   const [createNewsContent] = useCreateNewsContentMutation()
    // eslint-disable-next-line no-unused-vars
    const [updateNews, { isUpdating }] = useUpdateNewsMutation()
    const [getNewsById, { data: news }] = useLazyGetNewsByIdQuery()
@@ -144,16 +143,16 @@ const CreateNewsForm = () => {
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
-            <CCol>Create Gate</CCol>
-            <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+            <CCol>Добавление новостей</CCol>
+            <CButton onClick={() => navigate(-1)}>Назад</CButton>
          </CCardHeader>
          <CCardBody>
             <CForm validated={validated}>
                <Flex direction="column" p="1rem 16px">
                   <CRow>
-                     <CFormLabel>Title</CFormLabel>
+                     <CFormLabel>Заголовок</CFormLabel>
                      <CFormInput
-                        placeholder="News Title"
+                        placeholder="Заголовок"
                         type="string"
                         value={title || ''}
                         required
@@ -165,9 +164,9 @@ const CreateNewsForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Description</CFormLabel>
+                     <CFormLabel>Описание</CFormLabel>
                      <CFormInput
-                        placeholder="News Description"
+                        placeholder="Описание"
                         type="string"
                         value={description || ''}
                         required
@@ -179,7 +178,7 @@ const CreateNewsForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Image</CFormLabel>
+                     <CFormLabel>Фото</CFormLabel>
                      <CFormInput
                         type="file"
                         onChange={onDrop}
@@ -191,7 +190,7 @@ const CreateNewsForm = () => {
                   </CRow>
                   <br />
                   <CRow>
-                     <CFormLabel>Content</CFormLabel>
+                     <CFormLabel>Фото контента</CFormLabel>
                      <CFormInput
                         type="file"
                         onChange={onDropContent}
