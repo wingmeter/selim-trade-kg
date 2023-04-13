@@ -48,7 +48,7 @@ const News = () => {
 
    const deleteGateTypeHandler = async (id) => {
       try {
-         await deleteGateType(id).unwrap()
+         await deleteGateType(visible).unwrap()
          setVisible(false)
       } catch (error) {
          console.error(error || 'something went wrong')

@@ -69,7 +69,7 @@ const ServicesInnerPage = () => {
                      onClck={() => showInnerPage(card.id)}
                   >
                      <CardSubTitle>
-                        <Title white>{card?.title}</Title>
+                        <Title white>{card?.name}</Title>
                      </CardSubTitle>
                   </StyledCard>
                ))}
@@ -204,6 +204,7 @@ const CardSubTitle = styled(Flex)`
    max-width: 221px;
    border-radius: 20px;
    font-size: 18px;
+   position: absolute;
    @media screen and (max-width: 768px) {
       h1 {
          font-size: 12px;

@@ -150,8 +150,8 @@ const CreateOrderInProgressForm = () => {
    return (
       <CCard>
          <CCardHeader className="d-flex flex-row align-items-center">
-            <CCol>Create Order In Progress</CCol>
-            <CButton onClick={() => navigate(-1)}>Go Back</CButton>
+            <CCol>Добавить к рассмотрению</CCol>
+            <CButton onClick={() => navigate(-1)}>Назад</CButton>
          </CCardHeader>
          <CCardBody>
             <CForm validated={validated}>

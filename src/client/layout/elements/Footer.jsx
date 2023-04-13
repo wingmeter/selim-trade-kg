@@ -322,6 +322,7 @@ const ThirdBlock = styled.div`
    @media screen and (max-width: 450px) {
       margin-top: 0;
       gap: 10px;
+      flex-direction: column;
    }
 `
 const FourthBlock = styled.div`
@@ -332,7 +333,7 @@ const FourthBlock = styled.div`
       height: 140px;
    }
    @media screen and (max-width: 450px) {
-      width: 120px;
+      width: 140px;
       height: 120px;
    }
    .mapouter {
@@ -375,7 +376,7 @@ const WorkTime = styled.div`
       font-size: 18px;
       color: #414141;
       @media screen and (max-width: 769px) {
-         font-size: 12px;
+         font-size: 10px;
       }
    }
 `
@@ -391,7 +392,7 @@ const Phone = styled.div`
       font-size: 18px;
       color: #414141;
       @media screen and (max-width: 769px) {
-         font-size: 12px;
+         font-size: 10px;
       }
    }
 `

@@ -37,9 +37,9 @@ const OrderTable = () => {
       window.scroll(0, 0)
    }
 
-   const deleteOrderHandler = async (workId) => {
+   const deleteOrderHandler = async () => {
       try {
-         await deleteOrder(workId).unwrap()
+         await deleteOrder(visible).unwrap()
          setVisible(false)
       } catch (error) {
          console.error(error || 'something went wrong')

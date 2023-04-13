@@ -40,6 +40,7 @@ const AdminControlsView = () => {
    const [visible, setVisible] = useState(false)
 
    const [updateAdmin, { isLoading: isUpdateing }] = useUpdateAdminMutation()
+
    const { data: admins, isFetching } = useGetAllAdminsQuery({
       pageNo: queryParams.page - 1,
       pageSize: 4,

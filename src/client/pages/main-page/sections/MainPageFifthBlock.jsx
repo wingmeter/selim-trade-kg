@@ -54,7 +54,7 @@ const StyledSection = styled.section`
    background-position: right bottom -100%;
    background-image: url(${leaf});
    background-repeat: no-repeat;
-   height: 600px;
+   height: 560px;
    @media screen and (max-width: 769px) {
       padding-top: 50px;
       height: 350px;

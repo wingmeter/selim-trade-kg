@@ -157,15 +157,19 @@ const ProductTitle = styled.h1`
 
 const ProductTypes = styled.div`
    img {
+      width: 820px;
+      height: 460px;
       @media screen and (max-width: 769px) {
-         width: 350px;
-         height: 168px;
+         width: 336px;
+         height: 350px;
       }
    }
 `
 
 const ProductImage = styled.div`
    img {
+      width: 440px;
+      height: 460px;
       @media screen and (max-width: 769px) {
          width: 336px;
          height: 350px;

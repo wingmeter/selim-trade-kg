@@ -57,7 +57,7 @@ const GateTypesView = () => {
 
    const deleteGateTypeHandler = async (gateTypeId) => {
       try {
-         await deleteGateType(gateTypeId).unwrap()
+         await deleteGateType(visible).unwrap()
          setVisible(false)
          showSuccessMessage({ message: 'Successfully deleted gate type' })
       } catch (error) {

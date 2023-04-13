@@ -121,7 +121,7 @@ const SixthSection = () => {
 export default SixthSection
 
 const StyledSection = styled.section`
-   height: 500px;
+   height: 400px;
    @media screen and (max-width: 769px) {
       padding-top: 50px;
       height: 400px;

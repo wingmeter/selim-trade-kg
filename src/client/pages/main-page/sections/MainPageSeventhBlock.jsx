@@ -1,11 +1,11 @@
 import { Container } from '@mui/material'
 import styled from 'styled-components'
 
+import serviceWork from '../../../assets/images/call.png'
+import serviceWork2 from '../../../assets/images/communication.png'
+import serviceWork5 from '../../../assets/images/fix.png'
 import FourBG from '../../../assets/images/FourBG.png'
-import serviceWork from '../../../assets/images/serviceWork.png'
-import serviceWork2 from '../../../assets/images/serviceWork2.png'
-import serviceWork3 from '../../../assets/images/serviceWork3.png'
-import serviceWork5 from '../../../assets/images/serviceWork5.png'
+import serviceWork3 from '../../../assets/images/montage.png'
 import Card from '../../../components/UI/cards/Card'
 import LazyImage from '../../../components/UI/lazy-loading/LazyLoading'
 import { SubTitle } from '../style'
@@ -13,27 +13,22 @@ import { SubTitle } from '../style'
 const cardData = [
    {
       id: 1,
-      title: 'Бесплатный выезд специалиста для замеров',
+      title: 'Консультация и техническая поддержка',
       img: serviceWork,
    },
    {
       id: 2,
-      title: 'Многолетний опыт работы',
+      title: 'Настройка пультов управления',
       img: serviceWork2,
    },
    {
       id: 3,
-      title: 'Минимальные сроки производства',
-      img: serviceWork3,
-   },
-   {
-      id: 4,
-      title: 'Высокая квалификация сотрудиков',
+      title: 'Монтаж',
       img: serviceWork3,
    },
    {
       id: 5,
-      title: 'Постгарантийное обслуживание и ремонт',
+      title: 'Послегарантийное обслуживание',
       img: serviceWork5,
    },
 ]

@@ -30,7 +30,12 @@ const FeedbackForm = () => {
       // eslint-disable-next-line prefer-const
       let temp = {}
       temp.name = values.name ? '' : 'Это поле обязательное'
-      temp.phoneNumber = values.phoneNumber ? '' : 'Это поле обязательное'
+      temp.phoneNumber =
+         values.phoneNumber.toString().length >= 11 &&
+         values.phoneNumber.toString().length < 18
+            ? ''
+            : 'Введите корректный номер телефона'
+      // temp.phoneNumber = values.phoneNumber ? '' : 'Это поле обязательное'
       temp.message = values.message ? '' : 'Это поле обязательное'
 
       setErrors({
@@ -79,9 +84,9 @@ const FeedbackForm = () => {
                   onChange={(e) => handleInputChange(e)}
                />
                {!isMobile && (
-                  <Button disabled={isLoading} width="500px" type="submit">
-                     Оставить отзыв
-                  </Button>
+                  <SButton disabled={isLoading} width="500px" type="submit">
+                     Оставить заявку
+                  </SButton>
                )}
             </FormContainer>
             <Textarea
@@ -91,9 +96,9 @@ const FeedbackForm = () => {
                onChange={(e) => handleInputChange(e)}
             />
             {isMobile && (
-               <Button disabled={isLoading} width="500px" type="submit">
-                  Оставить отзыв
-               </Button>
+               <SButton disabled={isLoading} width="500px" type="submit">
+                  Оставить заявку
+               </SButton>
             )}
          </Form>
       </Container>
@@ -135,6 +140,10 @@ const Form = styled.form`
    button {
       margin: 0 auto;
    }
+`
+
+const SButton = styled(Button)`
+   height: 100%;
 `
 
 const FormContainer = styled.div`

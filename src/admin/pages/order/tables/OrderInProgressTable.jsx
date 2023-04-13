@@ -41,7 +41,7 @@ const OrderInProgressTable = () => {
 
    const deleteOrderInProgressHandler = async (workId) => {
       try {
-         await deleteOrderInProgress(workId).unwrap()
+         await deleteOrderInProgress(visible).unwrap()
          setVisible(false)
       } catch (error) {
          console.error(error || 'something went wrong')

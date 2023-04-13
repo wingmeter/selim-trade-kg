@@ -51,7 +51,7 @@ const WorksView = () => {
 
    const deleteGateTypeHandler = async (workId) => {
       try {
-         await deleteWorks(workId).unwrap()
+         await deleteWorks(visible).unwrap()
          setVisible(false)
       } catch (error) {
          console.error(error || 'something went wrong')
