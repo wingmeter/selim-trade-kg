@@ -1,13 +1,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/no-array-index-key */
-import React, { Suspense } from 'react'
+import { Suspense, memo } from 'react'
 
 import { CContainer, CSpinner } from '@coreui/react'
 import { useSelector } from 'react-redux'
 import { Navigate, Route, Routes } from 'react-router-dom'
-
-// routes config
-import Page404 from '../../admin/pages/not-found/Page404'
 
 import routes from './routes'
 
@@ -51,4 +48,4 @@ const AdminContent = () => {
    )
 }
 
-export default React.memo(AdminContent)
+export default memo(AdminContent)

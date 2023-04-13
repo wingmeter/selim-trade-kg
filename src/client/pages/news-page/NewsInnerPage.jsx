@@ -8,7 +8,6 @@ import {
 } from '../../../store/admin/news/newsApi'
 import { DeviceSize } from '../../../utils/constants'
 import { getImgUrl } from '../../../utils/helpers/general'
-import Tablet from '../../assets/images/Tablet.png'
 import Card from '../../components/UI/cards/Card'
 import LazyImage from '../../components/UI/lazy-loading/LazyLoading'
 import { Flex } from '../../styles/style-for-positions/style'
@@ -219,6 +218,7 @@ const StyledTitle = styled.p`
    font-weight: 800;
    font-size: 20px;
    color: #f1f6ff;
+   position: relative;
    @media screen and (max-width: 769px) {
       font-size: 10px;
    }
@@ -232,26 +232,3 @@ const SimilarContainer = styled.div`
       margin-top: 50px;
    }
 `
-// const StyledCard = styled(Card)`
-//    text-align: center;
-//    padding: 90px 28px;
-//    cursor: pointer;
-
-//    @media screen and (max-width: 769px) {
-//       display: flex;
-//       justify-content: center;
-//       align-items: center;
-//       height: 225px;
-//       padding: 70px 20px;
-//    }
-// `
-// const StyledTitle = styled.p`
-//    font-family: 'Montserrat';
-//    font-style: normal;
-//    font-weight: 800;
-//    font-size: 20px;
-//    color: #f1f6ff;
-//    @media screen and (max-width: 769px) {
-//       font-size: 10px;
-//    }
-// `
